@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    container_name: storys-lab-fishing-API
+    build:
+      context: .
+      dockerfile: ./docker/go/Dockerfile
+    volumes:
+      - .:/app
+      - go-cache:/root/.cache/go-build
+      - go-mod:/go/pkg/mod
+    ports:
+      - "8080:8080"
+    command: ./main
+    networks:
+      -  default
+volumes:
+  go-cache:
+  go-mod:
