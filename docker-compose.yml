@@ -11,7 +11,7 @@ services:
       - go-cache:/root/.cache/go-build
       - go-mod:/go/pkg/mod
     ports:
-      - "8080:8080"
+      - "80:80"
     command: ./main
     networks:
       -  default
