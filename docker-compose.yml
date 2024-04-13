@@ -6,15 +6,56 @@ services:
     build:
       context: .
       dockerfile: ./docker/go/Dockerfile
+    ports:
+      - "80:80"
+    environment:
+      - PORT=80
+      - ENVIRONMENT=development
+    env_file:
+      - .env
     volumes:
       - .:/app
       - go-cache:/root/.cache/go-build
       - go-mod:/go/pkg/mod
-    ports:
-      - "80:80"
     command: ./main
     networks:
       -  default
+
+  mysql:
+    container_name: storys-lab-fishing-DB
+    build:
+      context: .
+      dockerfile: ./docker/mysql/Dockerfile
+    volumes:
+      - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+    tmpfs:
+      - /var/lib/mysql
+      - /var/log/mysql
+    environment:
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=passpw
+      - MYSQL_DATABASE=story_fishing_db
+      - MYSQL_ROOT_PASSWORD=rootpw
+    env_file:
+      - .env
+    ports:
+      - "3306:3306"
+    networks:
+      - default
+
+  migrator:
+    image: migrate/migrate
+    volumes:
+      - ./database/migrations:/migrations
+    depends_on:
+      - mysql
+    # TODO 直書き直す
+    command: ["-path", "/migrations", "-database", "mysql://root:rootpw@tcp(mysql:3306)/story_fishing_db", "up"]
+
+
 volumes:
   go-cache:
   go-mod:
+
+networks:
+  default:
