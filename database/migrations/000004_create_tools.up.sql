@@ -1,5 +1,5 @@
 CREATE TABLE tools (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) COMMENT '釣り道具の名前',
     tool_category_id INT NOT NULL COMMENT '釣り道具カテゴリのID',
     size VARCHAR(255) COMMENT 'サイズ',

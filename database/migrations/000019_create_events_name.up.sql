@@ -1,0 +1,21 @@
+CREATE TABLE events (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    title VARCHAR(255) NOT NULL COMMENT 'タイトル',
+    sub_title VARCHAR(255) COMMENT '副題',
+    description TEXT COMMENT '説明',
+    start_datetime DATETIME NOT NULL COMMENT 'イベント開始日時',
+    end_datetime DATETIME NOT NULL COMMENT 'イベント終了日時',
+    admin_id INT NULL COMMENT 'イベント管理者のID',
+    instructor_id INT NULL COMMENT '指導員のID',
+    fishing_spot_id INT NOT NULL COMMENT '釣り場のID',
+    additional_information VARCHAR(255) COMMENT '追加情報',
+    max_persons INT COMMENT '最大参加人数',
+    mix_persons INT COMMENT '参加可能な最小人数',
+    is_display BOOLEAN NOT NULL DEFAULT TRUE COMMENT '表示フラグ',
+    FOREIGN KEY (fishing_spot_id) REFERENCES fishing_spots(id),
+    FOREIGN KEY (instructor_id) REFERENCES instructors(id),
+    FOREIGN KEY (admin_id) REFERENCES admins(id),
+    INDEX idx_admin (admin_id),
+    INDEX idx_instructor (instructor_id),
+    INDEX idx_fishing_spot (fishing_spot_id)
+) COMMENT='イベント情報を格納するテーブル';

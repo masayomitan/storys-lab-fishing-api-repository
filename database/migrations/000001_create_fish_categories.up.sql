@@ -1,5 +1,5 @@
 CREATE TABLE fish_categories (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) COMMENT '魚種類の名前',
     description TEXT COMMENT '詳細な説明',
     created_at DATETIME NOT NULL COMMENT '作成日時',

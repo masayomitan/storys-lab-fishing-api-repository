@@ -1,5 +1,5 @@
 CREATE TABLE prefectures (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) COMMENT '都道府県',
     name_kana VARCHAR(255) COMMENT '都道府県(カナ)',
     created_at DATETIME NOT NULL COMMENT '作成日時',

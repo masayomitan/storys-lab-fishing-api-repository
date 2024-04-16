@@ -1,5 +1,5 @@
 CREATE TABLE fishing_spots (
-    ID INT AUTO_INCREMENT PRIMARY KEY,
+    id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL COMMENT '釣りスポットの名前',
     area_id INT NOT NULL COMMENT 'エリアのID',
     scientific_name VARCHAR(255) COMMENT '魚の学名',
@@ -12,6 +12,6 @@ CREATE TABLE fishing_spots (
     conservation_status INT COMMENT '保存状態',
     edibility BOOLEAN COMMENT '食べられるか',
     recommended_fishing_methods INT COMMENT 'おすすめ釣り方法',
-    FOREIGN KEY (area_id) REFERENCES areas(ID),
+    FOREIGN KEY (area_id) REFERENCES areas(id),
     INDEX idx_area (area_id)
 ) COMMENT='釣りスポットとその特徴を保存するテーブル';
