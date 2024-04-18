@@ -10,5 +10,8 @@ CREATE TABLE boats (
     fishing_gear TEXT COMMENT '使用可能な漁具',
     price INT COMMENT '価格',
     gross_tonnage FLOAT COMMENT '総トン数',
+    created_at DATETIME NOT NULL COMMENT '作成日時',
+    updated_at DATETIME NOT NULL COMMENT '更新日時',
+    deleted_at DATETIME DEFAULT NULL COMMENT '削除日時',
     FOREIGN KEY (company_id) REFERENCES companies(id)
 ) COMMENT='船舶情報を保存するテーブル';

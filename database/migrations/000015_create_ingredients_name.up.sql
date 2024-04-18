@@ -7,5 +7,8 @@ CREATE TABLE ingredients (
     origin VARCHAR(255) COMMENT '原産国または産地',
     supplier VARCHAR(255) COMMENT '仕入れ先やブランド',
     unit VARCHAR(255) COMMENT '単位',
-    season VARCHAR(255) COMMENT '旬や入手可能な時期'
+    season VARCHAR(255) COMMENT '旬や入手可能な時期',
+    created_at DATETIME NOT NULL COMMENT '作成日時',
+    updated_at DATETIME NOT NULL COMMENT '更新日時',
+    deleted_at DATETIME DEFAULT NULL COMMENT '削除日時'
 ) COMMENT='食材情報を格納するテーブル';

@@ -9,6 +9,9 @@ CREATE TABLE instructors (
     prefecture_id INT COMMENT '都道府県ID',
     introduced TEXT COMMENT '紹介文',
     can_edit_events BOOLEAN NOT NULL DEFAULT FALSE COMMENT 'イベント作成/編集権限',
+    created_at DATETIME NOT NULL COMMENT '作成日時',
+    updated_at DATETIME NOT NULL COMMENT '更新日時',
+    deleted_at DATETIME DEFAULT NULL COMMENT '削除日時',
     FOREIGN KEY (prefecture_id) REFERENCES prefectures(id),
     INDEX idx_prefecture (prefecture_id)
 ) COMMENT='インストラクターテーブル';
