@@ -4,12 +4,11 @@ services:
   app:
     container_name: storys-lab-fishing-API
     build:
-      context: .
+      context: ./
       dockerfile: ./docker/go/Dockerfile
     ports:
-      - "80:80"
+      - "80:8000"
     environment:
-      - PORT=80
       - ENVIRONMENT=development
     env_file:
       - .env
@@ -17,7 +16,6 @@ services:
       - .:/app
       - go-cache:/root/.cache/go-build
       - go-mod:/go/pkg/mod
-    command: ./main
     networks:
       -  default
 
@@ -46,11 +44,11 @@ services:
   migrator:
     image: migrate/migrate
     volumes:
-      - ./database/migrations:/migrations
+      - ./infrastructure/database/migrations:/migrations
     depends_on:
       - mysql
     # TODO 直書き直す
-    command: ["-path", "/migrations", "-database", "mysql://root:rootpw@tcp(mysql:3306)/story_fishing_db", "up"]
+    command: ["-path", "/infrastructure/database/migrations", "-database", "mysql://root:rootpw@tcp(mysql:3306)/story_fishing_db", "up"]
 
 
 volumes:

@@ -1,30 +1,29 @@
 package main
 
 import (
-
-    "github.com/gin-gonic/gin"
-    "storys-lab-fishing-api/database"
     "fmt"
+	"os"
+	"time"
+
+    // "github.com/gin-gonic/gin"
+    "storys-lab-fishing-api/app/infrastructure"
+    // "storys-lab-fishing-api/app/infrastructure/log"
+    "storys-lab-fishing-api/app/infrastructure/router"
+    // "storys-lab-fishing-api/app/infrastructure/database"
+
 )
 
 func main() {
-    fmt.Println("start")
-    r := gin.Default()
-    db := database.GormConnect()
-    fmt.Println(db)
+    fmt.Println("build start...")
 
-    // ルートパス
-    r.GET("/", func(c *gin.Context) {
-        c.JSON(200, gin.H{
-            "message": "hello world",
-        })
-    })
+    var app = infrastructure.NewConfig().
+        Name(os.Getenv("APP_NAME")).
+        ContextTimeout(10 * time.Second).
+        // Logger(log.InstanceLogrusLogger).
+        // Validator(validation.InstanceGoPlayground).
+        DbSQL()
 
-    // ヘルスチェック用のパス
-    r.GET("/health", func(c *gin.Context) {
-        c.JSON(200, gin.H{
-            "status": "ok",
-        })
-    })
-    r.Run(":80")
+    app.WebServerPort(os.Getenv("APP_PORT")).
+        WebServer(router.InstanceGin).
+        Start()
 }

@@ -4,8 +4,8 @@ import (
 	"errors"
 	"time"
 	"github.com/gin-gonic/gin"
-	// "storys-lab-fishing-api/adapter/repository"
-	// "storys-lab-fishing-api/adapter/logger"
+	"storys-lab-fishing-api/app/adapter/repository"
+	"storys-lab-fishing-api/app/adapter/logger"
 	// "storys-lab-fishing-api/adapter/validator"
 )
 
@@ -26,19 +26,18 @@ var (
 
 func NewWebServerFactory(
 	instance int,
-	// log logger.Logger,
-	// dbSQL repository.SQL,
+	log logger.Logger,
+	SQL repository.SQL,
 	// validator validator.Validator,
 	port Port,
 	ctxTimeout time.Duration,
 ) (Server, error) {
 	return newGinServer(
 		gin.New(),
-		// log, 
-		// dbSQL, 
+		log, 
+		SQL, 
 		// validator, 
 		port, 
 		ctxTimeout,
-	), 
-	nil
+	), nil
 }
