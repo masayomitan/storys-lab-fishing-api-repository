@@ -31,17 +31,17 @@ type (
 
 	Fish struct {
 		id   FishID
-		name string
+		fishName string
 	}
 )
 
 func NewFish(
 	ID FishID,
-	name string,
+	fishName string,
 ) Fish {
 	return Fish{
 		id:   ID,
-		name: name,
+		fishName: fishName,
 	}
 }
 
@@ -49,6 +49,6 @@ func (f Fish) ID() FishID {
 	return f.id
 }
 
-func (f Fish) Name() string {
-	return f.name
+func (f Fish) FishName() string {
+	return f.fishName
 }
