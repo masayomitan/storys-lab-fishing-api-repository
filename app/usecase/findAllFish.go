@@ -20,11 +20,8 @@ type (
 
 	// FindAllFishOutput output data
 	FindAllFishOutput struct {
-		ID                   string  `json:"id"`
-		AccountOriginID      string  `json:"account_origin_id"`
-		AccountDestinationID string  `json:"account_destination_id"`
-		Amount               float64 `json:"amount"`
-		CreatedAt            string  `json:"created_at"`
+		ID        string  `json:"id"`
+		Name      string  `json:"name"`
 	}
 
 	findAllFishInteractor struct {
