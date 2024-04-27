@@ -1,7 +1,7 @@
 # ステージ1: ビルド環境
 FROM golang:1.22.1-alpine AS builder
 
-WORKDIR /
+WORKDIR /app
 
 # Airとビルドツールのインストール
 RUN apk add --no-cache go ca-certificates
@@ -10,6 +10,10 @@ RUN apk update &&  apk add git
 
 # 依存関係のインストール
 COPY go.mod go.sum ./
+
+RUN ls -la
+
+# モジュールのダウンロード
 RUN go mod download
 
 # ソースコードのコピー
@@ -22,11 +26,17 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o main ./
 FROM alpine:latest
 RUN apk --no-cache add ca-certificates
 
+# Goをインストール
+RUN apk add --no-cache go
+
+# Goのパスを環境変数に設定
+ENV PATH="/usr/local/go/bin:${PATH}"
+
 EXPOSE 80
 
 # ビルドした実行ファイルのコピー
-COPY --from=builder /main .
-COPY --from=builder /.env .
+COPY --from=builder /app/main ./
+COPY --from=builder /app/.env ./
 COPY --from=builder /go/bin/air /usr/local/bin/
 
 # Airの設定ファイルのコピー

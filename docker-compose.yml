@@ -2,14 +2,12 @@ version: '3.8'
 
 services:
   app:
-    container_name: storys-lab-fishing-API
+    container_name: fishing-api
     build:
       context: ./
       dockerfile: ./docker/go/Dockerfile
     ports:
       - "80:8000"
-    environment:
-      - ENVIRONMENT=development
     env_file:
       - .env
     volumes:
@@ -17,17 +15,17 @@ services:
       - go-cache:/root/.cache/go-build
       - go-mod:/go/pkg/mod
     networks:
-      -  default
+      -  common_network
 
   mysql:
-    container_name: storys-lab-fishing-DB
+    container_name: fishing-db
     build:
-      context: .
+      context: ./
       dockerfile: ./docker/mysql/Dockerfile
     volumes:
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+      - ./docker/mysql/data:/var/lib/mysql
     tmpfs:
-      - /var/lib/mysql
       - /var/log/mysql
     environment:
       - MYSQL_USER=user
@@ -37,23 +35,25 @@ services:
     env_file:
       - .env
     ports:
-      - "3306:3306"
+      - "13306:3306"
     networks:
-      - default
+      - common_network
 
   migrator:
+    container_name: fishing-mg
     image: migrate/migrate
     volumes:
-      - ./infrastructure/database/migrations:/migrations
+      - ./app/infrastructure/database/migrations:/migrations
     depends_on:
       - mysql
     # TODO 直書き直す
-    command: ["-path", "/infrastructure/database/migrations", "-database", "mysql://root:rootpw@tcp(mysql:3306)/story_fishing_db", "up"]
-
+    command: ["-path", "/migrations", "-database", "mysql://root:rootpw@tcp(fishing-DB:3306)/story_fishing_db", "up"]
+    networks:
+      - common_network
 
 volumes:
   go-cache:
   go-mod:
 
 networks:
-  default:
+  common_network:
