@@ -13,12 +13,14 @@ docker-compose up
 ```
 
 # API仕様書
-## swaggo https://github.com/golang-migrate/migrate](https://github.com/swaggo/swag
+## swaggo
+https://github.com/swaggo/swag
 
 
 
 # マイグレーション
-## golang-migrate https://github.com/golang-migrate/migrate
+## golang-migrate 
+https://github.com/golang-migrate/migrate
 
 
 ### インストール
