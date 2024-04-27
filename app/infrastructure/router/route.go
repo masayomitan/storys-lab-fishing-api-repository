@@ -12,20 +12,21 @@ import (
 	"github.com/gin-gonic/gin"
 	"storys-lab-fishing-api/app/adapter/api/action"
 	"storys-lab-fishing-api/app/adapter/logger"
-	"storys-lab-fishing-api/app/usecase"
+	"storys-lab-fishing-api/app/adapter/presenter"
 	"storys-lab-fishing-api/app/adapter/repository"
+	"storys-lab-fishing-api/app/usecase"
 )
+
 type ginEngine struct {
-	router     *gin.Engine
-	log        logger.Logger
-	db         repository.SQL
+	router *gin.Engine
+	log    logger.Logger
+	db     repository.SQL
 	// validator  validator.Validator
 	port       Port
 	ctxTimeout time.Duration
 }
 
 func newGinServer(
-	router *gin.Engine,
 	log logger.Logger,
 	db repository.SQL,
 	// validator validator.Validator,
@@ -34,23 +35,22 @@ func newGinServer(
 ) *ginEngine {
 	return &ginEngine{
 		// router:     gin.Default(),
-		router:     gin.New(),
-		// log:        log,
-		db:         db,
+		router: gin.New(),
+		log:    log,
+		db:     db,
 		// validator:  validator,
 		port:       port,
 		ctxTimeout: t,
 	}
 }
 
-func (g ginEngine) Listen()  {
+func (g ginEngine) Listen() {
 	fmt.Println("listen...")
-	fmt.Sprintf(":%d", g.port)
 
 	// サーバーをデバッグモードに設定
-	gin.SetMode(gin.DebugMode)
-	// gin.SetMode(gin.ReleaseMode)
-	
+	// gin.SetMode(gin.DebugMode)
+	gin.SetMode(gin.ReleaseMode)
+
 	// サーバーがpanicによるクラッシュから復旧するためのミドルウェアを設定
 	gin.Recovery()
 
@@ -59,10 +59,10 @@ func (g ginEngine) Listen()  {
 
 	// HTTPサーバーの設定を定義
 	server := &http.Server{
-		ReadTimeout:  5 * time.Second,  // タイムアウト設定（読み込み）
-		WriteTimeout: 15 * time.Second, // タイムアウト設定（書き込み）
+		ReadTimeout:  5 * time.Second,            // タイムアウト設定（読み込み）
+		WriteTimeout: 15 * time.Second,           // タイムアウト設定（書き込み）
 		Addr:         fmt.Sprintf(":%d", g.port), // サーバーのリスニングアドレス
-		Handler:      g.router, // HTTPリクエストを処理するハンドラー
+		Handler:      g.router,                   // HTTPリクエストを処理するハンドラー
 	}
 
 	// 終了シグナルを受け取るためのチャネルを作成
@@ -105,7 +105,7 @@ func (g ginEngine) buildFindAllFishAction() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			uc = usecase.NewFindAllFishInteractor(
-				repository.NewFishMySQL(g.db),
+				repository.NewFishSQL(g.db),
 				presenter.NewFindAllFishPresenter(),
 				g.ctxTimeout,
 			)

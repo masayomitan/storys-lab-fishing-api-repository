@@ -24,7 +24,7 @@ func (f FishID) String() string {
 
 type (
 	FishRepository interface {
-		// Create(context.Context, Transfer) (Transfer, error)
+		Create(context.Context, Fish) (Fish, error)
 		FindAll(context.Context) ([]Fish, error)
 		// WithTransaction(context.Context, func(context.Context) error) error
 	}

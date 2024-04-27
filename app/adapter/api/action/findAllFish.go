@@ -3,10 +3,10 @@ package action
 import (
 	"net/http"
 
-	// "github.com/gsabadini/go-clean-architecture/adapter/api/logging"
-	// "github.com/gsabadini/go-clean-architecture/adapter/api/response"
-	// "github.com/gsabadini/go-clean-architecture/adapter/logger"
-	// "github.com/gsabadini/go-clean-architecture/usecase"
+	"storys-lab-fishing-api/app/adapter/api/logging"
+	"storys-lab-fishing-api/app/adapter/api/response"
+	"storys-lab-fishing-api/app/adapter/logger"
+	"storys-lab-fishing-api/app/usecase"
 )
 
 type FindAllFishAction struct {
@@ -33,7 +33,7 @@ func (t FindAllFishAction) Execute(w http.ResponseWriter, r *http.Request) {
 			http.StatusInternalServerError,
 		).Log("error when returning the fish list")
 
-		response.NewError(err, http.StatusInternalServerError).Send(w)
+		// response.NewError(err, http.StatusInternalServerError).Send(w)
 		return
 	}
 	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish list")

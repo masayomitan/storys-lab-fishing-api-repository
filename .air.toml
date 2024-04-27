@@ -2,20 +2,20 @@
 
 # Working directory
 # . or absolute path, please note that the directories following must be under root.
-root = "./app"
+root = "."
 tmp_dir = "tmp"
 
 [build]
 cmd = "go build -o ./main ."
 bin = "main"
 # Customize binary, can setup environment variables when run your app.
-full_bin = "APP_ENV=dev APP_USER=air ./tmp/main"
-# Add additional arguments when running binary (bin/full_bin). Will run './tmp/main hello world'.
+full_bin = "APP_ENV=dev APP_USER=air ./main"
+# Add additional arguments when running binary (bin/full_bin). Will run './main hello world'.
 args_bin = ["hello", "world"]
 # Watch these filename extensions.
-include_ext = ["go", "mod", "sum", "tpl", "tmpl", "html"]
+include_ext = ["go", "tpl", "tmpl", "html"]
 # Ignore these filename extensions or directories.
-exclude_dir = ["assets", "tmp", "vendor", "frontend/node_modules", "proc", "sys", "usr", "dev", "etc", "run", "var"]
+exclude_dir = ["assets", "tmp", "vendor", "frontend/node_modules", "proc", "sys", "private",  "usr", "dev", "etc", "run", "var"]
 # Watch these directories if you specified.
 include_dir = []
 # Watch these files.

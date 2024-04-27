@@ -1,9 +1,9 @@
 package router
 
 import (
-	"errors"
+	// "errors"
 	"time"
-	"github.com/gin-gonic/gin"
+	// "github.com/gin-gonic/gin"
 	"storys-lab-fishing-api/app/adapter/repository"
 	"storys-lab-fishing-api/app/adapter/logger"
 	// "storys-lab-fishing-api/adapter/validator"
@@ -20,10 +20,6 @@ const (
 	InstanceGin
 )
 
-var (
-	errInvalidWebServerInstance = errors.New("invalid router server instance")
-)
-
 func NewWebServerFactory(
 	instance int,
 	log logger.Logger,
@@ -33,7 +29,6 @@ func NewWebServerFactory(
 	ctxTimeout time.Duration,
 ) (Server, error) {
 	return newGinServer(
-		gin.New(),
 		log, 
 		SQL, 
 		// validator, 

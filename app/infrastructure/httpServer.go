@@ -1,14 +1,14 @@
 package infrastructure
 
 import (
+	"fmt"
+	"storys-lab-fishing-api/app/adapter/repository"
 	"strconv"
 	"time"
-
-	"storys-lab-fishing-api/app/adapter/repository"
 	// "github.com/gsabadini/go-clean-architecture/adapter/validator"
 	"storys-lab-fishing-api/app/adapter/logger"
 	"storys-lab-fishing-api/app/infrastructure/database"
-	// "storys-lab-fishing-api/app/infrastructure/log"
+	"storys-lab-fishing-api/app/infrastructure/log"
 	"storys-lab-fishing-api/app/infrastructure/router"
 )
 
@@ -16,8 +16,8 @@ type config struct {
 	appName string
 	logger  logger.Logger
 	// validator     validator.Validator
-	dbSQL         repository.SQL
 	ctxTimeout    time.Duration
+	dbSQL         repository.SQL
 	webServerPort router.Port
 	webServer     router.Server
 }
@@ -36,26 +36,27 @@ func (c *config) Name(name string) *config {
 	return c
 }
 
-// func (c *config) Logger(instance int) *config {
-// 	log, err := log.NewLoggerFactory(instance)
-// 	if err != nil {
-// 		log.Fatalln(err)
-// 	}
+func (c *config) Logger(instance int) *config {
+	log, err := log.NewLoggerFactory(instance)
+	if err != nil {
+		log.Fatalln(err)
+	}
 
-// 	c.logger = log
-// 	c.logger.Infof("Successfully configured log")
-// 	return c
-// }
+	c.logger = log
+	c.logger.Infof("Successfully configured log")
+	return c
+}
 
 // DB接続
 func (c *config) DbSQL() *config {
-	db, err := database.DBConnect(database.NewConfigDB())
+	db, err := database.DBConnect()
 	if err != nil {
 		c.logger.Fatalln(err)
 	}
+	// fmt.Println(db)
 
+	fmt.Println("Successfully connected to the SQL database")
 	c.logger.Infof("Successfully connected to the SQL database")
-
 	c.dbSQL = &repository.GormAdapter{DB: db}
 	return c
 }
@@ -97,11 +98,11 @@ func (c *config) WebServerPort(port string) *config {
 	if err != nil {
 		c.logger.Fatalln(err)
 	}
-
 	c.webServerPort = router.Port(p)
 	return c
 }
 
 func (c *config) Start() {
+	fmt.Println("start listen...")
 	c.webServer.Listen()
 }

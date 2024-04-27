@@ -26,7 +26,7 @@ func NewFishSQL(db SQL) FishSQL {
 	}
 }
 
-func (a FishSQL) CreateFish(ctx context.Context, fish domain.Fish) (domain.Fish, error) {
+func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, error) {
 	var fishJSON = FishJSON{
 		ID:   fish.ID().String(),
 		Name: fish.Name(),
