@@ -31,17 +31,29 @@ type (
 
 	Fish struct {
 		id   FishID
-		fishName string
+		name string
+		familyName string
+		scientificName string
+		fishCategory int
+		description string
 	}
 )
 
 func NewFish(
 	ID FishID,
-	fishName string,
+	name string,
+	familyName string,
+	scientificName string,
+	fishCategory int,
+	description string,
 ) Fish {
 	return Fish{
 		id:   ID,
-		fishName: fishName,
+		name: name,
+		familyName: familyName,
+		scientificName: scientificName,
+		fishCategory: fishCategory,
+		description: description,
 	}
 }
 
@@ -49,6 +61,22 @@ func (f Fish) ID() FishID {
 	return f.id
 }
 
-func (f Fish) FishName() string {
-	return f.fishName
+func (f Fish) Name() string {
+	return f.name
+}
+
+func (f Fish) FamilyName() string {
+	return f.familyName
+}
+
+func (f Fish) ScientificName() string {
+	return f.scientificName
+}
+
+func (f Fish) FishCategory() int {
+	return f.fishCategory
+}
+
+func (f Fish) Description() string {
+	return f.description
 }

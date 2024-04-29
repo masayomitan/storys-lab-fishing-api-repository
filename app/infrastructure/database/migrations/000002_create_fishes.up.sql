@@ -1,6 +1,6 @@
 CREATE TABLE fishes (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    fish_name VARCHAR(255) COMMENT '魚の名前',
+    name VARCHAR(255) COMMENT '魚の名前',
     family_name VARCHAR(255) COMMENT '科の名前',
     scientific_name VARCHAR(255) COMMENT '学名',
     fish_category_id INT NOT NULL COMMENT '魚種別 外部ID',

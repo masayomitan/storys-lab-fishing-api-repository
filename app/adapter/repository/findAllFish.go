@@ -10,8 +10,12 @@ import (
 )
 
 type FishJSON struct {
-    ID   string `json:"id"`
-    FishName string `json:"fish_name"`
+	ID string `json:"id"`
+	Name string `json:"fish_name"`
+	FamilyName string `json:"family_name"`
+	ScientificName string `json:"scientific_name"`
+	FishCategory int `json:"fish_category"`
+	Description string `json:"description"`
 }
 
 type FishSQL struct {
@@ -29,7 +33,11 @@ func NewFishSQL(db SQL) FishSQL {
 func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, error) {
 	var fishJSON = FishJSON{
 		ID:   fish.ID().String(),
-		FishName: fish.FishName(),
+		Name: fish.Name(),
+		FamilyName: fish.FamilyName(),
+		ScientificName: fish.ScientificName(),
+		FishCategory: fish.FishCategory(),
+		Description: fish.Description(),
 	}
 
 	if err := a.db.Store(ctx, a.collectionName, fishJSON); err != nil {
@@ -51,7 +59,11 @@ func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 	for _, fishJSON := range fishJSON {
 		var fish = domain.NewFish(
 			domain.FishID(fishJSON.ID),
-			fishJSON.FishName,
+			fishJSON.Name,
+			fishJSON.FamilyName,
+			fishJSON.ScientificName,
+			fishJSON.FishCategory,
+			fishJSON.Description,
 		)
 
 		fishes = append(fishes, fish)

@@ -15,8 +15,12 @@ type (
 
 	// CreateFishInput input data
 	CreateFishInput struct {
-		ID        string  `json:"id"`
-		Name      string  `json:"name"`
+		ID string `json:"id"`
+		Name string `json:"name"`
+		FamilyName string `json:"family_name"`
+		ScientificName string `json:"scientific_name"`
+		FishCategory int `json:"fish_category"`
+		Description string `json:"description"`
 	}
 
 	// CreateFishPresenter output port
@@ -26,8 +30,12 @@ type (
 
 	// CreateFishOutput output data
 	CreateFishOutput struct {
-		ID        string  `json:"id"`
-		Name      string  `json:"name"`
+		ID string `json:"id"`
+		Name string `json:"name"`
+		FamilyName string `json:"family_name"`
+		ScientificName string `json:"scientific_name"`
+		FishCategory int `json:"fish_category"`
+		Description string `json:"description"`
 	}
 
 	createFishInteractor struct {
@@ -58,6 +66,10 @@ func (interactor createFishInteractor) Execute(ctx context.Context, input Create
 	var fish = domain.NewFish(
 		domain.FishID(domain.NewUUID()),
 		input.Name,
+		input.FamilyName,
+		input.ScientificName,
+		input.FishCategory,
+		input.Description,
 	)
 
 	fish, err := interactor.repo.Create(ctx, fish)
