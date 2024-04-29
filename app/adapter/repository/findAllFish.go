@@ -14,7 +14,7 @@ type FishJSON struct {
 	Name string `json:"fish_name"`
 	FamilyName string `json:"family_name"`
 	ScientificName string `json:"scientific_name"`
-	FishCategory int `json:"fish_category"`
+	FishCategoryId int `json:"fish_category"`
 	Description string `json:"description"`
 }
 
@@ -36,7 +36,7 @@ func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, err
 		Name: fish.Name(),
 		FamilyName: fish.FamilyName(),
 		ScientificName: fish.ScientificName(),
-		FishCategory: fish.FishCategory(),
+		FishCategoryId: fish.FishCategoryId(),
 		Description: fish.Description(),
 	}
 
@@ -62,7 +62,7 @@ func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 			fishJSON.Name,
 			fishJSON.FamilyName,
 			fishJSON.ScientificName,
-			fishJSON.FishCategory,
+			fishJSON.FishCategoryId,
 			fishJSON.Description,
 		)
 

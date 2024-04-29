@@ -34,7 +34,7 @@ type (
 		name string
 		familyName string
 		scientificName string
-		fishCategory int
+		fishCategoryId int
 		description string
 	}
 )
@@ -44,7 +44,7 @@ func NewFish(
 	name string,
 	familyName string,
 	scientificName string,
-	fishCategory int,
+	fishCategoryId int,
 	description string,
 ) Fish {
 	return Fish{
@@ -52,7 +52,7 @@ func NewFish(
 		name: name,
 		familyName: familyName,
 		scientificName: scientificName,
-		fishCategory: fishCategory,
+		fishCategoryId: fishCategoryId,
 		description: description,
 	}
 }
@@ -73,8 +73,8 @@ func (f Fish) ScientificName() string {
 	return f.scientificName
 }
 
-func (f Fish) FishCategory() int {
-	return f.fishCategory
+func (f Fish) FishCategoryId() int {
+	return f.fishCategoryId
 }
 
 func (f Fish) Description() string {

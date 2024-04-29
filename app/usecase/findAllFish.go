@@ -20,8 +20,12 @@ type (
 
 	// FindAllFishOutput output data
 	FindAllFishOutput struct {
-		ID        string  `json:"id"`
-		Name      string  `json:"name"`
+		ID string  `json:"id"`
+		Name string  `json:"name"`
+		FamilyName string `json:"family_name"`
+		ScientificName string `json:"scientific_name"`
+		FishCategoryId int `json:"fish_category_id"`
+		Description string `json:"description"`
 	}
 
 	findAllFishInteractor struct {

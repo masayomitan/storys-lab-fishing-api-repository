@@ -17,8 +17,12 @@ func (a findAllFishPresenter) Output(fishes []domain.Fish) []usecase.FindAllFish
 	var output = make([]usecase.FindAllFishOutput, 0)
 	for _, fish := range fishes {
 		output = append(output, usecase.FindAllFishOutput{
-			ID:        fish.ID().String(),
-			Name:      fish.Name(),
+			ID:fish.ID().String(),
+			Name: fish.Name(),
+			FamilyName: fish.FamilyName(),
+			ScientificName: fish.ScientificName(),
+			FishCategoryId: fish.FishCategoryId(),
+			Description: fish.Description(),
 		})
 	}
 	return output

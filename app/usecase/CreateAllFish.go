@@ -19,7 +19,7 @@ type (
 		Name string `json:"name"`
 		FamilyName string `json:"family_name"`
 		ScientificName string `json:"scientific_name"`
-		FishCategory int `json:"fish_category"`
+		FishCategoryId int `json:"fish_category_id"`
 		Description string `json:"description"`
 	}
 
@@ -34,7 +34,7 @@ type (
 		Name string `json:"name"`
 		FamilyName string `json:"family_name"`
 		ScientificName string `json:"scientific_name"`
-		FishCategory int `json:"fish_category"`
+		FishCategoryId int `json:"fish_category_id"`
 		Description string `json:"description"`
 	}
 
@@ -68,7 +68,7 @@ func (interactor createFishInteractor) Execute(ctx context.Context, input Create
 		input.Name,
 		input.FamilyName,
 		input.ScientificName,
-		input.FishCategory,
+		input.FishCategoryId,
 		input.Description,
 	)
 
