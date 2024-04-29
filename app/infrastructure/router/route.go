@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"github.com/gin-contrib/cors"
 	"storys-lab-fishing-api/app/adapter/api/action"
 	"storys-lab-fishing-api/app/adapter/logger"
 	"storys-lab-fishing-api/app/adapter/presenter"
@@ -55,6 +56,7 @@ func (g ginEngine) Listen() {
 	gin.Recovery()
 
 	// カスタム関数を用いて、HTTP通信に対するハンドラーをルーターに設定
+	g.router.Use(SetupCORS())
 	g.setAppHandlers(g.router)
 
 	// HTTPサーバーの設定を定義
@@ -69,7 +71,7 @@ func (g ginEngine) Listen() {
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 
-	// 新しいゴルーチンでサーバーを起動
+	// go routineでサーバーを起動
 	go func() {
 		g.log.WithFields(logger.Fields{"port": g.port}).Infof("Starting HTTP Server")
 		// ListenAndServeでサーバー起動 それ以外はログ出力
@@ -96,6 +98,7 @@ func (g ginEngine) Listen() {
 }
 
 func (g ginEngine) setAppHandlers(r *gin.Engine) {
+
 	r.GET("/fishes", g.buildFindAllFishAction())
 
 	r.GET("/health", g.healthCheck())
@@ -120,4 +123,28 @@ func (g ginEngine) healthCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		action.HealthCheck(c.Writer, c.Request)
 	}
+}
+
+func SetupCORS() gin.HandlerFunc {
+	return cors.New(cors.Config{
+		AllowOrigins: []string{
+			"http://localhost:3000",
+		},
+		AllowMethods: []string{
+			"POST",
+			"GET",
+			"PUT",
+			"OPTIONS",
+		},
+		AllowHeaders: []string{
+			"Access-Control-Allow-Credentials",
+			"Access-Control-Allow-Headers",
+			"Content-Type",
+			"Content-Length",
+			"Accept-Encoding",
+			"Authorization",
+		},
+		AllowCredentials: true,
+		MaxAge:           24 * time.Hour,
+	})
 }
