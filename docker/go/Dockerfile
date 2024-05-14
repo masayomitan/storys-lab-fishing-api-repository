@@ -42,5 +42,4 @@ COPY .air.toml .air.toml
 
 # 環境に応じた実行コマンドの設定
 # CMD ["air", "-c", ".air.toml"]
-# CMD if [ "$ENVIRONMENT" = "development" ]; then air -c .air.toml; else ./main; fi
 CMD ["./main"]

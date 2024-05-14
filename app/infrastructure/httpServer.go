@@ -17,7 +17,7 @@ type config struct {
 	logger  logger.Logger
 	// validator     validator.Validator
 	ctxTimeout    time.Duration
-	dbSQL         repository.SQL
+	dbSQL         repository.DBMethods
 	webServerPort router.Port
 	webServer     router.Server
 }
@@ -55,7 +55,6 @@ func (c *config) DbSQL() *config {
 	}
 	// fmt.Println(db)
 
-	fmt.Println("Successfully connected to the SQL database")
 	c.logger.Infof("Successfully connected to the SQL database")
 	c.dbSQL = &repository.GormAdapter{DB: db}
 	return c

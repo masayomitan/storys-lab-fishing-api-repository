@@ -21,7 +21,7 @@ import (
 type ginEngine struct {
 	router *gin.Engine
 	log    logger.Logger
-	db     repository.SQL
+	db     repository.DBMethods
 	// validator  validator.Validator
 	port       Port
 	ctxTimeout time.Duration
@@ -29,7 +29,7 @@ type ginEngine struct {
 
 func newGinServer(
 	log logger.Logger,
-	db repository.SQL,
+	db repository.DBMethods,
 	// validator validator.Validator,
 	port Port,
 	t time.Duration,

@@ -25,7 +25,7 @@ func main() {
 		Logger(log.InstanceLogrusLogger).
 		// Validator(validation.InstanceGoPlayground).
 		DbSQL()
-
+	fmt.Println("app_config")
     fmt.Println(app)
 	app.WebServerPort(os.Getenv("APP_PORT")).
 		WebServer(router.InstanceGin).

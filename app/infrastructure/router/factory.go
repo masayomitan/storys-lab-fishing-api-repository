@@ -23,7 +23,7 @@ const (
 func NewWebServerFactory(
 	instance int,
 	log logger.Logger,
-	SQL repository.SQL,
+	SQL repository.DBMethods,
 	// validator validator.Validator,
 	port Port,
 	ctxTimeout time.Duration,

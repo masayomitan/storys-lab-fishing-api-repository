@@ -20,10 +20,10 @@ type FishJSON struct {
 
 type FishSQL struct {
 	collectionName string
-	db             SQL
+	db             DBMethods
 }
 
-func NewFishSQL(db SQL) FishSQL {
+func NewFishSQL(db DBMethods) FishSQL {
 	return FishSQL{
 		db:             db,
 		collectionName: "fishes",

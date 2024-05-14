@@ -30,7 +30,7 @@ func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interfac
 
 // SQLActionは、データベースアクションのためのインターフェースです。
 // これにより、データベースへのアクセスを抽象化し、異なるデータベース技術への依存を減らします。
-type SQL interface {
+type DBMethods interface {
     Store(context.Context, string, interface{}) error
     FindAll(context.Context, string, interface{}, interface{}) error
 }
