@@ -74,8 +74,6 @@ func DBConnect() (*gorm.DB, error) {
 
 	// Decrypts secret using the associated KMS key.
 	var secretString string = *result.SecretString
-	fmt.Println("secretString")
-	fmt.Println(secretString)
 	var secretData SecretData
 	err = json.Unmarshal([]byte(secretString), &secretData)
 	if err != nil {
@@ -108,7 +106,7 @@ func DBConnect() (*gorm.DB, error) {
 		secretData.Password,
 		secretData.Host,
 		secretData.Port,
-		secretData.DBClusterIdentifier,
+		cfg.database,
 	)
 
 	fmt.Println("データベースの接続情報:", connect)
