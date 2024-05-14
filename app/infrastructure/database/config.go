@@ -52,9 +52,9 @@ func DBConnect() (*gorm.DB, error) {
 
 	db, err = gorm.Open(mysql.Open(connect))
 	if err != nil {
-		return nil, fmt.Errorf("データベースの接続に失敗しました: %w", err)
+		return nil, fmt.Errorf("データベースの接続に失敗しました!!!: %w", err)
 	}
-	fmt.Println("データベースの接続に成功しました!")
+	fmt.Println("データベースの接続に成功しました!!!")
 
 	return db, nil
 }
