@@ -35,7 +35,6 @@ func newGinServer(
 	t time.Duration,
 ) *ginEngine {
 	return &ginEngine{
-		// router:     gin.Default(),
 		router: gin.New(),
 		log:    log,
 		db:     db,
