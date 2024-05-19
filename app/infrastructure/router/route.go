@@ -10,12 +10,12 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
-	"github.com/gin-contrib/cors"
 	"storys-lab-fishing-api/app/adapter/api/action"
 	"storys-lab-fishing-api/app/adapter/logger"
 	"storys-lab-fishing-api/app/adapter/presenter"
 	"storys-lab-fishing-api/app/adapter/repository"
 	"storys-lab-fishing-api/app/usecase"
+	"storys-lab-fishing-api/app/middleware"
 )
 
 type ginEngine struct {
@@ -55,7 +55,7 @@ func (g ginEngine) Listen() {
 	gin.Recovery()
 
 	// カスタム関数を用いて、HTTP通信に対するハンドラーをルーターに設定
-	g.router.Use(SetupCORS())
+	g.router.Use(middleware.SetupCORS())
 	g.setAppHandlers(g.router)
 
 	// HTTPサーバーの設定を定義
@@ -122,28 +122,4 @@ func (g ginEngine) healthCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		action.HealthCheck(c.Writer, c.Request)
 	}
-}
-
-func SetupCORS() gin.HandlerFunc {
-	return cors.New(cors.Config{
-		AllowOrigins: []string{
-			"http://localhost:3000",
-		},
-		AllowMethods: []string{
-			"POST",
-			"GET",
-			"PUT",
-			"OPTIONS",
-		},
-		AllowHeaders: []string{
-			"Access-Control-Allow-Credentials",
-			"Access-Control-Allow-Headers",
-			"Content-Type",
-			"Content-Length",
-			"Accept-Encoding",
-			"Authorization",
-		},
-		AllowCredentials: true,
-		MaxAge:           24 * time.Hour,
-	})
 }
