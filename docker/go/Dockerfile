@@ -30,8 +30,6 @@ RUN apk add --no-cache go
 # Goのパスを環境変数に設定
 ENV PATH="/usr/local/go/bin:${PATH}"
 
-EXPOSE 80
-
 # ビルドした実行ファイルのコピー
 COPY --from=builder /app/main ./
 COPY --from=builder /app/.env ./
