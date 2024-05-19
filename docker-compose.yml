@@ -46,8 +46,9 @@ services:
       - ./app/infrastructure/database/migrations:/migrations
     depends_on:
       - mysql
-    # TODO 直書き直す
-    command: ["-path", "/migrations", "-database", "mysql://root:rootpw@tcp(fishing-DB:3306)/story_fishing_db", "up"]
+    command: ["-path", "/migrations", "-database", "mysql://admin:p0w5yHv3L6RAOjve4E3P@tcp(fishing-db-cluster.cluster-cmy9wzweaztg.ap-northeast-1.rds.amazonaws.com:3306)/story_fishing_db", "up"]
+    env_file:
+      - .env
     networks:
       - common_network
 
