@@ -4,6 +4,10 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"log"
+	"os"
+	"time"
+
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/secretsmanager"
@@ -11,19 +15,16 @@ import (
 	"github.com/joho/godotenv"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"log"
-	"os"
-	"time"
 )
 
 var db *gorm.DB
 
 type dbConfig struct {
-	host     string
-	database string
-	port     string
-	user     string
-	pass     string
+	host       string
+	database   string
+	port       string
+	user       string
+	pass       string
 	ctxTimeout time.Duration
 }
 
@@ -88,14 +89,23 @@ func DBConnect() (*gorm.DB, error) {
 	var connect string
 	fmt.Println(os.Getenv("ENV"))
 
-	connect = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		secretData.Username,
-		secretData.Password,
-		secretData.Host,
-		secretData.Port,
-		cfg.database,
-	)
-
+	if (os.Getenv("ENV") == "local") {
+		connect = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			cfg.user,
+			cfg.pass,
+			cfg.host,
+			cfg.port,
+			cfg.database,
+		)
+	} else {
+		connect = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			secretData.Username,
+			secretData.Password,
+			secretData.Host,
+			secretData.Port,
+			cfg.database,
+		)
+	}
 
 	fmt.Println("データベースの接続情報:", connect)
 

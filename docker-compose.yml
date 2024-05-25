@@ -7,7 +7,7 @@ services:
       context: ./
       dockerfile: ./docker/go/Dockerfile
     ports:
-      - "8000:8000"
+      - "80:80"
     env_file:
       - .env
     volumes:
@@ -28,10 +28,10 @@ services:
     tmpfs:
       - /var/log/mysql
     environment:
-      - MYSQL_USER=user
-      - MYSQL_PASSWORD=passpw
-      - MYSQL_DATABASE=story_fishing_db
-      - MYSQL_ROOT_PASSWORD=rootpw
+      - DB_USER=user
+      - DB_PASS=passpw
+      - DB_DATABASE=story_fishing_db
+      - DB_ROOT_PASS=rootpw
     env_file:
       - .env
     ports:
@@ -39,18 +39,19 @@ services:
     networks:
       - common_network
 
-  migrator:
-    container_name: fishing-mg
-    image: migrate/migrate
-    volumes:
-      - ./app/infrastructure/database/migrations:/migrations
-    depends_on:
-      - mysql
-    command: ["-path", "/migrations", "-database", "mysql://admin:p0w5yHv3L6RAOjve4E3P@tcp(fishing-db-cluster.cluster-cmy9wzweaztg.ap-northeast-1.rds.amazonaws.com:3306)/story_fishing_db", "up"]
-    env_file:
-      - .env
-    networks:
-      - common_network
+  # migrator:
+  #   container_name: fishing-mg
+  #   image: migrate/migrate
+  #   volumes:
+  #     - ./app/infrastructure/database/migrations:/migrations
+  #   depends_on:
+  #     - mysql
+  #   command: ["-path", "/migrations", "-database", "mysql://root:rootpw@tcp(fishing-DB:3306)/story_fishing_db", "up"]
+  #   # command: ["-path", "/migrations", "-database", "mysql://admin:p0w5yHv3L6RAOjve4E3P@tcp(fishing-db-cluster.cluster-cmy9wzweaztg.ap-northeast-1.rds.amazonaws.com:3306)/story_fishing_db", "up"]
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - common_network
 
 volumes:
   go-cache:

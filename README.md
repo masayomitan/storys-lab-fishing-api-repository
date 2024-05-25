@@ -30,30 +30,30 @@ brew install golang-migrate
 
 ### マイグレーションの作成
 ```
-migrate create -ext sql -dir infrastructure/database/migrations -seq create_table_name
+migrate create -ext sql -dir app/infrastructure/database/migrations -seq create_table_name
 ```
 
 ### マイグレーションの実行
 ```
-migrate -path infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" up
+migrate -path app/infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" up
 ```
 
 ### マイグレーションのロールバック
 ```
-migrate -path infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" down 1
+migrate -path app/infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" down 1
 ```
 
 ### 全てのマイグレーションをロールバック
 ```
-migrate -path infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" down -all
+migrate -path app/infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" down -all
 ```
 
 ### 特定のバージョンへのマイグレーション
 ```
-migrate -path infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" goto 2
+migrate -path app/infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" goto 2
 ```
 
 ### 現在のバージョンの確認
 ```
-migrate -path infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" version
+migrate -path app/infrastructure/database/migrations -database "mysql://root@tcp(127.0.0.1:3306)/story_fishing_db" version
 ```
