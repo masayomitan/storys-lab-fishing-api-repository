@@ -34,6 +34,7 @@ ENV PATH="/usr/local/go/bin:${PATH}"
 COPY --from=builder /app/main ./
 COPY --from=builder /app/.env ./
 COPY --from=builder /go/bin/air /usr/local/bin/
+COPY --from=builder /app/app/infrastructure/database/migrations /app/infrastructure/database/migrations
 
 # Airの設定ファイルのコピー
 COPY .air.toml .air.toml

@@ -5,7 +5,9 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"net/http"
+	"time"
 
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/mysql"
@@ -17,6 +19,15 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+type dbConfig struct {
+	host       string
+	database   string
+	port       string
+	user       string
+	pass       string
+	ctxTimeout time.Duration
+}
+
 type SecretData struct {
 	Username            string `json:"username"`
 	Password            string `json:"password"`
@@ -24,6 +35,18 @@ type SecretData struct {
 	Host                string `json:"host"`
 	Port                int    `json:"port"`
 	DBClusterIdentifier string `json:"dbClusterIdentifier"`
+	Database            string `json:"database"`
+}
+
+func NewConfigDB() *dbConfig {
+	return &dbConfig{
+		host:       os.Getenv("DB_HOST"),
+		port:       os.Getenv("DB_PORT"),
+		user:       os.Getenv("DB_USER"),
+		pass:       os.Getenv("DB_PASS"),
+		database:   os.Getenv("DB_DATABASE"),
+		ctxTimeout: 60 * time.Second,
+	}
 }
 
 func Migration(w http.ResponseWriter, _ *http.Request) {
@@ -57,21 +80,34 @@ func Migration(w http.ResponseWriter, _ *http.Request) {
 		fmt.Println("Error:", err)
 	}
 
+	cfg := NewConfigDB()
+	var connect string
 	// データベースURLを作成
-	dbURL := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		secretData.Username,
-		secretData.Password,
-		secretData.Host,
-		secretData.Port,
-		"story_fishing_db",
-	)
+	if (os.Getenv("ENV") == "local") {
+		connect = fmt.Sprintf("mysql://%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", 
+			cfg.user,
+			cfg.pass,
+			cfg.host,
+			cfg.port,
+			cfg.database,
+		)
+	} else {
+		connect = fmt.Sprintf("mysql://%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", 
+			secretData.Username,
+			secretData.Password,
+			secretData.Host,
+			secretData.Port,
+			secretData.Database,
+		)
+	}
 
 	migrationsPath := "file:///app/infrastructure/database/migrations"
 	log.Printf("Migrations path: %s", migrationsPath)
+	fmt.Println("データベースの接続情報:", connect)
 
 	m, err := migrate.New(
 		migrationsPath,
-		dbURL,
+		connect,
 	)
 	if err != nil {
 		log.Fatal(err)
