@@ -12,8 +12,8 @@ func SetupCORS() gin.HandlerFunc {
 	return cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:3000",
-			"https://www.storys-lab-fishing.com/",
-			"https://storys-lab-fishing.com/",
+			"https://www.storys-lab-fishing.com",
+			"https://storys-lab-fishing.com",
 		},
 		AllowMethods: []string{
 			"POST",
@@ -22,12 +22,13 @@ func SetupCORS() gin.HandlerFunc {
 			"OPTIONS",
 		},
 		AllowHeaders: []string{
-			"Access-Control-Allow-Credentials",
-			"Access-Control-Allow-Headers",
 			"Content-Type",
 			"Content-Length",
 			"Accept-Encoding",
 			"Authorization",
+		},
+		ExposeHeaders: []string{
+			"Content-Length",
 		},
 		AllowCredentials: true,
 		MaxAge:           24 * time.Hour,
