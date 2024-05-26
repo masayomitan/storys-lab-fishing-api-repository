@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gin-gonic/gin"
+
 	"github.com/golang-migrate/migrate/v4"
 	_ "github.com/golang-migrate/migrate/v4/database/mysql"
 	_ "github.com/golang-migrate/migrate/v4/source/file"
@@ -49,7 +51,7 @@ func NewConfigDB() *dbConfig {
 	}
 }
 
-func Migration(w http.ResponseWriter, _ *http.Request) {
+func Migration(c *gin.Context) {
 	secretName := "prod/fishing-db"
 	region := "ap-northeast-1"
 
@@ -115,10 +117,10 @@ func Migration(w http.ResponseWriter, _ *http.Request) {
 
 	// Migrate all the way up ...
 	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
-		http.Error(w, fmt.Sprintf("Failed to apply migrations: %v", err), http.StatusInternalServerError)
+		http.Error(c.Writer, fmt.Sprintf("Failed to apply migrations: %v", err), http.StatusInternalServerError)
 		return
 	}
 
 	log.Println("Migrations applied successfully")
-	w.WriteHeader(http.StatusOK)
+	c.Writer.WriteHeader(http.StatusOK)
 }

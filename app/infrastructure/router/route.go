@@ -6,9 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 	"storys-lab-fishing-api/app/adapter/api/action"
 	"storys-lab-fishing-api/app/adapter/logger"
-	"storys-lab-fishing-api/app/adapter/presenter"
+	fishPresenter "storys-lab-fishing-api/app/adapter/presenter/fish"
 	"storys-lab-fishing-api/app/adapter/repository"
-	"storys-lab-fishing-api/app/usecase"
+	fishRepository "storys-lab-fishing-api/app/adapter/repository/fish"
+	fishUsecase "storys-lab-fishing-api/app/usecase/fish"
 )
 
 type ginEngine struct {
@@ -23,36 +24,51 @@ type ginEngine struct {
 func (g ginEngine) setAppHandlers(r *gin.Engine) {
 
 	r.GET("/fishes", g.buildFindAllFishAction())
+	r.GET("/fishes/:id", g.buildFindOneFishAction())
 
 	r.GET("/health", g.healthCheck())
 
 	r.GET("/migration", g.migration())
 }
 
+func (g ginEngine) buildFindOneFishAction() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishUsecase.NewFindOneFishInteractor(
+				fishRepository.NewFishOneSQL(g.db),
+				fishPresenter.NewFindOneFishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFindOneFishAction(uc, g.log)
+		)
+		act.FindOne(c)
+	}
+}
+
 func (g ginEngine) buildFindAllFishAction() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = usecase.NewFindAllFishInteractor(
-				repository.NewFishSQL(g.db),
-				presenter.NewFindAllFishPresenter(),
+			uc = fishUsecase.NewFindAllFishInteractor(
+				fishRepository.NewFishSQL(g.db),
+				fishPresenter.NewFindAllFishPresenter(),
 				g.ctxTimeout,
 			)
 			act = action.NewFindAllFishAction(uc, g.log)
 		)
 
-		act.Execute(c.Writer, c.Request)
+		act.FindAll(c)
+
 	}
 }
 
 func (g ginEngine) healthCheck() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		action.HealthCheck(c.Writer, c.Request)
+		action.HealthCheck(c)
 	}
 }
 
-
 func (g ginEngine) migration() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		action.Migration(c.Writer, c.Request)
+		action.Migration(c)
 	}
 }

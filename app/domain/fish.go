@@ -26,6 +26,7 @@ type (
 	FishRepository interface {
 		Create(context.Context, Fish) (Fish, error)
 		FindAll(context.Context) ([]Fish, error)
+		FindOne(context.Context, string) (Fish, error)
 		// WithTransaction(context.Context, func(context.Context) error) error
 	}
 

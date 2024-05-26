@@ -3,18 +3,20 @@ package action
 import (
 	"fmt"
 	"net/http"
+
+    "github.com/gin-gonic/gin"
 )
 
-func HealthCheck(w http.ResponseWriter, _ *http.Request) {
+func HealthCheck(c *gin.Context) {
     // レスポンスヘッダーのステータスコードを設定
-    w.WriteHeader(http.StatusOK)
+    c.Writer.WriteHeader(http.StatusOK)
     
     // レスポンスヘッダーのコンテントタイプを設定
-    w.Header().Set("Content-Type", "application/json")
+    c.Writer.Header().Set("Content-Type", "application/json")
     
     // レスポンスボディに文言を書き込み
     responseMessage := `{"status": "healthy", "message": "Service is up and running"}`
-    _, err := w.Write([]byte(responseMessage))
+    _, err := c.Writer.Write([]byte(responseMessage))
     if err != nil {
         // エラーハンドリング
         fmt.Println("Error writing response:", err)

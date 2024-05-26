@@ -9,7 +9,8 @@ RUN go install github.com/cosmtrek/air@v1.51.0
 RUN apk update &&  apk add git
 
 # 依存関係のインストール
-COPY go.mod go.sum ./
+COPY go.mod ./
+COPY go.sum ./
 
 # モジュールのダウンロード
 RUN go mod download
@@ -40,5 +41,5 @@ COPY --from=builder /app/app/infrastructure/database/migrations /app/infrastruct
 COPY .air.toml .air.toml
 
 # 環境に応じた実行コマンドの設定
-# CMD ["air", "-c", ".air.toml"]
+# CMD ["air"]
 CMD ["./main"]

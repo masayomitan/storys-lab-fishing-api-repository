@@ -4,7 +4,7 @@ import (
 	// "time"
 
 	"storys-lab-fishing-api/app/domain"
-	"storys-lab-fishing-api/app/usecase"
+	"storys-lab-fishing-api/app/usecase/fish"
 )
 
 type findAllFishPresenter struct{}

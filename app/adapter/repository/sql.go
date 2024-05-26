@@ -11,19 +11,14 @@ type GormAdapter struct {
     DB *gorm.DB  // DBは、GORMライブラリによるデータベース接続を持ちます。
 }
 
-// Storeは、指定されたテーブルに新しいエンティティを保存します。
-// ctx: コンテキストは、リクエストスコープの情報を持ち、キャンセルやタイムアウトの管理に使用されます。
-// table: データを保存するデータベーステーブルの名前です。
-// entity: データベースに保存されるオブジェクト（エンティティ）です。
 func (ga *GormAdapter) Store(ctx context.Context, table string, entity interface{}) error {
     return ga.DB.Table(table).Create(entity).Error
 }
 
-// FindAllは、指定されたクエリに基づいてテーブルから全てのエンティティを取得します。
-// ctx: コンテキストは、リクエストスコープの情報を持ち、キャンセルやタイムアウトの管理に使用されます。
-// table: クエリを実行するデータベーステーブルの名前です。
-// query: データを検索するための条件を指定するクエリオブジェクトです。
-// result: 検索結果を格納するためのオブジェクトです。
+func (ga *GormAdapter) FindOne(ctx context.Context, table string, id string, result interface{}) error {
+    return ga.DB.Table(table).Where("id = ?", id).First(result).Error
+}
+
 func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).Find(result).Error
 }
@@ -32,6 +27,7 @@ func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interfac
 // これにより、データベースへのアクセスを抽象化し、異なるデータベース技術への依存を減らします。
 type DBMethods interface {
     Store(context.Context, string, interface{}) error
+	FindOne(context.Context, string, string, interface{}) error
     FindAll(context.Context, string, interface{}, interface{}) error
 }
 
