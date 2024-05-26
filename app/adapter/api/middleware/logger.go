@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"net/http"
 	"strings"
 	"time"
@@ -68,12 +68,12 @@ func getRequestPayload(r *http.Request) (string, error) {
 		return "", errors.New("body not defined")
 	}
 
-	payload, err := ioutil.ReadAll(r.Body)
+	payload, err := io.ReadAll(r.Body)
 	if err != nil {
 		return "", errors.Wrap(err, "error read body")
 	}
 
-	r.Body = ioutil.NopCloser(bytes.NewBuffer(payload))
+	r.Body = io.NopCloser(bytes.NewBuffer(payload))
 
 	return strings.TrimSpace(string(payload)), nil
 }
