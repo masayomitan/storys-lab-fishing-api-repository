@@ -18,7 +18,7 @@ var (
 
 type FishStruct struct {
 	ID                      string  `json:"id"`
-	Name                    string  `json:"fish_name"`
+	Name                    string  `json:"name"`
 	FamilyName              string  `json:"family_name"`
 	ScientificName          string  `json:"scientific_name"`
 	FishCategoryId          int     `json:"fish_category"`
