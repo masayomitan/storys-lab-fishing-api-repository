@@ -37,9 +37,8 @@ func NewFindAllFishAction(uc usecase.FindAllFishUseCase, log logger.Logger) Find
 
 func (t FindOneFishAction) FindOne(c *gin.Context) {
 	const logKey = "find_one_fish"
-	id := c.Param("id")
-	fmt.Println("idは？:", id)
-	output, err := t.uc.Execute(c.Request.Context(), id)
+	fmt.Println("")
+	output, err := t.uc.Execute(c.Request.Context(), c.Param("id"))
 	if err != nil {
 		logging.NewError(
 			t.log,

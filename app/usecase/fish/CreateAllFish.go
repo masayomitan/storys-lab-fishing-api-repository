@@ -10,32 +10,12 @@ import (
 type (
 	// CreateAccountUseCase input port
 	CreateFishUseCase interface {
-		Execute(context.Context, CreateFishInput) (CreateFishOutput, error)
-	}
-
-	// CreateFishInput input data
-	CreateFishInput struct {
-		ID string `json:"id"`
-		Name string `json:"name"`
-		FamilyName string `json:"family_name"`
-		ScientificName string `json:"scientific_name"`
-		FishCategoryId int `json:"fish_category_id"`
-		Description string `json:"description"`
+		Execute(context.Context, domain.FishStruct) (domain.FishStruct, error)
 	}
 
 	// CreateFishPresenter output port
 	CreateFishPresenter interface {
-		Output(domain.Fish) CreateFishOutput
-	}
-
-	// CreateFishOutput output data
-	CreateFishOutput struct {
-		ID string `json:"id"`
-		Name string `json:"name"`
-		FamilyName string `json:"family_name"`
-		ScientificName string `json:"scientific_name"`
-		FishCategoryId int `json:"fish_category_id"`
-		Description string `json:"description"`
+		Output(domain.Fish) domain.FishStruct
 	}
 
 	createFishInteractor struct {
@@ -59,7 +39,7 @@ func NewCreateFishInteractor(
 }
 
 // Execute orchestrates the use case
-func (interactor createFishInteractor) Execute(ctx context.Context, input CreateFishInput) (CreateFishOutput, error) {
+func (interactor createFishInteractor) Execute(ctx context.Context, input domain.FishStruct) (domain.FishStruct, error) {
 	ctx, cancel := context.WithTimeout(ctx, interactor.ctxTimeout)
 	defer cancel()
 
@@ -70,6 +50,12 @@ func (interactor createFishInteractor) Execute(ctx context.Context, input Create
 		input.ScientificName,
 		input.FishCategoryId,
 		input.Description,
+		input.Length,
+		input.Weight,
+		input.Habitat,
+		input.Depth_range,
+		input.Water_temperature_range,
+		input.Conservation_status,
 	)
 
 	fish, err := interactor.repo.Create(ctx, fish)

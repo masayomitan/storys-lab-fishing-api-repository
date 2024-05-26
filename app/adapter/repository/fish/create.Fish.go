@@ -8,7 +8,7 @@ import (
 )
 
 func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, error) {
-	var fishJSON = FishJSON{
+	var fishJSON = domain.FishStruct{
 		ID:   fish.ID().String(),
 		Name: fish.Name(),
 		FamilyName: fish.FamilyName(),

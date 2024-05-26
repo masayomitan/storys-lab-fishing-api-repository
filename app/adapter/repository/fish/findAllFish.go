@@ -8,9 +8,9 @@ import (
 )
 
 func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
-	var fishJSON = make([]FishJSON, 0)
+	var fishJSON = make([]domain.FishStruct, 0)
 
-	if err := a.db.FindAll(ctx, a.collectionName, FishJSON{}, &fishJSON); err != nil {
+	if err := a.db.FindAll(ctx, a.collectionName, domain.FishStruct{}, &fishJSON); err != nil {
 		return []domain.Fish{}, errors.Wrap(err, "error listing fishes")
 	}
 
@@ -24,6 +24,12 @@ func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 			fishJSON.ScientificName,
 			fishJSON.FishCategoryId,
 			fishJSON.Description,
+			fishJSON.Length,
+			fishJSON.Weight,
+			fishJSON.Habitat,
+			fishJSON.Depth_range,
+			fishJSON.Water_temperature_range,
+			fishJSON.Conservation_status,
 		)
 
 		fishes = append(fishes, fish)

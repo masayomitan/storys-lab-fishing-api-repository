@@ -13,8 +13,8 @@ func NewFindOneFishPresenter() usecase.FindOneFishPresenter {
 	return findOneFishPresenter{}
 }
 
-func (a findOneFishPresenter) Output(fish domain.Fish) usecase.FindOneFishOutput {
-	return usecase.FindOneFishOutput{
+func (a findOneFishPresenter) Output(fish domain.Fish) domain.FishStruct {
+	return domain.FishStruct{
 		ID:             fish.ID().String(),
 		Name:           fish.Name(),
 		FamilyName:     fish.FamilyName(),

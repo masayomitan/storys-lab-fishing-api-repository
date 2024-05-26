@@ -13,8 +13,8 @@ func NewCreateFishPresenter() usecase.CreateFishPresenter {
 	return createFishPresenter{}
 }
 
-func (a createFishPresenter) Output(fish domain.Fish) usecase.CreateFishOutput {
-	return usecase.CreateFishOutput{
+func (a createFishPresenter) Output(fish domain.Fish) domain.FishStruct {
+	return domain.FishStruct{
 		ID: fish.ID().String(),
 		Name: fish.Name(),
 		FamilyName: fish.FamilyName(),
@@ -23,5 +23,3 @@ func (a createFishPresenter) Output(fish domain.Fish) usecase.CreateFishOutput {
 		Description: fish.Description(),
 	}
 }
-
-

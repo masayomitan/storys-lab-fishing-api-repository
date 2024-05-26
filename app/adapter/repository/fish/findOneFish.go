@@ -8,7 +8,7 @@ import (
 )
 
 func (a FishSQL) FindOne(ctx context.Context, id string) (domain.Fish, error) {
-	var fishJSON = FishJSON{}
+	var fishJSON = domain.FishStruct{}
 	fmt.Println(id)
 	if err := a.db.FindOne(ctx, a.collectionName, id, &fishJSON); err != nil {
 		return domain.Fish{}, errors.Wrap(err, "error listing fishes")
@@ -21,6 +21,12 @@ func (a FishSQL) FindOne(ctx context.Context, id string) (domain.Fish, error) {
 		fishJSON.ScientificName,
 		fishJSON.FishCategoryId,
 		fishJSON.Description,
+		fishJSON.Length,
+		fishJSON.Weight,
+		fishJSON.Habitat,
+		fishJSON.Depth_range,
+		fishJSON.Water_temperature_range,
+		fishJSON.Conservation_status,
 	)
 
 	return fish, nil

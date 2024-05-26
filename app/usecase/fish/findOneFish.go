@@ -10,22 +10,12 @@ import (
 type (
 	// FindOneFishUseCase input port
 	FindOneFishUseCase interface {
-		Execute(context.Context, string) (FindOneFishOutput, error)
+		Execute(context.Context, string) (domain.FishStruct, error)
 	}
 
 	// FindOneFishPresenter output port
 	FindOneFishPresenter interface {
-		Output(domain.Fish) FindOneFishOutput
-	}
-
-	// FindOneFishOutput output data
-	FindOneFishOutput struct {
-		ID string  `json:"id"`
-		Name string  `json:"name"`
-		FamilyName string `json:"family_name"`
-		ScientificName string `json:"scientific_name"`
-		FishCategoryId int `json:"fish_category_id"`
-		Description string `json:"description"`
+		Output(domain.Fish) domain.FishStruct
 	}
 
 	findOneFishInteractor struct {
@@ -49,7 +39,7 @@ func NewFindOneFishInteractor(
 }
 
 // Execute orchestrates the use case
-func (t findOneFishInteractor) Execute(ctx context.Context, id string) (FindOneFishOutput, error) {
+func (t findOneFishInteractor) Execute(ctx context.Context, id string) (domain.FishStruct, error) {
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
 	defer cancel()
 
