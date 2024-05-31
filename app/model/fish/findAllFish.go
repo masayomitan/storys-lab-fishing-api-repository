@@ -1,4 +1,4 @@
-package repository
+package model
 
 import (
 	"context"
@@ -18,7 +18,7 @@ func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 
 	for _, fishJSON := range fishJSON {
 		var fish = domain.NewFish(
-			domain.FishID(fishJSON.ID),
+			fishJSON.ID,
 			fishJSON.Name,
 			fishJSON.FamilyName,
 			fishJSON.ScientificName,
@@ -27,13 +27,20 @@ func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 			fishJSON.Length,
 			fishJSON.Weight,
 			fishJSON.Habitat,
-			fishJSON.Depth_range,
-			fishJSON.Water_temperature_range,
-			fishJSON.Conservation_status,
+			fishJSON.DepthRange,
+			fishJSON.WaterTemperatureRange,
+			fishJSON.ConservationStatus,
+			convertFishCategory(fishJSON.FishCategory),
+			convertFishingMethods(fishJSON.FishingMethods),
+			convertDishes(fishJSON.Dishes),
 		)
 
 		fishes = append(fishes, fish)
 	}
 
 	return fishes, nil
+}
+
+func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
+    return ga.DB.Table(table).Where(query).Find(result).Error
 }

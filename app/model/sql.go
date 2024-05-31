@@ -1,4 +1,4 @@
-package repository
+package model
 
 import (
     "context"
@@ -15,8 +15,12 @@ func (ga *GormAdapter) Store(ctx context.Context, table string, entity interface
     return ga.DB.Table(table).Create(entity).Error
 }
 
+// todo 共通化却下 sql.goがいらない
 func (ga *GormAdapter) FindOne(ctx context.Context, table string, id string, result interface{}) error {
-    return ga.DB.Table(table).Where("id = ?", id).First(result).Error
+    return ga.DB.Table(table).Where("id = ?", id).
+    Preload("FishCategory").
+    Preload("FishingMethods").
+	First(result).Error
 }
 
 func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
@@ -25,6 +29,7 @@ func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interfac
 
 // SQLActionは、データベースアクションのためのインターフェースです。
 // これにより、データベースへのアクセスを抽象化し、異なるデータベース技術への依存を減らします。
+// DBの依存していいだろ リリースしてからmysqlからpostgresに変えるとか聞いたことねーよ
 type DBMethods interface {
     Store(context.Context, string, interface{}) error
 	FindOne(context.Context, string, string, interface{}) error

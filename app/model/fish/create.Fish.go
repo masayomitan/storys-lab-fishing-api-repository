@@ -1,4 +1,4 @@
-package repository
+package model
 
 import (
 	"context"
@@ -9,7 +9,7 @@ import (
 
 func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, error) {
 	var fishJSON = domain.FishStruct{
-		ID:   fish.ID().String(),
+		ID:   fish.ID(),
 		Name: fish.Name(),
 		FamilyName: fish.FamilyName(),
 		ScientificName: fish.ScientificName(),
@@ -22,4 +22,8 @@ func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, err
 	}
 
 	return fish, nil
+}
+
+func (ga *GormAdapter) Store(ctx context.Context, table string, entity interface{}) error {
+    return ga.DB.Table(table).Create(entity).Error
 }

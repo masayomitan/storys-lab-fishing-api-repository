@@ -2,7 +2,6 @@ package router
 
 import (
 	"fmt"
-	"storys-lab-fishing-api/app/adapter/repository"
 	"strconv"
 	"time"
 	"context"
@@ -10,7 +9,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
-
+	"gorm.io/gorm"
 	"github.com/gin-gonic/gin"
 	"storys-lab-fishing-api/app/middleware"
 	"storys-lab-fishing-api/app/adapter/logger"
@@ -23,7 +22,7 @@ type config struct {
 	logger  logger.Logger
 	// validator     validator.Validator
 	ctxTimeout    time.Duration
-	dbSQL         repository.DBMethods
+	dbSQL         *gorm.DB
 	webServerPort Port
 	webServer     Server
 }
@@ -43,7 +42,7 @@ func NewConfig() *config {
 
 func newGinServer(
 	log logger.Logger,
-	db repository.DBMethods,
+	db *gorm.DB,
 	// validator validator.Validator,
 	port Port,
 	t time.Duration,
@@ -138,7 +137,7 @@ func (c *config) DbSQL() *config {
 	// fmt.Println(db)
 
 	c.logger.Infof("Successfully connected to the SQL database")
-	c.dbSQL = &repository.GormAdapter{DB: db}
+	c.dbSQL = db
 	return c
 }
 

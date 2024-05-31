@@ -4,18 +4,18 @@ import (
 	"time"
 
 	"github.com/gin-gonic/gin"
+	"gorm.io/gorm"
 	"storys-lab-fishing-api/app/adapter/api/action"
 	"storys-lab-fishing-api/app/adapter/logger"
 	fishPresenter "storys-lab-fishing-api/app/adapter/presenter/fish"
-	"storys-lab-fishing-api/app/adapter/repository"
-	fishRepository "storys-lab-fishing-api/app/adapter/repository/fish"
+	fishRepository "storys-lab-fishing-api/app/model/fish"
 	fishUsecase "storys-lab-fishing-api/app/usecase/fish"
 )
 
 type ginEngine struct {
 	router *gin.Engine
 	log    logger.Logger
-	db     repository.DBMethods
+	db     *gorm.DB
 	// validator  validator.Validator
 	port       Port
 	ctxTimeout time.Duration

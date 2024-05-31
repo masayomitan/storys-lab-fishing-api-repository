@@ -4,7 +4,7 @@ import (
 	// "errors"
 	"time"
 	// "github.com/gin-gonic/gin"
-	"storys-lab-fishing-api/app/adapter/repository"
+	"gorm.io/gorm"
 	"storys-lab-fishing-api/app/adapter/logger"
 	// "storys-lab-fishing-api/adapter/validator"
 )
@@ -23,7 +23,7 @@ const (
 func NewWebServerFactory(
 	instance int,
 	log logger.Logger,
-	SQL repository.DBMethods,
+	SQL *gorm.DB,
 	// validator validator.Validator,
 	port Port,
 	ctxTimeout time.Duration,

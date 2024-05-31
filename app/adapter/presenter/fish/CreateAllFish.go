@@ -15,7 +15,7 @@ func NewCreateFishPresenter() usecase.CreateFishPresenter {
 
 func (a createFishPresenter) Output(fish domain.Fish) domain.FishStruct {
 	return domain.FishStruct{
-		ID: fish.ID().String(),
+		ID: fish.ID(),
 		Name: fish.Name(),
 		FamilyName: fish.FamilyName(),
 		ScientificName: fish.ScientificName(),

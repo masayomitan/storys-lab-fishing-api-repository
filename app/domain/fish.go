@@ -16,8 +16,12 @@ var (
 	ErrInsufficientBalance = errors.New("origin Fish does not have sufficient balance")
 )
 
+func (FishStruct) TableName() string {
+    return "fishes"
+}
+
 type FishStruct struct {
-	ID                      string  `json:"id"`
+	ID                      string  `gorm:"primaryKey"`
 	Name                    string  `json:"name"`
 	FamilyName              string  `json:"family_name"`
 	ScientificName          string  `json:"scientific_name"`
@@ -26,9 +30,13 @@ type FishStruct struct {
 	Length                  float64 `json:"length"`
 	Weight                  float64 `json:"weight"`
 	Habitat                 string  `json:"habitat"`
-	Depth_range             string  `json:"depth_range"`
-	Water_temperature_range string  `json:"water_temperature_range"`
-	Conservation_status     string  `json:"conservation_status"`
+	DepthRange             string  `json:"depth_range"`
+	WaterTemperatureRange string  `json:"water_temperature_range"`
+	ConservationStatus     string  `json:"conservation_status"`
+
+	FishCategory            FishCategory `gorm:"foreignKey:FishCategoryId"`
+	FishingMethods []FishingMethod `gorm:"many2many:fishing_methods_fishes;foreignKey:ID;joinForeignKey:FishID;References:ID;joinReferences:FishingMethodID"`
+	Dishes []Dish `gorm:"many2many:fishes_dishes;foreignKey:ID;joinForeignKey:FishID;References:ID;joinReferences:DishID"`
 }
 
 type FishID string
@@ -46,7 +54,7 @@ type (
 	}
 
 	Fish struct {
-		id                      FishID
+		id                      string
 		name                    string
 		familyName              string
 		scientificName          string
@@ -55,14 +63,18 @@ type (
 		length                  float64
 		weight                  float64
 		habitat                 string
-		depth_range             string
-		water_temperature_range string
-		conservation_status     string
+		depthRange             string
+		waterTemperatureRange string
+		conservationStatus     string
+
+		fishCategory            FishCategory
+		fishingMethods          []FishingMethod
+		dishes                  []Dish
 	}
 )
 
 func NewFish(
-	ID FishID,
+	ID string,
 	name string,
 	familyName string,
 	scientificName string,
@@ -71,9 +83,13 @@ func NewFish(
 	length float64,
 	weight float64,
 	habitat string,
-	depth_range string,
-	water_temperature_range string,
-	conservation_status string,
+	depthRange string,
+	waterTemperatureRange string,
+	conservationStatus string,
+
+	fishCategory            FishCategory,
+	fishingMethods          []FishingMethod,
+	dishes                  []Dish,
 ) Fish {
 	return Fish{
 		id:                      ID,
@@ -85,13 +101,17 @@ func NewFish(
 		length:                  length,
 		weight:                  weight,
 		habitat:                 habitat,
-		depth_range:             depth_range,
-		water_temperature_range: water_temperature_range,
-		conservation_status:     conservation_status,
+		depthRange:              depthRange,
+		waterTemperatureRange: 	 waterTemperatureRange,
+		conservationStatus:      conservationStatus,
+
+		fishCategory:            fishCategory,
+		fishingMethods:          fishingMethods,
+		dishes:                  dishes,
 	}
 }
 
-func (f Fish) ID() FishID {
+func (f Fish) ID() string {
 	return f.id
 }
 
@@ -117,4 +137,36 @@ func (f Fish) Description() string {
 
 func (f Fish) Length() float64 {
 	return f.length
+}
+
+func (f Fish) Weight() float64 {
+	return f.weight
+}
+
+func (f Fish) Habitat() string {
+	return f.habitat
+}
+
+func (f Fish) DepthRange() string {
+	return f.depthRange
+}
+
+func (f Fish) WaterTemperatureRange() string {
+	return f.waterTemperatureRange
+}
+
+func (f Fish) ConservationStatus() string {
+	return f.conservationStatus
+}
+
+func (f Fish) FishCategory() FishCategory {
+	return f.fishCategory
+}
+
+func (f Fish) FishingMethods() []FishingMethod {
+	return f.fishingMethods
+}
+
+func (f Fish) Dishes() []Dish {
+	return f.dishes
 }

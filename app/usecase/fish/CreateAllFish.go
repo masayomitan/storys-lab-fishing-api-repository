@@ -44,7 +44,7 @@ func (interactor createFishInteractor) Execute(ctx context.Context, input domain
 	defer cancel()
 
 	var fish = domain.NewFish(
-		domain.FishID(domain.NewUUID()),
+		domain.NewUUID(),
 		input.Name,
 		input.FamilyName,
 		input.ScientificName,
@@ -53,9 +53,13 @@ func (interactor createFishInteractor) Execute(ctx context.Context, input domain
 		input.Length,
 		input.Weight,
 		input.Habitat,
-		input.Depth_range,
-		input.Water_temperature_range,
-		input.Conservation_status,
+		input.DepthRange,
+		input.WaterTemperatureRange,
+		input.ConservationStatus,
+		input.FishCategory,
+		input.FishingMethods,
+		input.Dishes,
+		
 	)
 
 	fish, err := interactor.repo.Create(ctx, fish)

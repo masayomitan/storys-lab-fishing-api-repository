@@ -17,7 +17,7 @@ func (a findAllFishPresenter) Output(fishes []domain.Fish) []domain.FishStruct {
 	var output = make([]domain.FishStruct, 0)
 	for _, fish := range fishes {
 		output = append(output, domain.FishStruct{
-			ID:fish.ID().String(),
+			ID:fish.ID(),
 			Name: fish.Name(),
 			FamilyName: fish.FamilyName(),
 			ScientificName: fish.ScientificName(),
