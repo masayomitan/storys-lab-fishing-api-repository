@@ -5,21 +5,22 @@ import (
 	"time"
 
 	"storys-lab-fishing-api/app/domain"
+	"storys-lab-fishing-api/app/repository"
 )
 
 type (
 	// CreateAccountUseCase input port
 	CreateFishUseCase interface {
-		Execute(context.Context, domain.FishStruct) (domain.FishStruct, error)
+		Execute(context.Context, domain.Fish) (domain.Fish, error)
 	}
 
 	// CreateFishPresenter output port
 	CreateFishPresenter interface {
-		Output(domain.Fish) domain.FishStruct
+		Output(domain.Fish) domain.Fish
 	}
 
 	createFishInteractor struct {
-		repo       domain.FishRepository
+		repo       repository.FishRepository
 		presenter  CreateFishPresenter
 		ctxTimeout time.Duration
 	}
@@ -27,7 +28,7 @@ type (
 
 // NewCreateFishInteractor creates new createFishInteractor with its dependencies
 func NewCreateFishInteractor(
-	repo domain.FishRepository,
+	repo repository.FishRepository,
 	presenter CreateFishPresenter,
 	t time.Duration,
 ) CreateFishUseCase {
@@ -39,7 +40,7 @@ func NewCreateFishInteractor(
 }
 
 // Execute orchestrates the use case
-func (interactor createFishInteractor) Execute(ctx context.Context, input domain.FishStruct) (domain.FishStruct, error) {
+func (interactor createFishInteractor) Execute(ctx context.Context, input domain.Fish) (domain.Fish, error) {
 	ctx, cancel := context.WithTimeout(ctx, interactor.ctxTimeout)
 	defer cancel()
 

@@ -8,13 +8,13 @@ import (
 )
 
 func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, error) {
-	var fishJSON = domain.FishStruct{
-		ID:   fish.ID(),
-		Name: fish.Name(),
-		FamilyName: fish.FamilyName(),
-		ScientificName: fish.ScientificName(),
-		FishCategoryId: fish.FishCategoryId(),
-		Description: fish.Description(),
+	var fishJSON = domain.Fish{
+		ID:   fish.ID,
+		Name: fish.Name,
+		FamilyName: fish.FamilyName,
+		ScientificName: fish.ScientificName,
+		FishCategoryId: fish.FishCategoryId,
+		Description: fish.Description,
 	}
 
 	if err := a.db.Store(ctx, a.collectionName, fishJSON); err != nil {

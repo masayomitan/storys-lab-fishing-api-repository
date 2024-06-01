@@ -8,9 +8,9 @@ import (
 )
 
 func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
-	var fishJSON = make([]domain.FishStruct, 0)
+	var fishJSON = make([]domain.Fish, 0)
 
-	if err := a.db.FindAll(ctx, a.collectionName, domain.FishStruct{}, &fishJSON); err != nil {
+	if err := a.db.FindAll(ctx, a.collectionName, domain.Fish{}, &fishJSON); err != nil {
 		return []domain.Fish{}, errors.Wrap(err, "error listing fishes")
 	}
 

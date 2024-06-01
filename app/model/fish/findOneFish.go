@@ -9,7 +9,7 @@ import (
 )
 
 func (a FishSQL) FindOne(ctx context.Context, id string) (domain.Fish, error) {
-	var fishJSON = domain.FishStruct{}
+	var fishJSON = domain.Fish{}
 	fmt.Println(id)
 
 	if err := a.db.FindOneFish(ctx, a.collectionName, id, &fishJSON); err != nil {

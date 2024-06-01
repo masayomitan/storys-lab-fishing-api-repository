@@ -13,13 +13,13 @@ func NewCreateFishPresenter() usecase.CreateFishPresenter {
 	return createFishPresenter{}
 }
 
-func (a createFishPresenter) Output(fish domain.Fish) domain.FishStruct {
-	return domain.FishStruct{
-		ID: fish.ID(),
-		Name: fish.Name(),
-		FamilyName: fish.FamilyName(),
-		ScientificName: fish.ScientificName(),
-		FishCategoryId: fish.FishCategoryId(),
-		Description: fish.Description(),
+func (a createFishPresenter) Output(fish domain.Fish) domain.Fish {
+	return domain.Fish{
+		ID: fish.ID,
+		Name: fish.Name,
+		FamilyName: fish.FamilyName,
+		ScientificName: fish.ScientificName,
+		FishCategoryId: fish.FishCategoryId,
+		Description: fish.Description,
 	}
 }

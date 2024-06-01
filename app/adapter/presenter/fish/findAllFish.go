@@ -13,16 +13,16 @@ func NewFindAllFishPresenter() usecase.FindAllFishPresenter {
 	return findAllFishPresenter{}
 }
 
-func (a findAllFishPresenter) Output(fishes []domain.Fish) []domain.FishStruct {
-	var output = make([]domain.FishStruct, 0)
+func (a findAllFishPresenter) Output(fishes []domain.Fish) []domain.Fish {
+	var output = make([]domain.Fish, 0)
 	for _, fish := range fishes {
-		output = append(output, domain.FishStruct{
-			ID:fish.ID(),
-			Name: fish.Name(),
-			FamilyName: fish.FamilyName(),
-			ScientificName: fish.ScientificName(),
-			FishCategoryId: fish.FishCategoryId(),
-			Description: fish.Description(),
+		output = append(output, domain.Fish{
+			ID:fish.ID,
+			Name: fish.Name,
+			FamilyName: fish.FamilyName,
+			ScientificName: fish.ScientificName,
+			FishCategoryId: fish.FishCategoryId,
+			Description: fish.Description,
 		})
 	}
 	return output

@@ -5,21 +5,22 @@ import (
 	"time"
 
 	"storys-lab-fishing-api/app/domain"
+	"storys-lab-fishing-api/app/repository"
 )
 
 type (
 	// FindAllFishUseCase input port
 	FindAllFishUseCase interface {
-		Execute(context.Context) ([]domain.FishStruct, error)
+		Execute(context.Context) ([]domain.Fish, error)
 	}
 
 	// FindAllFishPresenter output port
 	FindAllFishPresenter interface {
-		Output([]domain.Fish) []domain.FishStruct
+		Output([]domain.Fish) []domain.Fish
 	}
 
 	findAllFishInteractor struct {
-		repo       domain.FishRepository
+		repo       repository.FishRepository
 		presenter  FindAllFishPresenter
 		ctxTimeout time.Duration
 	}
@@ -27,7 +28,7 @@ type (
 
 // NewFindAllFishInteractor creates new findAllFishInteractor with its dependencies
 func NewFindAllFishInteractor(
-	repo domain.FishRepository,
+	repo repository.FishRepository,
 	presenter FindAllFishPresenter,
 	t time.Duration,
 ) FindAllFishUseCase {
@@ -39,7 +40,7 @@ func NewFindAllFishInteractor(
 }
 
 // Execute orchestrates the use case
-func (t findAllFishInteractor) Execute(ctx context.Context) ([]domain.FishStruct, error) {
+func (t findAllFishInteractor) Execute(ctx context.Context) ([]domain.Fish, error) {
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
 	defer cancel()
 
