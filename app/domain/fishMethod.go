@@ -8,5 +8,6 @@ type FishingMethod struct {
     ID   string `gorm:"primaryKey"`
     Name string  `json:"name"`
 	Description string `json:"description"`
-	Difficulty_level string `json:"DifficultyLevel"`
+	DifficultyLevel string `json:"difficulty_level"`
+	IsTraditional bool `json:"is_traditional" gorm:"not null,DEFAULT false"`
 }

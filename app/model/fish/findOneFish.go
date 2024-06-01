@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 	"github.com/pkg/errors"
-
+	"gorm.io/gorm"
 	"storys-lab-fishing-api/app/domain"
 )
+
 
 func (a FishSQL) FindOne(ctx context.Context, id string) (domain.Fish, error) {
 	var fishJSON = domain.Fish{}
@@ -43,7 +44,11 @@ func (a FishSQL) FindOne(ctx context.Context, id string) (domain.Fish, error) {
 func (ga *GormAdapter) FindOneFish(ctx context.Context, table string, id string, result interface{}) error {
 	return ga.DB.Table(table).Where("id = ?", id).
 		Preload("FishCategory").
-		Preload("FishingMethods").
+		Preload("FishingMethods", func(*gorm.DB) *gorm.DB {
+			return ga.DB.Select("fishing_methods.*, fishing_methods_fishes.is_traditional").
+				Joins("inner join fishing_methods_fishes on fishing_methods_fishes.fishing_method_id = fishing_methods.id").
+				Where("fishing_methods_fishes.fish_id = ?", id)
+		}).
 		Preload("Dishes").
 		First(result).Error
 }
@@ -63,7 +68,8 @@ func convertFishingMethods(methods []domain.FishingMethod) []domain.FishingMetho
 			ID:   m.ID,
 			Name: m.Name,
 			Description: m.Description,
-			Difficulty_level: m.Difficulty_level,
+			DifficultyLevel: m.DifficultyLevel,
+			IsTraditional: m.IsTraditional,
 		})
 	}
 	return result

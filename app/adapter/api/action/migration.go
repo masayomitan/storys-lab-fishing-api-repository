@@ -84,6 +84,7 @@ func Migration(c *gin.Context) {
 
 	cfg := NewConfigDB()
 	var connect string
+	var migrationsPath string
 	// データベースURLを作成
 	if (os.Getenv("ENV") == "local") {
 		connect = fmt.Sprintf("mysql://%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", 
@@ -93,6 +94,7 @@ func Migration(c *gin.Context) {
 			cfg.port,
 			cfg.database,
 		)
+		migrationsPath = "file:///app/app//infrastructure/database/migrations"
 	} else {
 		connect = fmt.Sprintf("mysql://%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local", 
 			secretData.Username,
@@ -101,9 +103,9 @@ func Migration(c *gin.Context) {
 			secretData.Port,
 			secretData.Database,
 		)
+		migrationsPath = "file:///app/infrastructure/database/migrations"
 	}
 
-	migrationsPath := "file:///app/infrastructure/database/migrations"
 	log.Printf("Migrations path: %s", migrationsPath)
 	fmt.Println("データベースの接続情報:", connect)
 
