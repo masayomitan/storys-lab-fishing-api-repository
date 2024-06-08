@@ -33,6 +33,7 @@ func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 			convertFishCategory(fishJSON.FishCategory),
 			convertFishingMethods(fishJSON.FishingMethods),
 			convertDishes(fishJSON.Dishes),
+			fishJSON.FishImages,
 		)
 
 		fishes = append(fishes, fish)

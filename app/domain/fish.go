@@ -32,9 +32,10 @@ type Fish struct {
 	WaterTemperatureRange string  `json:"water_temperature_range"`
 	ConservationStatus     string  `json:"conservation_status"`
 
-	FishCategory            FishCategory `gorm:"foreignKey:FishCategoryId"`
-	FishingMethods []FishingMethod `gorm:"many2many:fishing_methods_fishes;foreignKey:ID;joinForeignKey:FishID;References:ID;joinReferences:FishingMethodID"`
-	Dishes []Dish `gorm:"many2many:fishes_dishes;foreignKey:ID;joinForeignKey:FishID;References:ID;joinReferences:DishID"`
+	FishCategory    FishCategory `gorm:"foreignKey:FishCategoryId"`
+	FishingMethods []FishingMethod `gorm:"many2many:fishing_methods_fishes;foreignKey:ID;joinForeignKey:FishId;References:ID;joinReferences:FishingMethodId"`
+	Dishes []Dish `gorm:"many2many:fishes_dishes;foreignKey:ID;joinForeignKey:FishId;References:ID;joinReferences:DishId"`
+	FishImages      []FishImage `gorm:"foreignKey:FishId"`
 }
 
 type FishID string
@@ -60,6 +61,7 @@ func NewFish(
 	fishCategory            FishCategory,
 	fishingMethods          []FishingMethod,
 	dishes                  []Dish,
+	fishImages              []FishImage,
 ) Fish {
 	return Fish{
 		ID:                      ID,
@@ -78,5 +80,6 @@ func NewFish(
 		FishCategory:            fishCategory,
 		FishingMethods:          fishingMethods,
 		Dishes:                  dishes,
+		FishImages:              fishImages,
 	}
 }

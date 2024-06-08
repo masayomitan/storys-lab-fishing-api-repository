@@ -30,5 +30,6 @@ func (a findOneFishPresenter) Output(fish domain.Fish) domain.Fish {
 		FishCategory: fish.FishCategory,
 		FishingMethods: fish.FishingMethods,
 		Dishes: fish.Dishes,
+		FishImages: fish.FishImages,
 	}
 }

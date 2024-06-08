@@ -80,7 +80,6 @@ func (g ginEngine) Listen() {
 	// 終了シグナルを受け取るためのチャネルを作成
 	stop := make(chan os.Signal, 1)
 	signal.Notify(stop, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
-	fmt.Println("port: ", g.port)
 	// go routineでサーバーを起動
 	go func() {
 		g.log.WithFields(logger.Fields{"port": g.port}).Infof("Starting HTTP Server")

@@ -34,6 +34,7 @@ func (a FishSQL) FindOne(ctx context.Context, id string) (domain.Fish, error) {
 		convertFishCategory(fishJSON.FishCategory),
 		convertFishingMethods(fishJSON.FishingMethods),
 		convertDishes(fishJSON.Dishes),
+		fishJSON.FishImages,
 	)
 	fmt.Println("fishStruct")
 	fmt.Println(fish)
@@ -50,6 +51,7 @@ func (ga *GormAdapter) FindOneFish(ctx context.Context, table string, id string,
 				Where("fishing_methods_fishes.fish_id = ?", id)
 		}).
 		Preload("Dishes").
+		Preload("FishImages").
 		First(result).Error
 }
 

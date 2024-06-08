@@ -23,6 +23,8 @@ type ginEngine struct {
 
 func (g ginEngine) setAppHandlers(r *gin.Engine) {
 
+	r.Static("/public", "./public")
+
 	r.GET("/fishes", g.buildFindAllFishAction())
 	r.GET("/fishes/:id", g.buildFindOneFishAction())
 

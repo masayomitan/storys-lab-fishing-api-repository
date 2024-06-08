@@ -1,9 +1,5 @@
 package domain
 
-type Tabler interface {
-  TableName() string
-}
-
 func (FishCategory) TableName() string {
     return "fish_categories"
 }

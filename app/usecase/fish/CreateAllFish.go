@@ -60,6 +60,7 @@ func (interactor createFishInteractor) Execute(ctx context.Context, input domain
 		input.FishCategory,
 		input.FishingMethods,
 		input.Dishes,
+		input.FishImages,
 		
 	)
 
