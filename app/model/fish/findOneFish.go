@@ -44,14 +44,14 @@ func (a FishSQL) FindOne(ctx context.Context, id string) (domain.Fish, error) {
 
 func (ga *GormAdapter) FindOneFish(ctx context.Context, table string, id string, result interface{}) error {
 	return ga.DB.Table(table).Where("id = ?", id).
+		Preload("FishImages").
 		Preload("FishCategory").
 		Preload("FishingMethods", func(*gorm.DB) *gorm.DB {
 			return ga.DB.Select("fishing_methods.*, fishing_methods_fishes.is_traditional").
 				Joins("inner join fishing_methods_fishes on fishing_methods_fishes.fishing_method_id = fishing_methods.id").
 				Where("fishing_methods_fishes.fish_id = ?", id)
 		}).
-		Preload("Dishes").
-		Preload("FishImages").
+		Preload("Dishes.DishImages").
 		First(result).Error
 }
 
@@ -80,14 +80,25 @@ func convertFishingMethods(methods []domain.FishingMethod) []domain.FishingMetho
 func convertDishes(dishes []domain.Dish) []domain.Dish {
 	var result []domain.Dish
 	for _, d := range dishes {
+		var dishImages []domain.DishImage
+		for _, img := range d.DishImages {
+			dishImages = append(dishImages, domain.DishImage{
+				ID:     	img.ID,
+				DishId: 	img.DishId,
+				ImageUrl:   img.ImageUrl,
+			})
+		}
+
 		result = append(result, domain.Dish{
-			ID:   d.ID,
-			Name: d.Name,
+			ID:          d.ID,
+			Name:        d.Name,
 			Description: d.Description,
 			Ingredients: d.Ingredients,
-			Kind: d.Kind,
-			Level: d.Level,
+			Kind:        d.Kind,
+			Level:       d.Level,
+			DishImages:  dishImages,
 		})
 	}
 	return result
 }
+

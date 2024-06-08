@@ -12,6 +12,7 @@ services:
       - .env
     volumes:
       - .:/app
+      - ./public:/app/public
       - go-cache:/root/.cache/go-build
       - go-mod:/go/pkg/mod
     networks:

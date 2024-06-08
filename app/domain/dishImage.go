@@ -1,12 +1,12 @@
 package domain
 
-func (FishImage) TableName() string {
-    return "fish_images"
+func (DishImage) TableName() string {
+    return "dish_images"
 }
 
-type FishImage struct {
+type DishImage struct {
     ID   string `gorm:"primaryKey" json:"id"`
-    FishId string  `json:"fish_id"`
+    DishId string  `json:"dish_id"`
 	ImageUrl string `json:"image_url"`
 	Sort string `json:"sort"`
 	IsMain string `json:"is_main"`

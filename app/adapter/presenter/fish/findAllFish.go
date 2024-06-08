@@ -23,6 +23,7 @@ func (a findAllFishPresenter) Output(fishes []domain.Fish) []domain.Fish {
 			ScientificName: fish.ScientificName,
 			FishCategoryId: fish.FishCategoryId,
 			Description: fish.Description,
+			FishImages: fish.FishImages,
 		})
 	}
 	return output

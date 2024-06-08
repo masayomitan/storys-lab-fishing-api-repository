@@ -19,7 +19,7 @@ func (Fish) TableName() string {
 }
 
 type Fish struct {
-	ID                      string  `gorm:"primaryKey"`
+	ID                      string  `gorm:"primaryKey" json:"id"`
 	Name                    string  `json:"name"`
 	FamilyName              string  `json:"family_name"`
 	ScientificName          string  `json:"scientific_name"`
