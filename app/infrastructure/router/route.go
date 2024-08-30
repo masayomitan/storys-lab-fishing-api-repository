@@ -10,6 +10,10 @@ import (
 	fishPresenter "storys-lab-fishing-api/app/adapter/presenter/fish"
 	fishRepository "storys-lab-fishing-api/app/model/fish"
 	fishUsecase "storys-lab-fishing-api/app/usecase/fish"
+
+	areaPresenter "storys-lab-fishing-api/app/adapter/presenter/area"
+	areaRepository "storys-lab-fishing-api/app/model/area"
+	areaUsecase"storys-lab-fishing-api/app/usecase/area"
 )
 
 type ginEngine struct {
@@ -25,8 +29,12 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 
 	r.Static("/public", "./public")
 
+	// 魚
 	r.GET("/fishes", g.buildFindAllFishAction())
 	r.GET("/fishes/:id", g.buildFindOneFishAction())
+
+	// エリア
+	r.GET("/areas/:id", g.buildFindAllAreaAction())
 
 	r.GET("/health", g.healthCheck())
 
@@ -56,6 +64,22 @@ func (g ginEngine) buildFindAllFishAction() gin.HandlerFunc {
 				g.ctxTimeout,
 			)
 			act = action.NewFindAllFishAction(uc, g.log)
+		)
+
+		act.FindAll(c)
+
+	}
+}
+
+func (g ginEngine) buildFindAllAreaAction() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = areaUsecase.NewFindAllAreaInteractor(
+				areaRepository.NewAreaSQL(g.db),
+				areaPresenter.NewFindAllAreaPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFindAllAreaAction(uc, g.log)
 		)
 
 		act.FindAll(c)

@@ -9,12 +9,10 @@ import (
 )
 
 type (
-	// FindAllFishUseCase input port
 	FindAllFishUseCase interface {
 		Execute(context.Context) ([]domain.Fish, error)
 	}
 
-	// FindAllFishPresenter output port
 	FindAllFishPresenter interface {
 		Output([]domain.Fish) []domain.Fish
 	}
@@ -26,7 +24,6 @@ type (
 	}
 )
 
-// NewFindAllFishInteractor creates new findAllFishInteractor with its dependencies
 func NewFindAllFishInteractor(
 	repo repository.FishRepository,
 	presenter FindAllFishPresenter,
