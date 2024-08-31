@@ -14,6 +14,10 @@ import (
 	areaPresenter "storys-lab-fishing-api/app/adapter/presenter/area"
 	areaRepository "storys-lab-fishing-api/app/model/area"
 	areaUsecase"storys-lab-fishing-api/app/usecase/area"
+
+	prefPresenter "storys-lab-fishing-api/app/adapter/presenter/prefecture"
+	prefRepository "storys-lab-fishing-api/app/model/prefecture"
+	prefUsecase"storys-lab-fishing-api/app/usecase/prefecture"
 )
 
 type ginEngine struct {
@@ -32,6 +36,9 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	// 魚
 	r.GET("/fishes", g.buildFindAllFishAction())
 	r.GET("/fishes/:id", g.buildFindOneFishAction())
+
+	// 都道府県
+	r.GET("/prefectures/:id", g.buildFindOnePrefAction())
 
 	// エリア
 	r.GET("/areas/:id", g.buildFindAllAreaAction())
@@ -65,9 +72,7 @@ func (g ginEngine) buildFindAllFishAction() gin.HandlerFunc {
 			)
 			act = action.NewFindAllFishAction(uc, g.log)
 		)
-
 		act.FindAll(c)
-
 	}
 }
 
@@ -81,9 +86,21 @@ func (g ginEngine) buildFindAllAreaAction() gin.HandlerFunc {
 			)
 			act = action.NewFindAllAreaAction(uc, g.log)
 		)
-
 		act.FindAll(c)
+	}
+}
 
+func (g ginEngine) buildFindOnePrefAction() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = prefUsecase.NewFindOnePrefInteractor(
+				prefRepository.NewPrefSQL(g.db),
+				prefPresenter.NewFindOnePrefPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFindOnePrefAction(uc, g.log)
+		)
+		act.FindOne(c)
 	}
 }
 

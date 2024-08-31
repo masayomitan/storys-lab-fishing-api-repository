@@ -9,12 +9,10 @@ import (
 )
 
 type (
-	// FindOneFishUseCase input port
 	FindOneFishUseCase interface {
 		Execute(context.Context, string) (domain.Fish, error)
 	}
 
-	// FindOneFishPresenter output port
 	FindOneFishPresenter interface {
 		Output(domain.Fish) domain.Fish
 	}
@@ -26,7 +24,6 @@ type (
 	}
 )
 
-// NewFindOneFishInteractor creates new findOneFishInteractor with its dependencies
 func NewFindOneFishInteractor(
 	repo repository.FishRepository,
 	presenter FindOneFishPresenter,
@@ -39,7 +36,6 @@ func NewFindOneFishInteractor(
 	}
 }
 
-// Execute orchestrates the use case
 func (t findOneFishInteractor) Execute(ctx context.Context, id string) (domain.Fish, error) {
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
 	defer cancel()

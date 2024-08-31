@@ -5,7 +5,7 @@ func (DishImage) TableName() string {
 }
 
 type DishImage struct {
-    ID   string `gorm:"primaryKey" json:"id"`
+    ID string `gorm:"primaryKey" json:"id"`
     DishId string  `json:"dish_id"`
 	ImageUrl string `json:"image_url"`
 	Sort string `json:"sort"`

@@ -36,7 +36,6 @@ func NewFindAllFishInteractor(
 	}
 }
 
-// Execute orchestrates the use case
 func (t findAllFishInteractor) Execute(ctx context.Context) ([]domain.Fish, error) {
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
 	defer cancel()

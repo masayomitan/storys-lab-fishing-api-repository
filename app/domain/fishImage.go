@@ -5,7 +5,7 @@ func (FishImage) TableName() string {
 }
 
 type FishImage struct {
-    ID   string `gorm:"primaryKey" json:"id"`
+    ID string `gorm:"primaryKey" json:"id"`
     FishId string  `json:"fish_id"`
 	ImageUrl string `json:"image_url"`
 	Sort string `json:"sort"`
