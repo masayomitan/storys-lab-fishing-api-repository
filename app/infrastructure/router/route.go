@@ -41,7 +41,10 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	r.GET("/prefectures/:id", g.buildFindOnePrefAction())
 
 	// エリア
-	r.GET("/areas/:id", g.buildFindAllAreaAction())
+	r.GET("/areas/:id", g.buildFindOneAreaAction())
+
+	// 釣り場
+	// r.GET("/fishing-spots/:id", g.buildFindAllAreaAction())
 
 	r.GET("/health", g.healthCheck())
 
@@ -76,17 +79,17 @@ func (g ginEngine) buildFindAllFishAction() gin.HandlerFunc {
 	}
 }
 
-func (g ginEngine) buildFindAllAreaAction() gin.HandlerFunc {
+func (g ginEngine) buildFindOneAreaAction() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = areaUsecase.NewFindAllAreaInteractor(
+			uc = areaUsecase.NewFindOneAreaInteractor(
 				areaRepository.NewAreaSQL(g.db),
-				areaPresenter.NewFindAllAreaPresenter(),
+				areaPresenter.NewFindOneAreaPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindAllAreaAction(uc, g.log)
+			act = action.NewFindOneAreaAction(uc, g.log)
 		)
-		act.FindAll(c)
+		act.FindOne(c)
 	}
 }
 

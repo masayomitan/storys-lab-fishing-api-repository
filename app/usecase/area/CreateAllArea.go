@@ -49,6 +49,7 @@ func (interactor createAreaInteractor) Execute(ctx context.Context, input domain
 		input.Name,
 		input.Description,
 		input.PrefectureId,
+		input.FishingSpots,
 	)
 
 	area, err := interactor.repo.Create(ctx, area)

@@ -22,6 +22,7 @@ func (a AreaSQL) FindAll(ctx context.Context) ([]domain.Area, error) {
 			areaJSON.Name,
 			areaJSON.Description,
 			areaJSON.PrefectureId,
+			convertFishingSpots(areaJSON.FishingSpots),	
 		)
 
 		areas = append(areas, area)

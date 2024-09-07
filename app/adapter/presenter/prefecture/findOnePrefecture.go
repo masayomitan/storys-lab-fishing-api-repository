@@ -15,9 +15,9 @@ func NewFindOnePrefPresenter() usecase.FindOnePrefPresenter {
 
 func (a findOnePrefPresenter) Output(pref domain.Pref) domain.Pref {
 	return domain.Pref{
-		ID:             pref.ID,
-		Name:           pref.Name,
-		NameKana:       pref.NameKana,
-		Areas:			pref.Areas,
+		ID: pref.ID,
+		Name: pref.Name,
+		NameKana: pref.NameKana,
+		Areas: pref.Areas,
 	}
 }
