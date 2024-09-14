@@ -40,10 +40,10 @@ func (t findAllFishInteractor) Execute(ctx context.Context) ([]domain.Fish, erro
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
 	defer cancel()
 
-	Fishes, err := t.repo.FindAll(ctx)
+	fishes, err := t.repo.FindAll(ctx)
 	if err != nil {
 		return t.presenter.Output([]domain.Fish{}), err
 	}
 
-	return t.presenter.Output(Fishes), nil
+	return t.presenter.Output(fishes), nil
 }

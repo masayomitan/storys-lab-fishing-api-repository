@@ -10,31 +10,31 @@ import (
 
 
 func (a FishSQL) FindOne(ctx context.Context, id string) (domain.Fish, error) {
-	var fishJSON = domain.Fish{}
+	var json = domain.Fish{}
 	fmt.Println(id)
 
-	if err := a.db.FindOneFish(ctx, a.collectionName, id, &fishJSON); err != nil {
+	if err := a.db.FindOneFish(ctx, a.collectionName, id, &json); err != nil {
 		return domain.Fish{}, errors.Wrap(err, "error listing fishes")
 	}
 
 	var fish = domain.NewFish(
-		fishJSON.ID,
-		fishJSON.Name,
-		fishJSON.FamilyName,
-		fishJSON.ScientificName,
-		fishJSON.FishCategoryId,
-		fishJSON.Description,
-		fishJSON.Length,
-		fishJSON.Weight,
-		fishJSON.Habitat,
-		fishJSON.DepthRange,
-		fishJSON.WaterTemperatureRange,
-		fishJSON.ConservationStatus,
+		json.ID,
+		json.Name,
+		json.FamilyName,
+		json.ScientificName,
+		json.FishCategoryId,
+		json.Description,
+		json.Length,
+		json.Weight,
+		json.Habitat,
+		json.DepthRange,
+		json.WaterTemperatureRange,
+		json.ConservationStatus,
 
-		convertFishCategory(fishJSON.FishCategory),
-		convertFishingMethods(fishJSON.FishingMethods),
-		convertDishes(fishJSON.Dishes),
-		fishJSON.FishImages,
+		convertFishCategory(json.FishCategory),
+		convertFishingMethods(json.FishingMethods),
+		convertDishes(json.Dishes),
+		json.FishImages,
 	)
 	fmt.Println("fishStruct")
 	fmt.Println(fish)
@@ -55,11 +55,11 @@ func (ga *GormAdapter) FindOneFish(ctx context.Context, table string, id string,
 		First(result).Error
 }
 
-func convertFishCategory(category domain.FishCategory) domain.FishCategory {
-	return domain.FishCategory{
-		ID:   category.ID,
-		Name: category.Name,
-		Description: category.Description,
+func convertFishCategory(c domain.FishCategory) domain.FishCategory {
+	return domain.FishCategory {
+		ID: c.ID,
+		Name: c.Name,
+		Description: c.Description,
 	}
 }
 
@@ -67,7 +67,7 @@ func convertFishingMethods(methods []domain.FishingMethod) []domain.FishingMetho
 	var result []domain.FishingMethod
 	for _, m := range methods {
 		result = append(result, domain.FishingMethod{
-			ID:   m.ID,
+			ID: m.ID,
 			Name: m.Name,
 			Description: m.Description,
 			DifficultyLevel: m.DifficultyLevel,

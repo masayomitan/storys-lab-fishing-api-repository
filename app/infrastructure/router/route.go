@@ -18,6 +18,10 @@ import (
 	prefPresenter "storys-lab-fishing-api/app/adapter/presenter/prefecture"
 	prefRepository "storys-lab-fishing-api/app/model/prefecture"
 	prefUsecase"storys-lab-fishing-api/app/usecase/prefecture"
+
+	fishingSpotPresenter "storys-lab-fishing-api/app/adapter/presenter/fishingSpot"
+	fishingSpotRepository "storys-lab-fishing-api/app/model/fishingSpot"
+	fishingSpotUsecase "storys-lab-fishing-api/app/usecase/fishingSpot"
 )
 
 type ginEngine struct {
@@ -44,7 +48,10 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	r.GET("/areas/:id", g.buildFindOneAreaAction())
 
 	// 釣り場
-	// r.GET("/fishing-spots/:id", g.buildFindAllAreaAction())
+	r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotAction())
+
+	// 潮時表
+	// r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotAction())
 
 	r.GET("/health", g.healthCheck())
 
@@ -102,6 +109,20 @@ func (g ginEngine) buildFindOnePrefAction() gin.HandlerFunc {
 				g.ctxTimeout,
 			)
 			act = action.NewFindOnePrefAction(uc, g.log)
+		)
+		act.FindOne(c)
+	}
+}
+
+func (g ginEngine) buildFindOneFishingSpotAction() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishingSpotUsecase.NewFindOneFishingSpotInteractor(
+				fishingSpotRepository.NewFishingSpotSQL(g.db),
+				fishingSpotPresenter.NewFindOneFishingSpotPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFindOneFishingSpotAction(uc, g.log)
 		)
 		act.FindOne(c)
 	}

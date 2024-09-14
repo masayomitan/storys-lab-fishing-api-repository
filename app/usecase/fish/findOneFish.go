@@ -40,10 +40,10 @@ func (t findOneFishInteractor) Execute(ctx context.Context, id string) (domain.F
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
 	defer cancel()
 
-	Fish, err := t.repo.FindOne(ctx, id)
+	fish, err := t.repo.FindOne(ctx, id)
 	if err != nil {
 		return t.presenter.Output(domain.Fish{}), err
 	}
 
-	return t.presenter.Output(Fish), nil
+	return t.presenter.Output(fish), nil
 }
