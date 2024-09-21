@@ -18,9 +18,9 @@ func (Pref) TableName() string {
 }
 
 type Pref struct {
-	ID string  `gorm:"primaryKey" json:"id"`
-	Name string  `json:"name"`
-	NameKana string  `json:"name_kana"`
+	ID string `gorm:"primaryKey" json:"id"`
+	Name string `json:"name"`
+	NameKana string `json:"name_kana"`
 
 	Areas []Area `gorm:"foreignKey:PrefectureId"`
 }

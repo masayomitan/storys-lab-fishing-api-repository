@@ -47,7 +47,6 @@ func (t FindOneAreaAction) FindOne(c *gin.Context) {
 			http.StatusInternalServerError,
 		).Log("error when returning the area")
 
-		// response.NewError(err, http.StatusInternalServerError).Send(w)
 		return
 	}
 	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning area")
@@ -68,7 +67,6 @@ func (t FindAllAreaAction) FindAll(c *gin.Context) {
 			http.StatusInternalServerError,
 		).Log("error when returning the area list")
 
-		// response.NewError(err, http.StatusInternalServerError).Send(w)
 		return
 	}
 	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning area list")

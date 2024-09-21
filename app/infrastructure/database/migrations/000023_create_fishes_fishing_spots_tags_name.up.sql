@@ -1,4 +1,4 @@
-CREATE TABLE fish_fishing_spot_tags (
+CREATE TABLE fish_fishing_spot_time_tags (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fishing_spot_id INT NOT NULL,
     fish_id INT NOT NULL,

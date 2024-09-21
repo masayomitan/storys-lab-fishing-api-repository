@@ -19,6 +19,8 @@ func (a findOneAreaPresenter) Output(area domain.Area) domain.Area {
 		Name: area.Name,
 		Description: area.Description,
 		PrefectureId: area.PrefectureId,
+
 		FishingSpots: area.FishingSpots,
+		Tides: area.Tides,
 	}
 }
