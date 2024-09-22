@@ -23,6 +23,7 @@ func (a AreaSQL) FindOne(ctx context.Context, id string) (domain.Area, error) {
 		areaJSON.Description,
 		areaJSON.PrefectureId,
 		convertFishingSpots(areaJSON.FishingSpots),
+		convertTide(areaJSON.Tides),
 	)
 	fmt.Println(area)
 
@@ -44,6 +45,18 @@ func convertFishingSpots(fishingSpot []domain.FishingSpot) []domain.FishingSpot 
 			Name: f.Name,
 			Description: f.Description,
 			AreaId: f.AreaId,
+		})
+	}
+	return result
+}
+
+func convertTide(tide []domain.Tide) []domain.Tide {
+	var result []domain.Tide
+	for _, t := range tide {
+		result = append(result, domain.Tide{
+			ID: t.ID,
+			AreaId: t.AreaId,
+			PrefectureId: t.PrefectureId,
 		})
 	}
 	return result

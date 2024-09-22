@@ -49,6 +49,7 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 
 	// 釣り場
 	r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotAction())
+	r.GET("/fishing-spots/area/:area_id", g.buildFindAllFishingSpotByAreaIdAction())
 
 	// 潮時表
 	// r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotAction())
@@ -125,6 +126,21 @@ func (g ginEngine) buildFindOneFishingSpotAction() gin.HandlerFunc {
 			act = action.NewFindOneFishingSpotAction(uc, g.log)
 		)
 		act.FindOne(c)
+	}
+}
+
+
+func (g ginEngine) buildFindAllFishingSpotByAreaIdAction() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishingSpotUsecase.NewFindAllFishingSpotInteractor(
+				fishingSpotRepository.NewFishingSpotSQL(g.db),
+				fishingSpotPresenter.NewFindAllFishingSpotPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFindAllFishingSpotAction(uc, g.log)
+		)
+		act.FindAllByAreaId(c)
 	}
 }
 

@@ -6,7 +6,6 @@ import (
 	"time"
 	"github.com/joho/godotenv"
 
-	// "github.com/gin-gonic/gin"
 	"storys-lab-fishing-api/app/infrastructure/log"
 	"storys-lab-fishing-api/app/infrastructure/router"
 )
