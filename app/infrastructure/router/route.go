@@ -51,9 +51,6 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotAction())
 	r.GET("/fishing-spots/area/:area_id", g.buildFindAllFishingSpotByAreaIdAction())
 
-	// 潮時表
-	// r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotAction())
-
 	r.GET("/health", g.healthCheck())
 
 	r.GET("/migration", g.migration())

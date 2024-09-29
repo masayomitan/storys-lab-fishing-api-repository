@@ -26,3 +26,4 @@ func NewFishingSpotOneSQL(db *gorm.DB) FishingSpotSQL {
 		tableName: "fishing_spots",
 	}
 }
+

@@ -10,7 +10,7 @@ import (
 func (a FishingSpotSQL) FindOne(ctx context.Context, id string) (domain.FishingSpot, error) {
 	var json = domain.FishingSpot{}
 
-	if err := a.db.FindOneFish(ctx, a.tableName, id, &json); err != nil {
+	if err := a.db.FindOneFishingSpot(ctx, a.tableName, id, &json); err != nil {
 		return domain.FishingSpot{}, errors.Wrap(err, "error listing fishes")
 	}
 
@@ -19,8 +19,9 @@ func (a FishingSpotSQL) FindOne(ctx context.Context, id string) (domain.FishingS
 		json.Name,
 		json.Description,
 		json.AreaId,
-		convertFishes(json.Fishes),
 		convertArea(json.Area),
+		convertFishes(json.Fishes),
+		convertTags(json.Tags),
 	)
 
 	fmt.Println("fishingSpot")
@@ -43,8 +44,9 @@ func (a FishingSpotSQL) FindAllByAreaId(ctx context.Context, id int) ([]domain.F
 			json.Name,
 			json.Description,
 			json.AreaId,
-			convertFishes(json.Fishes),
 			convertArea(json.Area),
+			convertFishes(json.Fishes),
+			convertTags(json.Tags),
 		)
 		fishingSpots = append(fishingSpots, fishingSpot)
 	}
@@ -55,11 +57,12 @@ func (a FishingSpotSQL) FindAllByAreaId(ctx context.Context, id int) ([]domain.F
 	return fishingSpots, nil
 }
 
-func (ga *GormAdapter) FindOneFish(ctx context.Context, table string, id string, result interface{}) error {
+func (ga *GormAdapter) FindOneFishingSpot(ctx context.Context, table string, id string, result interface{}) error {
 	return ga.DB.Table(table).Where("id = ?", id).
 		Preload("Area").
 		Preload("Area.Tides").
 		Preload("Fishes").
+		Preload("Tags").
 		First(result).Error
 }
 
@@ -88,6 +91,17 @@ func convertArea(a domain.Area) domain.Area {
 		PrefectureId: a.PrefectureId,
 		Tides:        convertTides(a.Tides),
 	}
+}
+
+func convertTags(tags []domain.Tag) []domain.Tag {
+	var result []domain.Tag
+	for _, t := range tags {
+		result = append(result, domain.Tag{
+			ID:        t.ID,
+			Name:      t.Name,
+		})
+	}
+	return result
 }
 
 func convertTides(tides []domain.Tide) []domain.Tide {

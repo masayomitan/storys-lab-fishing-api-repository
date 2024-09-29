@@ -10,8 +10,9 @@ type FishingSpot struct {
 	Description string `json:"description"`
 	AreaId      int `json:"area_id"`
 
-	Fishes []Fish `gorm:"many2many:fish_fishing_spot_tags;foreignKey:ID;joinForeignKey:FishingSpotId;References:ID;joinReferences:FishId"`
+	Fishes []Fish `gorm:"many2many:fish_fishing_spot_time_tags;foreignKey:ID;joinForeignKey:FishingSpotId;References:ID;joinReferences:FishId"`
 	Area   Area   `gorm:"foreignKey:AreaId;references:ID"`
+	Tags []Tag `gorm:"many2many:fishing_spots_to_tags;foreignKey:ID;joinForeignKey:FishingSpotId;References:ID;joinReferences:TagId"`
 }
 
 
@@ -21,8 +22,9 @@ func NewFishingSpot(
 	description string,
 	areaId int,
 
-	fishes []Fish,
 	area Area,
+	fishes []Fish,
+	tags []Tag,
 ) FishingSpot {
 	return FishingSpot{
 		ID: ID,
@@ -32,5 +34,6 @@ func NewFishingSpot(
 
 		Area: area,
 		Fishes: fishes,
+		Tags: tags,
 	}
 }

@@ -117,12 +117,11 @@ func Migration(c *gin.Context) {
 		log.Fatal(err)
 	}
 
-	// Migrate all the way up ...
 	if err := m.Up(); err != nil && err != migrate.ErrNoChange {
-		http.Error(c.Writer, fmt.Sprintf("Failed to apply migrations: %v", err), http.StatusInternalServerError)
+		http.Error(c.Writer, fmt.Sprintf("マイグレーションに失敗しました: %v", err), http.StatusInternalServerError)
 		return
 	}
 
-	log.Println("Migrations applied successfully")
+	log.Println("マイグレーションに成功しました!!")
 	c.Writer.WriteHeader(http.StatusOK)
 }
