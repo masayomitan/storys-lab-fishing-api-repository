@@ -21,6 +21,7 @@ func (a PrefSQL) FindOne(ctx context.Context, id string) (domain.Pref, error) {
 		prefJSON.ID,
 		prefJSON.Name,
 		prefJSON.NameKana,
+		prefJSON.ImageUrl,
 
 		convertAreas(prefJSON.Areas),
 	)
@@ -44,6 +45,7 @@ func convertAreas(areas []domain.Area) []domain.Area {
 			Name: a.Name,
 			Description: a.Description,
 			PrefectureId: a.PrefectureId,
+			ImageUrl: a.ImageUrl,
 		})
 	}
 	return result

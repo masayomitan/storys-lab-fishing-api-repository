@@ -10,7 +10,7 @@ import (
 func (a AreaSQL) FindAll(ctx context.Context) ([]domain.Area, error) {
 	var areaJSON = make([]domain.Area, 0)
 
-	if err := a.db.FindAll(ctx, a.collectionName, domain.Area{}, &areaJSON); err != nil {
+	if err := a.db.FindByPrefectureId(ctx, a.collectionName, domain.Area{}, &areaJSON); err != nil {
 		return []domain.Area{}, errors.Wrap(err, "error listing areas")
 	}
 
@@ -22,6 +22,7 @@ func (a AreaSQL) FindAll(ctx context.Context) ([]domain.Area, error) {
 			areaJSON.Name,
 			areaJSON.Description,
 			areaJSON.PrefectureId,
+			areaJSON.ImageUrl,
 			convertFishingSpots(areaJSON.FishingSpots),
 			convertTide(areaJSON.Tides),
 		)
@@ -32,7 +33,7 @@ func (a AreaSQL) FindAll(ctx context.Context) ([]domain.Area, error) {
 	return areas, nil
 }
 
-func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
+func (ga *GormAdapter) FindByPrefectureId(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
 		// Preload("AreaImages").
 		Find(result).Error

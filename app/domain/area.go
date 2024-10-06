@@ -5,10 +5,11 @@ func (Area) TableName() string {
 }
 
 type Area struct {
-	ID          string `gorm:"primaryKey" json:"id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
+	ID           int 	`gorm:"primaryKey" json:"id"`
+	Name         string `json:"name"`
+	Description  string `json:"description"`
 	PrefectureId string `json:"prefecture_id"`
+	ImageUrl 	 string `json:"image_url"`
 
 	FishingSpots []FishingSpot `gorm:"foreignKey:AreaId"`
 	Tides []Tide `gorm:"foreignKey:AreaId"`
@@ -16,21 +17,23 @@ type Area struct {
 
 
 func NewArea(
-	ID string,
-	name string,
-	description string,
-	prefectureId string,
+	ID 				int,
+	name			string,
+	description 	string,
+	prefectureId 	string,
+	imageUrl 		string,
 
 	fishingSpots []FishingSpot,
 	tides []Tide,
 ) Area {
 	return Area{
-		ID: ID,
-		Name: name,
-		Description: description,
-		PrefectureId: prefectureId,
+		ID: 			ID,
+		Name:			name,
+		Description: 	description,
+		PrefectureId: 	prefectureId,
+		ImageUrl: 		imageUrl,
 
-		FishingSpots: fishingSpots,
-		Tides: tides,
+		FishingSpots: 	fishingSpots,
+		Tides: 			tides,
 	}
 }

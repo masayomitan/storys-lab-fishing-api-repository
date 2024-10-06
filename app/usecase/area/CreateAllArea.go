@@ -45,10 +45,12 @@ func (interactor createAreaInteractor) Execute(ctx context.Context, input domain
 	defer cancel()
 
 	var area = domain.NewArea(
-		domain.NewUUID(),
+		input.ID,
 		input.Name,
 		input.Description,
 		input.PrefectureId,
+		input.ImageUrl,
+
 		input.FishingSpots,
 		input.Tides,
 	)

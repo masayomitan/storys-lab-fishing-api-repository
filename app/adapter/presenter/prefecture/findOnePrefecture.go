@@ -18,6 +18,7 @@ func (a findOnePrefPresenter) Output(pref domain.Pref) domain.Pref {
 		ID: pref.ID,
 		Name: pref.Name,
 		NameKana: pref.NameKana,
+		ImageUrl: pref.ImageUrl,
 		Areas: pref.Areas,
 	}
 }

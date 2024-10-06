@@ -15,12 +15,13 @@ func NewFindOneAreaPresenter() usecase.FindOneAreaPresenter {
 
 func (a findOneAreaPresenter) Output(area domain.Area) domain.Area {
 	return domain.Area{
-		ID: area.ID,
-		Name: area.Name,
-		Description: area.Description,
-		PrefectureId: area.PrefectureId,
+		ID: 			area.ID,
+		Name: 			area.Name,
+		Description: 	area.Description,
+		PrefectureId: 	area.PrefectureId,
+		ImageUrl:	 	area.ImageUrl,
 
-		FishingSpots: area.FishingSpots,
-		Tides: area.Tides,
+		FishingSpots: 	area.FishingSpots,
+		Tides: 			area.Tides,
 	}
 }

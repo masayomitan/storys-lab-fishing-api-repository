@@ -22,6 +22,7 @@ func (a AreaSQL) FindOne(ctx context.Context, id string) (domain.Area, error) {
 		areaJSON.Name,
 		areaJSON.Description,
 		areaJSON.PrefectureId,
+		areaJSON.ImageUrl,
 		convertFishingSpots(areaJSON.FishingSpots),
 		convertTide(areaJSON.Tides),
 	)
