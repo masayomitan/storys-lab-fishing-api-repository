@@ -6,10 +6,10 @@ import (
 )
 
 type (
-	ToolRepository interface {
+	ToolCategoryRepository interface {
 		// Create(context.Context, domain.Fish) (domain.Fish, error)
-		FindAll(context.Context) ([]domain.Tool, error)
-		FindOne(context.Context, string) (domain.Tool, error)
+		// FindOne(context.Context, int) (domain.ToolCategory, error)
+		FindAll(context.Context) ([]domain.ToolCategory, error)
 		// WithTransaction(context.Context, func(context.Context) error) error
 	}
 )

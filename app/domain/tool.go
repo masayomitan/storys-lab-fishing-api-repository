@@ -8,7 +8,7 @@ type Tool struct {
     ID int `gorm:"primaryKey" json:"id"`
     Name string  `json:"name"`
 	Description string `json:"description"`
-	ToolCategoryID int `json:"tool_category_id"`
+	ToolCategoryId int `json:"tool_category_id"`
 	MaterialID int `json:"material_id"`
 	Size string `json:"size"`
 	Weight  float64 `json:"weight"`

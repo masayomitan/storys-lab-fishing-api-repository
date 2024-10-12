@@ -1,19 +1,5 @@
 package domain
 
-import (
-	"errors"
-)
-
-var (
-	ErrFishNotFound = errors.New("Fish not found")
-
-	ErrFishOriginNotFound = errors.New("Fish origin not found")
-
-	ErrFishDestinationNotFound = errors.New("Fish destination not found")
-
-	ErrInsufficientBalance = errors.New("origin Fish does not have sufficient balance")
-)
-
 func (Fish) TableName() string {
     return "fishes"
 }

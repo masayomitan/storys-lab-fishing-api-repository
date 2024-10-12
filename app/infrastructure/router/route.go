@@ -22,6 +22,10 @@ import (
 	fishingSpotPresenter "storys-lab-fishing-api/app/adapter/presenter/fishingSpot"
 	fishingSpotRepository "storys-lab-fishing-api/app/model/fishingSpot"
 	fishingSpotUsecase "storys-lab-fishing-api/app/usecase/fishingSpot"
+
+	toolCategoryPresenter "storys-lab-fishing-api/app/adapter/presenter/toolCategory"
+	toolCategoryRepository "storys-lab-fishing-api/app/model/toolCategory"
+	toolCategoryUsecase "storys-lab-fishing-api/app/usecase/toolCategory"
 )
 
 type ginEngine struct {
@@ -50,9 +54,12 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	// 釣り場
 	r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotAction())
 	r.GET("/fishing-spots/area/:area_id", g.buildFindAllFishingSpotByAreaIdAction())
+	r.GET("/tool-categories", g.buildFindAllToolCategoryAction())
 
+	// ヘルスチェック
 	r.GET("/health", g.healthCheck())
 
+	// マイグレーション TODO 他に移行するべき
 	r.GET("/migration", g.migration())
 }
 
@@ -126,7 +133,6 @@ func (g ginEngine) buildFindOneFishingSpotAction() gin.HandlerFunc {
 	}
 }
 
-
 func (g ginEngine) buildFindAllFishingSpotByAreaIdAction() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -138,6 +144,20 @@ func (g ginEngine) buildFindAllFishingSpotByAreaIdAction() gin.HandlerFunc {
 			act = action.NewFindAllFishingSpotAction(uc, g.log)
 		)
 		act.FindAllByAreaId(c)
+	}
+}
+
+func (g ginEngine) buildFindAllToolCategoryAction() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolCategoryUsecase.NewFindAllToolCategoryInteractor(
+				toolCategoryRepository.NewToolCategorySQL(g.db),
+				toolCategoryPresenter.NewFindAllToolCategoryPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFindAllToolCategoryAction(uc, g.log)
+		)
+		act.FindAll(c)
 	}
 }
 

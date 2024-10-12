@@ -1,6 +1,7 @@
 CREATE TABLE fishing_spots (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL COMMENT '釣りスポットの名前',
+    image_url VARCHAR(255) NOT NULL COMMENT '画像保存URL',
     area_id INT NOT NULL COMMENT 'エリアのID',
     scientific_name VARCHAR(255) COMMENT '魚の学名',
     description TEXT COMMENT '釣りスポットの説明',

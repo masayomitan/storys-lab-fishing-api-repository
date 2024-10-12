@@ -19,6 +19,7 @@ func (a findAllFishingSpotPresenter) Output(fishingSpot []domain.FishingSpot) []
 		output = append(output, domain.FishingSpot{
 			ID:             fishingSpot.ID,
 			Name:           fishingSpot.Name,
+			ImageUrl:       fishingSpot.ImageUrl,
 			AreaId: 		fishingSpot.AreaId,
 			Description:    fishingSpot.Description,
 		})

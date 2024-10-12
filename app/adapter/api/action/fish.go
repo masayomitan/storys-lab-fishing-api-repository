@@ -56,7 +56,7 @@ func (t FindOneFishAction) FindOne(c *gin.Context) {
 
 
 func (t FindAllFishAction) FindAll(c *gin.Context) {
-	const logKey = "find_all_fish"
+	const logKey = "find_all_fishes"
 
 	output, err := t.uc.Execute(c.Request.Context())
 	if err != nil {

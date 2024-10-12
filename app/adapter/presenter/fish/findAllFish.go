@@ -17,13 +17,13 @@ func (a findAllFishPresenter) Output(fishes []domain.Fish) []domain.Fish {
 	var output = make([]domain.Fish, 0)
 	for _, fish := range fishes {
 		output = append(output, domain.Fish{
-			ID:fish.ID,
-			Name: fish.Name,
-			FamilyName: fish.FamilyName,
+			ID:				fish.ID,
+			Name: 			fish.Name,
+			FamilyName: 	fish.FamilyName,
 			ScientificName: fish.ScientificName,
 			FishCategoryId: fish.FishCategoryId,
-			Description: fish.Description,
-			FishImages: fish.FishImages,
+			Description: 	fish.Description,
+			FishImages: 	fish.FishImages,
 		})
 	}
 	return output

@@ -17,6 +17,7 @@ func (a findOneFishingSpotPresenter) Output(fishingSpot domain.FishingSpot) doma
 	return domain.FishingSpot{
 		ID:             fishingSpot.ID,
 		Name:           fishingSpot.Name,
+		ImageUrl:       fishingSpot.ImageUrl,
 		AreaId: 		fishingSpot.AreaId,
 		Description:    fishingSpot.Description,
 

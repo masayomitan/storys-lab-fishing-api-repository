@@ -17,6 +17,7 @@ func (a FishingSpotSQL) FindOne(ctx context.Context, id string) (domain.FishingS
 	var fishingSpot = domain.NewFishingSpot(
 		json.ID,
 		json.Name,
+		json.ImageUrl,
 		json.Description,
 		json.AreaId,
 		convertArea(json.Area),
@@ -42,6 +43,7 @@ func (a FishingSpotSQL) FindAllByAreaId(ctx context.Context, id int) ([]domain.F
 		var fishingSpot = domain.NewFishingSpot(
 			json.ID,
 			json.Name,
+			json.ImageUrl,
 			json.Description,
 			json.AreaId,
 			convertArea(json.Area),
