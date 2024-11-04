@@ -15,7 +15,7 @@ func (a AreaSQL) Create(ctx context.Context, area domain.Area) (domain.Area, err
 		PrefectureId: area.PrefectureId,
 	}
 
-	if err := a.db.Store(ctx, a.collectionName, areaJSON); err != nil {
+	if err := a.db.Store(ctx, a.tableName, areaJSON); err != nil {
 		return domain.Area{}, errors.Wrap(err, "error creating account")
 	}
 

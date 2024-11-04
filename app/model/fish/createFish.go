@@ -17,7 +17,7 @@ func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, err
 		Description: fish.Description,
 	}
 
-	if err := a.db.Store(ctx, a.collectionName, fishJSON); err != nil {
+	if err := a.db.Store(ctx, a.tableName, fishJSON); err != nil {
 		return domain.Fish{}, errors.Wrap(err, "error creating account")
 	}
 

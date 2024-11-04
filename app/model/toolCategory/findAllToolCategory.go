@@ -10,7 +10,7 @@ import (
 func (a ToolCategorySQL) FindAll(ctx context.Context) ([]domain.ToolCategory, error) {
 	var json = make([]domain.ToolCategory, 0)
 
-	if err := a.db.FindAll(ctx, a.collectionName, domain.ToolCategory{}, &json); err != nil {
+	if err := a.db.FindAll(ctx, a.tableName, domain.ToolCategory{}, &json); err != nil {
 		return []domain.ToolCategory{}, errors.Wrap(err, "error listing tool_categories")
 	}
 

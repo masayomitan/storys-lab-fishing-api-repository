@@ -8,14 +8,14 @@ type GormAdapter struct {
 	DB *gorm.DB
 }
 
-type ToolCategorySQL struct {
+type ToolSQL struct {
 	db             *GormAdapter
 	tableName string
 }
 
-func NewToolCategorySQL(db *gorm.DB) ToolCategorySQL {
-	return ToolCategorySQL{
+func NewToolSQL(db *gorm.DB) ToolSQL {
+	return ToolSQL{
 		db:             &GormAdapter{DB: db},
-		tableName: "tool_categories",
+		tableName: "tools",
 	}
 }

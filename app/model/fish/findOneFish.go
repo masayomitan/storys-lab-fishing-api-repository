@@ -13,7 +13,7 @@ func (a FishSQL) FindOne(ctx context.Context, id string) (domain.Fish, error) {
 	var json = domain.Fish{}
 	fmt.Println(id)
 
-	if err := a.db.FindOneFish(ctx, a.collectionName, id, &json); err != nil {
+	if err := a.db.FindOneFish(ctx, a.tableName, id, &json); err != nil {
 		return domain.Fish{}, errors.Wrap(err, "error listing fishes")
 	}
 

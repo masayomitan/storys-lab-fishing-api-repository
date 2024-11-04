@@ -10,19 +10,19 @@ type GormAdapter struct {
 
 type AreaSQL struct {
 	db             *GormAdapter
-	collectionName string
+	tableName string
 }
 
 func NewAreaSQL(db *gorm.DB) AreaSQL {
 	return AreaSQL{
 		db:             &GormAdapter{DB: db},
-		collectionName: "areas",
+		tableName: "areas",
 	}
 }
 
 func NewAreaOneSQL(db *gorm.DB) AreaSQL {
 	return AreaSQL{
 		db:             &GormAdapter{DB: db},
-		collectionName: "areas",
+		tableName: "areas",
 	}
 }

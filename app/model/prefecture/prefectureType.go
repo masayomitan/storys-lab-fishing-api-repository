@@ -10,19 +10,19 @@ type GormAdapter struct {
 
 type PrefSQL struct {
 	db             *GormAdapter
-	collectionName string
+	tableName string
 }
 
 func NewPrefSQL(db *gorm.DB) PrefSQL {
 	return PrefSQL{
 		db:             &GormAdapter{DB: db},
-		collectionName: "prefectures",
+		tableName: "prefectures",
 	}
 }
 
 func NewPrefOneSQL(db *gorm.DB) PrefSQL {
 	return PrefSQL{
 		db:             &GormAdapter{DB: db},
-		collectionName: "prefectures",
+		tableName: "prefectures",
 	}
 }

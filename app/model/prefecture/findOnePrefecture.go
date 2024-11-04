@@ -13,7 +13,7 @@ func (a PrefSQL) FindOne(ctx context.Context, id string) (domain.Pref, error) {
 	var prefJSON = domain.Pref{}
 	fmt.Println(id)
 
-	if err := a.db.FindOnePref(ctx, a.collectionName, id, &prefJSON); err != nil {
+	if err := a.db.FindOnePref(ctx, a.tableName, id, &prefJSON); err != nil {
 		return domain.Pref{}, errors.Wrap(err, "error listing fishes")
 	}
 

@@ -23,6 +23,10 @@ import (
 	fishingSpotRepository "storys-lab-fishing-api/app/model/fishingSpot"
 	fishingSpotUsecase "storys-lab-fishing-api/app/usecase/fishingSpot"
 
+	toolPresenter "storys-lab-fishing-api/app/adapter/presenter/tool"
+	toolRepository "storys-lab-fishing-api/app/model/tool"
+	toolUsecase "storys-lab-fishing-api/app/usecase/tool"
+
 	toolCategoryPresenter "storys-lab-fishing-api/app/adapter/presenter/toolCategory"
 	toolCategoryRepository "storys-lab-fishing-api/app/model/toolCategory"
 	toolCategoryUsecase "storys-lab-fishing-api/app/usecase/toolCategory"
@@ -54,7 +58,13 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	// 釣り場
 	r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotAction())
 	r.GET("/fishing-spots/area/:area_id", g.buildFindAllFishingSpotByAreaIdAction())
+
+	// 道具
+	r.GET("/tools/:id", g.buildFindOneToolAction())
+
+	// 道具種別
 	r.GET("/tool-categories", g.buildFindAllToolCategoryAction())
+
 
 	// ヘルスチェック
 	r.GET("/health", g.healthCheck())
@@ -144,6 +154,20 @@ func (g ginEngine) buildFindAllFishingSpotByAreaIdAction() gin.HandlerFunc {
 			act = action.NewFindAllFishingSpotAction(uc, g.log)
 		)
 		act.FindAllByAreaId(c)
+	}
+}
+
+func (g ginEngine) buildFindOneToolAction() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolUsecase.NewFindOneToolInteractor(
+				toolRepository.NewToolSQL(g.db),
+				toolPresenter.NewFindOneToolPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFindOneToolAction(uc, g.log)
+		)
+		act.FindOne(c)
 	}
 }
 

@@ -13,7 +13,7 @@ func (a AreaSQL) FindOne(ctx context.Context, id string) (domain.Area, error) {
 	var areaJSON = domain.Area{}
 	fmt.Println(id)
 
-	if err := a.db.FindOneArea(ctx, a.collectionName, id, &areaJSON); err != nil {
+	if err := a.db.FindOneArea(ctx, a.tableName, id, &areaJSON); err != nil {
 		return domain.Area{}, errors.Wrap(err, "error listing fishes")
 	}
 

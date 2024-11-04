@@ -10,7 +10,7 @@ import (
 func (a AreaSQL) FindAll(ctx context.Context) ([]domain.Area, error) {
 	var areaJSON = make([]domain.Area, 0)
 
-	if err := a.db.FindByPrefectureId(ctx, a.collectionName, domain.Area{}, &areaJSON); err != nil {
+	if err := a.db.FindByPrefectureId(ctx, a.tableName, domain.Area{}, &areaJSON); err != nil {
 		return []domain.Area{}, errors.Wrap(err, "error listing areas")
 	}
 

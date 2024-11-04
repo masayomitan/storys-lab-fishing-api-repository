@@ -10,7 +10,7 @@ import (
 func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 	var fishJSON = make([]domain.Fish, 0)
 
-	if err := a.db.FindAll(ctx, a.collectionName, domain.Fish{}, &fishJSON); err != nil {
+	if err := a.db.FindAll(ctx, a.tableName, domain.Fish{}, &fishJSON); err != nil {
 		return []domain.Fish{}, errors.Wrap(err, "error listing fishes")
 	}
 
