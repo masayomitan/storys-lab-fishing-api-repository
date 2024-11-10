@@ -39,7 +39,7 @@ func NewFindOneToolAction(uc usecase.FindOneToolUseCase, log logger.Logger) Find
 func (t FindOneToolAction) FindOne(c *gin.Context) {
 	const logKey = "find_one_Tool"
 	fmt.Println("")
-	output, err := t.uc.Execute(c.Request.Context(), utils.StrToInt(c.Param("area_id")))
+	output, err := t.uc.Execute(c.Request.Context(), utils.StrToInt(c.Param("id")))
 	if err != nil {
 		logging.NewError(
 			t.log,

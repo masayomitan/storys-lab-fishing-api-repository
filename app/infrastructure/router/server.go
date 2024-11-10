@@ -30,7 +30,7 @@ type config struct {
 // type ginEngine struct {
 // 	router *gin.Engine
 // 	log    logger.Logger
-// 	db     repository.DBMethods
+// 	db     db *gorm.DB,
 // 	// validator  validator.Validator
 // 	port       router.Port
 // 	ctxTimeout time.Duration

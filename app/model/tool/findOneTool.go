@@ -30,13 +30,12 @@ func (a ToolSQL) FindOne(ctx context.Context, id int) (domain.Tool, error) {
 		json.EasyFishing,	
 	)
 
-	fmt.Println("tool")
-	fmt.Println(tool)
+	fmt.Println("")
 
 	return tool, nil
 }
 
-func (ga *GormAdapter) FindOneTool(ctx context.Context, table string, area_id int, result interface{}) error {
-	return ga.DB.Table(table).Where("id = ?", area_id).
+func (ga *GormAdapter) FindOneTool(ctx context.Context, table string, tool_id int, result interface{}) error {
+	return ga.DB.Table(table).Where("id = ?", tool_id).
 		Find(result).Error
 }

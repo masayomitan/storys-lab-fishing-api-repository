@@ -65,6 +65,9 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	// 道具種別
 	r.GET("/tool-categories", g.buildFindAllToolCategoryAction())
 
+	// 記事
+	r.GET("/articles", g.buildFindAllArticleAction())
+
 
 	// ヘルスチェック
 	r.GET("/health", g.healthCheck())
