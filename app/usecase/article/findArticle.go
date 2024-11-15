@@ -14,6 +14,10 @@ type (
 		ExecuteSecond(context.Context, int) ([]domain.Article, error)
 	}
 
+	FindAllArticleByArticleCategoryIDUseCase interface {
+		ExecuteSecond(context.Context, int) ([]domain.Article, error)
+	}
+
 	FindAllArticlePresenter interface {
 		Output([]domain.Article) []domain.Article
 	}

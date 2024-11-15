@@ -15,32 +15,38 @@ type Article struct {
 	Description       string    `json:"description"`
 	IsDisplay         bool      `json:"is_display"`
 	PublishedDateTime time.Time `json:"published_date_time"`
-	CategoryId        int       `json:"category_id"`
+	ArticleCategoryId int       `json:"article_category_id"`
 	ViewCount         int       `json:"view_count"`
+
+
+	ArticleCategory ArticleCategory `gorm:"foreignKey:ArticleCategoryId;references:ID"`
+		// Area   			Area   `gorm:"foreignKey:AreaId;references:ID"`
 }
 
 func NewArticle(
-	ID              int,
-	title           string,
-	subTitle        string,
-	instructorId    string,
-	adminId         string,
-	description     string,
-	isDisplay       bool,
-	publishedDateTime time.Time,
-	categoryId      int,
-	viewCount       int,
+	ID              	int,
+	title           	string,
+	subTitle        	string,
+	instructorId   		string,
+	adminId        	 	string,
+	description     	string,
+	isDisplay       	bool,
+	publishedDateTime 	time.Time,
+	articleCategoryId   int,
+	viewCount       	int,
+	articleCategory 	ArticleCategory,
 ) Article {
 	return Article{
-		ID:               ID,
-		Title:            title,
-		SubTitle:         subTitle,
-		InstructorId:     instructorId,
-		AdminId:          adminId,
-		Description:      description,
-		IsDisplay:        isDisplay,
-		PublishedDateTime: publishedDateTime,
-		CategoryId:       categoryId,
-		ViewCount:        viewCount,
+		ID:					ID,
+		Title:				title,
+		SubTitle:			subTitle,
+		InstructorId:		instructorId,
+		AdminId:            adminId,
+		Description:        description,
+		IsDisplay:          isDisplay,
+		PublishedDateTime:  publishedDateTime,
+		ArticleCategoryId: 	articleCategoryId,
+		ViewCount:        	viewCount,
+		ArticleCategory:  	articleCategory,
 	}
 }

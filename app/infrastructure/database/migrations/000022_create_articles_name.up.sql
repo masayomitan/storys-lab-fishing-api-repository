@@ -7,15 +7,15 @@ CREATE TABLE articles (
     description TEXT COMMENT '記事の説明',
     is_display BOOLEAN NOT NULL DEFAULT TRUE COMMENT '表示フラグ',
     published_datetime DATETIME COMMENT '公開日時',
-    category_id INT COMMENT 'カテゴリID',
+    article_category_id INT COMMENT '記事カテゴリID',
     view_count INT DEFAULT 0 COMMENT '閲覧数',
     created_at DATETIME NOT NULL COMMENT '作成日時',
     updated_at DATETIME NOT NULL COMMENT '更新日時',
     deleted_at DATETIME DEFAULT NULL COMMENT '削除日時',
     FOREIGN KEY (instructor_id) REFERENCES instructors(id),
     FOREIGN KEY (admin_id) REFERENCES admins(id),
-    FOREIGN KEY (category_id) REFERENCES article_categories(id),
+    FOREIGN KEY (article_category_id) REFERENCES article_categories(id),
     INDEX idx_instructor (instructor_id),
     INDEX idx_admin (admin_id),
-    INDEX idx_category (category_id)
+    INDEX idx_article_category (article_category_id)
 ) COMMENT='記事情報を格納するテーブル';

@@ -67,6 +67,8 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 
 	// 記事
 	r.GET("/articles", g.buildFindAllArticleAction())
+	r.GET("/articles/:id", g.buildFindOneArticleAction())
+	r.GET("/article-categories/:id", g.buildFindAllArticleByArticleCategoryIdAction())
 
 
 	// ヘルスチェック

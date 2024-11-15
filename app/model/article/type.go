@@ -26,3 +26,10 @@ func NewArticleOneSQL(db *gorm.DB) ArticleSQL {
 		tableName: 	"articles",
 	}
 }
+
+func NewArticleCategoryOneSQL(db *gorm.DB) ArticleSQL {
+	return ArticleSQL{
+		db:         &GormAdapter{DB: db},
+		tableName: 	"article_categories",
+	}
+}
