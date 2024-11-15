@@ -7,26 +7,27 @@ import (
 )
 
 func (a ArticleSQL) FindAll(ctx context.Context) ([]domain.Article, error) {
-	var articleJSON = make([]domain.Article, 0)
+	var json = make([]domain.Article, 0)
 
-	if err := a.db.FindAll(ctx, a.tableName, domain.Article{}, &articleJSON); err != nil {
+	if err := a.db.FindAll(ctx, a.tableName, domain.Article{}, &json); err != nil {
 		return []domain.Article{}, errors.Wrap(err, "error listing areas")
 	}
 
 	var articles = make([]domain.Article, 0)
 
-	for _, articleJSON := range articleJSON {
+	for _, json := range json {
 		var article = domain.NewArticle(
-			articleJSON.ID,
-			articleJSON.Title,
-			articleJSON.SubTitle,
-			articleJSON.InstructorId,
-			articleJSON.AdminId,
-			articleJSON.Description,
-			articleJSON.IsDisplay,
-			articleJSON.PublishedDateTime,
-			articleJSON.CategoryId,
-			articleJSON.ViewCount,
+			json.ID,
+			json.Title,
+			json.SubTitle,
+			json.InstructorId,
+			json.AdminId,
+			json.Description,
+			json.IsDisplay,
+			json.PublishedDateTime,
+			json.ArticleCategoryId,
+			json.ViewCount,
+			json.ArticleCategory,
 		)
 
 		articles = append(articles, article)
@@ -36,28 +37,28 @@ func (a ArticleSQL) FindAll(ctx context.Context) ([]domain.Article, error) {
 }
 
 func (a ArticleSQL) FindAllByArticleCategoryId(ctx context.Context, category_id int) ([]domain.Article, error) {
-	var articleJSON = make([]domain.Article, 0)
+	var json = make([]domain.Article, 0)
 
-	if err := a.db.FindAll(ctx, a.tableName, domain.Article{}, &articleJSON); err != nil {
+	if err := a.db.FindAllByArticleCategoryId(ctx, a.tableName, category_id, &json); err != nil {
 		return []domain.Article{}, errors.Wrap(err, "error listing areas")
 	}
 
 	var articles = make([]domain.Article, 0)
 
-	for _, articleJSON := range articleJSON {
+	for _, json := range json {
 		var article = domain.NewArticle(
-			articleJSON.ID,
-			articleJSON.Title,
-			articleJSON.SubTitle,
-			articleJSON.InstructorId,
-			articleJSON.AdminId,
-			articleJSON.Description,
-			articleJSON.IsDisplay,
-			articleJSON.PublishedDateTime,
-			articleJSON.CategoryId,
-			articleJSON.ViewCount,
+			json.ID,
+			json.Title,
+			json.SubTitle,
+			json.InstructorId,
+			json.AdminId,
+			json.Description,
+			json.IsDisplay,
+			json.PublishedDateTime,
+			json.ArticleCategoryId,
+			json.ViewCount,
+			convertArticle(json.ArticleCategory),
 		)
-
 		articles = append(articles, article)
 	}
 
@@ -69,5 +70,8 @@ func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interfac
 		Find(result).Error
 }
 
-
-
+func (ga *GormAdapter) FindAllByArticleCategoryId(ctx context.Context, table string, article_category_id int, result interface{}) error {
+	return ga.DB.Table(table).Where("article_category_id = ?", article_category_id).
+		Preload("ArticleCategory").
+		Find(result).Error
+}
