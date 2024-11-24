@@ -33,5 +33,6 @@ func (a ToolCategorySQL) FindAll(ctx context.Context) ([]domain.ToolCategory, er
 func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
 		Preload("Tools").
+		Preload("Tools.ToolImages").
 		Find(result).Error
 }

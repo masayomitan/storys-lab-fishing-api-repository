@@ -13,16 +13,17 @@ func NewFindOneArticlePresenter() usecase.FindOneArticlePresenter {
 
 func (a findOneArticlePresenter) Output(article domain.Article) domain.Article {
 	return domain.Article {
-		ID:          article.ID,
-		Title:       article.Title,
-		SubTitle:    article.SubTitle,
-		InstructorId: article.InstructorId,
-		AdminId:     article.AdminId,
-		Description: article.Description,
-		IsDisplay:   article.IsDisplay,
-		PublishedDateTime: article.PublishedDateTime,
+		ID: 				article.ID,
+		Title:      	 	article.Title,
+		SubTitle:  		  	article.SubTitle,
+		InstructorId: 		article.InstructorId,
+		AdminId:     		article.AdminId,
+		Description: 		article.Description,
+		IsDisplay:   		article.IsDisplay,
+		PublishedDatetime: 	article.PublishedDatetime,
 		ArticleCategoryId:  article.ArticleCategoryId,
-		ViewCount:   article.ViewCount,
+		ViewCount:   		article.ViewCount,
+		ArticleImages: 		article.ArticleImages,
 	}
 }
 

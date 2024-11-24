@@ -22,14 +22,6 @@ import (
 	fishingSpotPresenter "storys-lab-fishing-api/app/adapter/presenter/fishingSpot"
 	fishingSpotRepository "storys-lab-fishing-api/app/model/fishingSpot"
 	fishingSpotUsecase "storys-lab-fishing-api/app/usecase/fishingSpot"
-
-	toolPresenter "storys-lab-fishing-api/app/adapter/presenter/tool"
-	toolRepository "storys-lab-fishing-api/app/model/tool"
-	toolUsecase "storys-lab-fishing-api/app/usecase/tool"
-
-	toolCategoryPresenter "storys-lab-fishing-api/app/adapter/presenter/toolCategory"
-	toolCategoryRepository "storys-lab-fishing-api/app/model/toolCategory"
-	toolCategoryUsecase "storys-lab-fishing-api/app/usecase/toolCategory"
 )
 
 type ginEngine struct {
@@ -46,30 +38,33 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	r.Static("/public", "./public")
 
 	// 魚
-	r.GET("/fishes", g.buildFindAllFishAction())
-	r.GET("/fishes/:id", g.buildFindOneFishAction())
+	r.GET("/fishes", g.buildFindAllFishRoute())
+	r.GET("/fishes/:id", g.buildFindOneFishRoute())
 
 	// 都道府県
-	r.GET("/prefectures/:id", g.buildFindOnePrefAction())
+	r.GET("/prefectures/:id", g.buildFindOnePrefRoute())
 
 	// エリア
-	r.GET("/areas/:id", g.buildFindOneAreaAction())
+	r.GET("/areas/:id", g.buildFindOneAreaRoute())
 
 	// 釣り場
-	r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotAction())
-	r.GET("/fishing-spots/area/:area_id", g.buildFindAllFishingSpotByAreaIdAction())
+	r.GET("/fishing-spots/:id", g.buildFindOneFishingSpotRoute())
+	r.GET("/fishing-spots/area/:area_id", g.buildFindAllFishingSpotByAreaIdRoute())
+	// todo
+	// r.GET("/areas/:area_id/fishing-spots", g.buildFindAllFishingSpotByAreaIdRoute())
 
 	// 道具
-	r.GET("/tools/:id", g.buildFindOneToolAction())
+	r.GET("/tools", g.buildFindAllToolRoute())
+	r.GET("/tools/:id", g.buildFindOneToolRoute())
+	r.GET("/tool-categories/:id/tools", g.buildFindAllToolCategoryRoute())
 
 	// 道具種別
-	r.GET("/tool-categories", g.buildFindAllToolCategoryAction())
+	r.GET("/tool-categories", g.buildFindAllToolCategoryRoute())
 
 	// 記事
-	r.GET("/articles", g.buildFindAllArticleAction())
-	r.GET("/articles/:id", g.buildFindOneArticleAction())
-	r.GET("/article-categories/:id", g.buildFindAllArticleByArticleCategoryIdAction())
-
+	r.GET("/articles", g.buildFindAllArticleRoute())
+	r.GET("/articles/:id", g.buildFindOneArticleRoute())
+	r.GET("/article-categories/:id", g.buildFindAllArticleByArticleCategoryIdRoute())
 
 	// ヘルスチェック
 	r.GET("/health", g.healthCheck())
@@ -78,7 +73,7 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	r.GET("/migration", g.migration())
 }
 
-func (g ginEngine) buildFindOneFishAction() gin.HandlerFunc {
+func (g ginEngine) buildFindOneFishRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			uc = fishUsecase.NewFindOneFishInteractor(
@@ -92,7 +87,7 @@ func (g ginEngine) buildFindOneFishAction() gin.HandlerFunc {
 	}
 }
 
-func (g ginEngine) buildFindAllFishAction() gin.HandlerFunc {
+func (g ginEngine) buildFindAllFishRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			uc = fishUsecase.NewFindAllFishInteractor(
@@ -106,7 +101,7 @@ func (g ginEngine) buildFindAllFishAction() gin.HandlerFunc {
 	}
 }
 
-func (g ginEngine) buildFindOneAreaAction() gin.HandlerFunc {
+func (g ginEngine) buildFindOneAreaRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			uc = areaUsecase.NewFindOneAreaInteractor(
@@ -120,7 +115,7 @@ func (g ginEngine) buildFindOneAreaAction() gin.HandlerFunc {
 	}
 }
 
-func (g ginEngine) buildFindOnePrefAction() gin.HandlerFunc {
+func (g ginEngine) buildFindOnePrefRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			uc = prefUsecase.NewFindOnePrefInteractor(
@@ -134,7 +129,7 @@ func (g ginEngine) buildFindOnePrefAction() gin.HandlerFunc {
 	}
 }
 
-func (g ginEngine) buildFindOneFishingSpotAction() gin.HandlerFunc {
+func (g ginEngine) buildFindOneFishingSpotRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			uc = fishingSpotUsecase.NewFindOneFishingSpotInteractor(
@@ -148,7 +143,7 @@ func (g ginEngine) buildFindOneFishingSpotAction() gin.HandlerFunc {
 	}
 }
 
-func (g ginEngine) buildFindAllFishingSpotByAreaIdAction() gin.HandlerFunc {
+func (g ginEngine) buildFindAllFishingSpotByAreaIdRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			uc = fishingSpotUsecase.NewFindAllFishingSpotInteractor(
@@ -159,34 +154,6 @@ func (g ginEngine) buildFindAllFishingSpotByAreaIdAction() gin.HandlerFunc {
 			act = action.NewFindAllFishingSpotAction(uc, g.log)
 		)
 		act.FindAllByAreaId(c)
-	}
-}
-
-func (g ginEngine) buildFindOneToolAction() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		var (
-			uc = toolUsecase.NewFindOneToolInteractor(
-				toolRepository.NewToolSQL(g.db),
-				toolPresenter.NewFindOneToolPresenter(),
-				g.ctxTimeout,
-			)
-			act = action.NewFindOneToolAction(uc, g.log)
-		)
-		act.FindOne(c)
-	}
-}
-
-func (g ginEngine) buildFindAllToolCategoryAction() gin.HandlerFunc {
-	return func(c *gin.Context) {
-		var (
-			uc = toolCategoryUsecase.NewFindAllToolCategoryInteractor(
-				toolCategoryRepository.NewToolCategorySQL(g.db),
-				toolCategoryPresenter.NewFindAllToolCategoryPresenter(),
-				g.ctxTimeout,
-			)
-			act = action.NewFindAllToolCategoryAction(uc, g.log)
-		)
-		act.FindAll(c)
 	}
 }
 

@@ -17,10 +17,10 @@ type FindOneToolAction struct {
 	log logger.Logger
 }
 
-// type FindAllToolAction struct {
-// 	uc  usecase.FindAllToolUseCase
-// 	log logger.Logger
-// }
+type FindAllToolAction struct {
+	uc  usecase.FindAllToolUseCase
+	log logger.Logger
+}
 
 func NewFindOneToolAction(uc usecase.FindOneToolUseCase, log logger.Logger) FindOneToolAction {
 	return FindOneToolAction{
@@ -29,12 +29,12 @@ func NewFindOneToolAction(uc usecase.FindOneToolUseCase, log logger.Logger) Find
 	}
 }
 
-// func NewFindAllToolAction(uc usecase.FindAllToolUseCase, log logger.Logger) FindAllToolAction {
-// 	return FindAllToolAction{
-// 		uc:  uc,
-// 		log: log,
-// 	}
-// }
+func NewFindAllToolAction(uc usecase.FindAllToolUseCase, log logger.Logger) FindAllToolAction {
+	return FindAllToolAction{
+		uc:  uc,
+		log: log,
+	}
+}
 
 func (t FindOneToolAction) FindOne(c *gin.Context) {
 	const logKey = "find_one_Tool"
@@ -56,21 +56,21 @@ func (t FindOneToolAction) FindOne(c *gin.Context) {
 }
 
 
-// func (t FindAllToolAction) FindAll(c *gin.Context) {
-// 	const logKey = "find_all_Tool"
+func (t FindAllToolAction) FindAll(c *gin.Context) {
+	const logKey = "find_all_Tools"
 
-// 	output, err := t.uc.Execute(c.Request.Context())
-// 	if err != nil {
-// 		logging.NewError(
-// 			t.log,
-// 			err,
-// 			logKey,
-// 			http.StatusInternalServerError,
-// 		).Log("error when returning the Tool list")
+	output, err := t.uc.Execute(c.Request.Context())
+	if err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the Tool list")
 
-// 		return
-// 	}
-// 	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning Tool list")
+		return
+	}
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning Tool list")
 
-// 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
-// }
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}

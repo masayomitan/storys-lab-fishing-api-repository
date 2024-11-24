@@ -15,17 +15,18 @@ func (a findAllArticlePresenter) Output(articles []domain.Article) []domain.Arti
 	var output = make([]domain.Article, 0)
 	for _, article := range articles {
 		output = append(output, domain.Article{
-			ID:          article.ID,
-			Title:       article.Title,
-			SubTitle:    article.SubTitle,
-			InstructorId: article.InstructorId,
-			AdminId:     article.AdminId,
-			Description: article.Description,
-			IsDisplay:   article.IsDisplay,
-			PublishedDateTime: article.PublishedDateTime,
+			ID:         	 	article.ID,
+			Title:      	 	article.Title,
+			SubTitle:   	 	article.SubTitle,
+			InstructorId: 		article.InstructorId,
+			AdminId:    	 	article.AdminId,
+			Description: 		article.Description,
+			IsDisplay:   		article.IsDisplay,
+			PublishedDatetime: 	article.PublishedDatetime,
 			ArticleCategoryId:  article.ArticleCategoryId,
-			ViewCount:   article.ViewCount,
-			ArticleCategory: article.ArticleCategory,
+			ViewCount:   		article.ViewCount,
+			ArticleCategory: 	article.ArticleCategory,
+			ArticleImages: 		article.ArticleImages,
 		})
 	}
 	return output

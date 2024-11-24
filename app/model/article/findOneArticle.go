@@ -4,6 +4,7 @@ import (
 	"context"
 	"storys-lab-fishing-api/app/domain"
 	"github.com/pkg/errors"
+	"fmt"
 )
 
 func (a ArticleSQL) FindOne(ctx context.Context, id int) (domain.Article, error) {
@@ -21,17 +22,20 @@ func (a ArticleSQL) FindOne(ctx context.Context, id int) (domain.Article, error)
 		json.AdminId,
 		json.Description,
 		json.IsDisplay,
-		json.PublishedDateTime,
+		json.PublishedDatetime,
 		json.ArticleCategoryId,
 		json.ViewCount,
 		json.ArticleCategory,
+		json.ArticleImages,
 	)
+	fmt.Printf("PublishedDateTime: %v\n", article.PublishedDatetime)
 
 	return article, nil
 }
 
 func (ga *GormAdapter) FindOne(ctx context.Context, table string, id int, result interface{}) error {
 	return ga.DB.Table(table).Where("id = ?", id).
+		Preload("ArticleImages").
 		First(result).Error
 }
 

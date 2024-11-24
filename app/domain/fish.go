@@ -1,7 +1,21 @@
 package domain
 
+func (FishCategory) TableName() string {
+    return "fish_categories"
+}
+
 func (Fish) TableName() string {
     return "fishes"
+}
+
+func (FishImage) TableName() string {
+    return "fish_images"
+}
+
+type FishCategory struct {
+    ID string `gorm:"primaryKey" json:"id"`
+    Name string  `json:"name"`
+	Description string `json:"description"`
 }
 
 type Fish struct {
@@ -24,10 +38,12 @@ type Fish struct {
 	FishImages []FishImage `gorm:"foreignKey:FishId"`
 }
 
-type FishID string
-
-func (f FishID) String() string {
-	return string(f)
+type FishImage struct {
+    ID string `gorm:"primaryKey" json:"id"`
+    FishId string  `json:"fish_id"`
+	ImageUrl string `json:"image_url"`
+	Sort string `json:"sort"`
+	IsMain string `json:"is_main"`
 }
 
 func NewFish(

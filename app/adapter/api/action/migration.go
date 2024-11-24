@@ -122,6 +122,10 @@ func Migration(c *gin.Context) {
 		return
 	}
 
-	log.Println("マイグレーションに成功しました!!")
-	c.Writer.WriteHeader(http.StatusOK)
+	successMessage := "Succeed migration!!"
+	log.Println(successMessage)
+	c.JSON(http.StatusOK, gin.H{
+		"status":  http.StatusOK,
+		"message": successMessage,
+	})
 }

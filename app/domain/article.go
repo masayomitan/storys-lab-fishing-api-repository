@@ -6,6 +6,10 @@ func (Article) TableName() string {
     return "articles"
 }
 
+func (ArticleImage) TableName() string {
+    return "article_images"
+}
+
 type Article struct {
 	ID                int       `gorm:"primaryKey" json:"id"`
 	Title             string    `json:"title"`
@@ -14,13 +18,20 @@ type Article struct {
 	AdminId           string    `json:"admin_id"`
 	Description       string    `json:"description"`
 	IsDisplay         bool      `json:"is_display"`
-	PublishedDateTime time.Time `json:"published_date_time"`
+	PublishedDatetime time.Time `json:"published_datetime"`
 	ArticleCategoryId int       `json:"article_category_id"`
 	ViewCount         int       `json:"view_count"`
 
-
 	ArticleCategory ArticleCategory `gorm:"foreignKey:ArticleCategoryId;references:ID"`
-		// Area   			Area   `gorm:"foreignKey:AreaId;references:ID"`
+	ArticleImages []ArticleImage `gorm:"foreignKey:ArticleId"`
+}
+
+type ArticleImage struct {
+    ID string `gorm:"primaryKey" json:"id"`
+    ArticleId string  `json:"article_id"`
+	ImageUrl string `json:"image_url"`
+	Sort string `json:"sort"`
+	IsMain string `json:"is_main"`
 }
 
 func NewArticle(
@@ -31,10 +42,11 @@ func NewArticle(
 	adminId        	 	string,
 	description     	string,
 	isDisplay       	bool,
-	publishedDateTime 	time.Time,
+	publishedDatetime 	time.Time,
 	articleCategoryId   int,
 	viewCount       	int,
 	articleCategory 	ArticleCategory,
+	articleImages       []ArticleImage,
 ) Article {
 	return Article{
 		ID:					ID,
@@ -44,9 +56,10 @@ func NewArticle(
 		AdminId:            adminId,
 		Description:        description,
 		IsDisplay:          isDisplay,
-		PublishedDateTime:  publishedDateTime,
+		PublishedDatetime:  publishedDatetime,
 		ArticleCategoryId: 	articleCategoryId,
 		ViewCount:        	viewCount,
 		ArticleCategory:  	articleCategory,
+		ArticleImages: 		articleImages,
 	}
 }

@@ -24,10 +24,11 @@ func (a ArticleSQL) FindAll(ctx context.Context) ([]domain.Article, error) {
 			json.AdminId,
 			json.Description,
 			json.IsDisplay,
-			json.PublishedDateTime,
+			json.PublishedDatetime,
 			json.ArticleCategoryId,
 			json.ViewCount,
 			json.ArticleCategory,
+			json.ArticleImages,
 		)
 
 		articles = append(articles, article)
@@ -54,10 +55,11 @@ func (a ArticleSQL) FindAllByArticleCategoryId(ctx context.Context, category_id 
 			json.AdminId,
 			json.Description,
 			json.IsDisplay,
-			json.PublishedDateTime,
+			json.PublishedDatetime,
 			json.ArticleCategoryId,
 			json.ViewCount,
 			convertArticle(json.ArticleCategory),
+			json.ArticleImages,
 		)
 		articles = append(articles, article)
 	}
@@ -67,11 +69,15 @@ func (a ArticleSQL) FindAllByArticleCategoryId(ctx context.Context, category_id 
 
 func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
+		Preload("ArticleImages").
+		Order("id asc").
 		Find(result).Error
 }
 
 func (ga *GormAdapter) FindAllByArticleCategoryId(ctx context.Context, table string, article_category_id int, result interface{}) error {
 	return ga.DB.Table(table).Where("article_category_id = ?", article_category_id).
 		Preload("ArticleCategory").
+		Preload("ArticleImages").
+		Order("id asc").
 		Find(result).Error
 }

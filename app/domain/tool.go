@@ -1,7 +1,23 @@
 package domain
 
+func (ToolCategory) TableName() string {
+    return "tool_categories"
+}
+
 func (Tool) TableName() string {
     return "tools"
+}
+
+func (ToolImage) TableName() string {
+    return "tool_images"
+}
+
+type ToolCategory struct {
+    ID int `gorm:"primaryKey" json:"id"`
+    Name string  `json:"name"`
+	Description string `json:"description"`
+	Tools []Tool `gorm:"foreignKey:ToolCategoryId"`
+
 }
 
 type Tool struct {
@@ -18,6 +34,31 @@ type Tool struct {
     Maker          string  `json:"maker"`
     Recommend      int     `json:"recommend"`
     EasyFishing    int     `json:"easy_fishing"`
+
+    ToolImages []ToolImage `gorm:"foreignKey:ToolId"`
+}
+
+type ToolImage struct {
+    ID string `gorm:"primaryKey" json:"id"`
+    ToolId string  `json:"tool_id"`
+	ImageUrl string `json:"image_url"`
+	Sort string `json:"sort"`
+	IsMain string `json:"is_main"`
+}
+
+func NewToolCategory(
+	ID int,
+	name string,
+	description string,
+	tools []Tool,
+
+) ToolCategory {
+	return ToolCategory{
+		ID: ID,
+		Name: name,
+		Description: description,
+		Tools: tools,
+	}
 }
 
 func NewTool(
@@ -34,6 +75,7 @@ func NewTool(
     maker string,
     recommend int,
     easyFishing int,
+    toolImages []ToolImage,
 ) Tool {
     return Tool{
         ID:             ID,
@@ -49,5 +91,6 @@ func NewTool(
         Maker:          maker,
         Recommend:      recommend,
         EasyFishing:    easyFishing,
+        ToolImages:      toolImages,
     }
 }

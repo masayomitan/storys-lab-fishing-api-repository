@@ -45,22 +45,22 @@ func (t findAllArticleInteractor) Execute(ctx context.Context) ([]domain.Article
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
 	defer cancel()
 
-	article, err := t.repo.FindAll(ctx)
+	articles, err := t.repo.FindAll(ctx)
 	if err != nil {
 		return t.presenter.Output([]domain.Article{}), err
 	}
 
-	return t.presenter.Output(article), nil
+	return t.presenter.Output(articles), nil
 }
 
 func (t findAllArticleInteractor) ExecuteSecond(ctx context.Context, id int) ([]domain.Article, error) {
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
 	defer cancel()
 
-	article, err := t.repo.FindAllByArticleCategoryId(ctx, id)
+	articles, err := t.repo.FindAllByArticleCategoryId(ctx, id)
 	if err != nil {
 		return t.presenter.Output([]domain.Article{}), err
 	}
 
-	return t.presenter.Output(article), nil
+	return t.presenter.Output(articles), nil
 }

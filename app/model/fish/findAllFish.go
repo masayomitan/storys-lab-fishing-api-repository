@@ -45,5 +45,6 @@ func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
 		Preload("FishImages").
+		Order("id asc").
 		Find(result).Error
 }
