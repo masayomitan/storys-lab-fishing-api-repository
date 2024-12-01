@@ -27,6 +27,8 @@ func (a findAllArticlePresenter) Output(articles []domain.Article) []domain.Arti
 			ViewCount:   		article.ViewCount,
 			ArticleCategory: 	article.ArticleCategory,
 			ArticleImages: 		article.ArticleImages,
+			Instructor:         article.Instructor,
+			Admin:              article.Admin,
 		})
 	}
 	return output

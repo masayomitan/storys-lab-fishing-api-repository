@@ -24,6 +24,8 @@ func (a findOneArticlePresenter) Output(article domain.Article) domain.Article {
 		ArticleCategoryId:  article.ArticleCategoryId,
 		ViewCount:   		article.ViewCount,
 		ArticleImages: 		article.ArticleImages,
+		Instructor:         article.Instructor,
+		Admin:              article.Admin,
 	}
 }
 

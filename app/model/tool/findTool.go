@@ -74,6 +74,6 @@ func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interfac
 
 func (ga *GormAdapter) FindOneTool(ctx context.Context, table string, tool_id int, result interface{}) error {
 	return ga.DB.Table(table).Where("id = ?", tool_id).
-		// Preload("ToolImages").
+		Preload("ToolImages").
 		First(result).Error
 }
