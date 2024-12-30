@@ -15,18 +15,18 @@ func (a ArticleSQL) FindOne(ctx context.Context, id int) (domain.Article, error)
 	}
 
 	// Instructor のロード
-	if json.InstructorId != 0 {
+	if json.InstructorID != 0 {
 		instructor := domain.Instructor{}
-		if err := a.db.DB.Table("instructors").Where("id = ?", json.InstructorId).First(&instructor).Error; err != nil {
+		if err := a.db.DB.Table("instructors").Where("id = ?", json.InstructorID).First(&instructor).Error; err != nil {
 			return domain.Article{}, errors.Wrap(err, "error loading instructor")
 		}
 		json.Instructor = instructor
 	}
 
 	// Admin のロード
-	if json.AdminId != 0 {
+	if json.AdminID != 0 {
 		admin := domain.Admin{}
-		if err := a.db.DB.Table("admins").Where("id = ?", json.AdminId).First(&admin).Error; err != nil {
+		if err := a.db.DB.Table("admins").Where("id = ?", json.AdminID).First(&admin).Error; err != nil {
 			return domain.Article{}, errors.Wrap(err, "error loading admin")
 		}
 		json.Admin = admin
@@ -36,12 +36,12 @@ func (a ArticleSQL) FindOne(ctx context.Context, id int) (domain.Article, error)
 		json.ID,
 		json.Title,
 		json.SubTitle,
-		json.InstructorId,
-		json.AdminId,
+		json.InstructorID,
+		json.AdminID,
 		json.Description,
 		json.IsDisplay,
 		json.PublishedDatetime,
-		json.ArticleCategoryId,
+		json.ArticleCategoryID,
 		json.ViewCount,
 		json.ArticleCategory,
 		json.ArticleImages,

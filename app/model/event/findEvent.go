@@ -69,13 +69,13 @@ func (a EventSQL) FindOne(ctx context.Context, id int) (domain.Event, error) {
 
 func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
-		Preload("EventImages").
+		// Preload("EventImages").
 		Order("id asc").
 		Find(result).Error
 }
 
 func (ga *GormAdapter) FindOne(ctx context.Context, table string, event_id int, result interface{}) error {
 	return ga.DB.Table(table).Where("id = ?", event_id).
-		Preload("EventImages").
+		// Preload("EventImages").
 		First(result).Error
 }

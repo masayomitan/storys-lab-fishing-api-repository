@@ -21,7 +21,7 @@ func main() {
 		Name(os.Getenv("APP_NAME")).
 		ContextTimeout(10 * time.Second).
 		Logger(log.InstanceLogrusLogger).
-		// Validator(validation.InstanceGoPlayground).
+		Validator().
 		DbSQL()
 
     fmt.Println(app)

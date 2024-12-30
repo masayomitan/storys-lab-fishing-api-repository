@@ -21,8 +21,8 @@ type Event struct {
     MinPersons          int        `json:"min_persons"`
     IsDisplay           bool       `json:"is_display"`
 
-    Instructor          Instructor      `gorm:"foreignKey:InstructorId;references:ID"`
-    Admin               Admin           `gorm:"foreignKey:AdminId;references:ID"`
+    Instructor          Instructor      `gorm:"foreignKey:InstructorID;references:ID"`
+    Admin               Admin           `gorm:"foreignKey:AdminID;references:ID"`
 }
 
 type EventImage struct {

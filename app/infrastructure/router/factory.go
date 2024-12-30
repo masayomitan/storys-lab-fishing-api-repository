@@ -6,7 +6,7 @@ import (
 	// "github.com/gin-gonic/gin"
 	"gorm.io/gorm"
 	"storys-lab-fishing-api/app/adapter/logger"
-	// "storys-lab-fishing-api/adapter/validator"
+	"storys-lab-fishing-api/app/adapter/validator"
 )
 
 type Server interface {
@@ -24,14 +24,14 @@ func NewWebServerFactory(
 	instance int,
 	log logger.Logger,
 	SQL *gorm.DB,
-	// validator validator.Validator,
+	validator *validator.Validator,
 	port Port,
 	ctxTimeout time.Duration,
 ) (Server, error) {
 	return newGinServer(
 		log, 
 		SQL, 
-		// validator, 
+		validator, 
 		port, 
 		ctxTimeout,
 	), nil

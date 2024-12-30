@@ -9,7 +9,6 @@ func (Tide) TableName() string {
 	return "tides"
 }
 
-
 type Tide struct {
     ID int `gorm:"primaryKey" json:"id"`
 	PrefectureId int `json:"prefecture_id"`

@@ -13,4 +13,3 @@ type Dish struct {
 	Level string `json:"level"`
 	DishImages []DishImage `gorm:"foreignKey:DishId"`
 }
-

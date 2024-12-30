@@ -73,3 +73,22 @@ func (t FindAllFishAction) FindAll(c *gin.Context) {
 
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
+
+func (t FindAllFishAction) FindAllByAdmin(c *gin.Context) {
+	const logKey = "find_all_fishes"
+
+	output, err := t.uc.Execute(c.Request.Context())
+	if err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the fish list")
+
+		return
+	}
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish list")
+
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}

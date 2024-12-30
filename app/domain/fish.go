@@ -1,4 +1,5 @@
 package domain
+import "time"
 
 func (FishCategory) TableName() string {
     return "fish_categories"
@@ -13,9 +14,11 @@ func (FishImage) TableName() string {
 }
 
 type FishCategory struct {
-    ID string `gorm:"primaryKey" json:"id"`
-    Name string  `json:"name"`
-	Description string `json:"description"`
+	ID          int    `json:"id"`
+	Name        string `json:"name" validate:"required,min=1,max=255"`
+	Description string `json:"description" validate:"max=2000"`       
+	CreatedAt   time.Time `json:"created_at"`
+	UpdatedAt 	time.Time `json:"updated_at"`
 }
 
 type Fish struct {
@@ -83,5 +86,21 @@ func NewFish(
 		FishingMethods: fishingMethods,
 		Dishes: dishes,
 		FishImages: fishImages,
+	}
+}
+
+func NewFishCategory(
+	ID int,
+	name string,
+	description string,
+	createdAt time.Time,
+	updatedAt time.Time,
+) FishCategory {
+	return FishCategory{
+		ID: ID,
+		Name: name,
+		Description: description,
+		CreatedAt: createdAt,
+		UpdatedAt: updatedAt,
 	}
 }

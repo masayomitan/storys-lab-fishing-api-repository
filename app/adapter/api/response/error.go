@@ -13,21 +13,21 @@ var (
 )
 
 type Error struct {
-	statusCode int
 	Errors     []string `json:"errors"`
+	statusCode int
 }
 
 func NewError(err error, status int) *Error {
 	return &Error{
-		statusCode: status,
 		Errors:     []string{err.Error()},
+		statusCode: status,
 	}
 }
 
 func NewErrorMessage(messages []string, status int) *Error {
 	return &Error{
-		statusCode: status,
 		Errors:     messages,
+		statusCode: status,
 	}
 }
 

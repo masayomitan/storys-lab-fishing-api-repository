@@ -13,45 +13,37 @@ import (
 	"github.com/gin-gonic/gin"
 	"storys-lab-fishing-api/app/middleware"
 	"storys-lab-fishing-api/app/adapter/logger"
+	"storys-lab-fishing-api/app/adapter/validator"
 	"storys-lab-fishing-api/app/infrastructure/database"
 	"storys-lab-fishing-api/app/infrastructure/log"
 )
 
 type config struct {
-	appName string
-	logger  logger.Logger
-	// validator     validator.Validator
-	ctxTimeout    time.Duration
-	dbSQL         *gorm.DB
-	webServerPort Port
-	webServer     Server
+	appName 		string
+	logger  		logger.Logger
+	validator     	*validator.Validator
+	ctxTimeout    	time.Duration
+	dbSQL         	*gorm.DB
+	webServerPort 	Port
+	webServer     	Server
 }
-
-// type ginEngine struct {
-// 	router *gin.Engine
-// 	log    logger.Logger
-// 	db     db *gorm.DB,
-// 	// validator  validator.Validator
-// 	port       router.Port
-// 	ctxTimeout time.Duration
-// }
 
 func NewConfig() *config {
 	return &config{}
 }
 
 func newGinServer(
-	log logger.Logger,
-	db *gorm.DB,
-	// validator validator.Validator,
-	port Port,
-	t time.Duration,
+	log 		logger.Logger,
+	db 			*gorm.DB,
+	validator 	*validator.Validator,
+	port 		Port,
+	t 			time.Duration,
 ) *ginEngine {
 	return &ginEngine{
-		router: gin.New(),
-		log:    log,
-		db:     db,
-		// validator:  validator,
+		router: 	gin.New(),
+		log:   		log,
+		db:     	db,
+		validator:  *validator,
 		port:       port,
 		ctxTimeout: t,
 	}
@@ -140,24 +132,21 @@ func (c *config) DbSQL() *config {
 	return c
 }
 
-// func (c *config) Validator(instance int) *config {
-// 	v, err := validation.NewValidatorFactory(instance)
-// 	if err != nil {
-// 		c.logger.Fatalln(err)
-// 	}
+func (c *config) Validator() *config {
+	v := validator.NewValidator()
 
-// 	c.logger.Infof("Successfully configured validator")
+	c.logger.Infof("Successfully configured validator")
 
-// 	c.validator = v
-// 	return c
-// }
+	c.validator = v
+	return c
+}
 
 func (c *config) WebServer(instance int) *config {
 	s, err := NewWebServerFactory(
 		instance,
 		c.logger,
 		c.dbSQL,
-		// c.validator,
+		c.validator,
 		c.webServerPort,
 		c.ctxTimeout,
 	)

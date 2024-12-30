@@ -20,18 +20,18 @@ func (a ArticleSQL) FindAll(ctx context.Context) ([]domain.Article, error) {
 		article := &json[i]
 
 		// Instructor のロード
-		if article.InstructorId != 0 {
+		if article.InstructorID != 0 {
 			instructor := domain.Instructor{}
-			if err := a.db.DB.Table("instructors").Where("id = ?", article.InstructorId).First(&instructor).Error; err != nil {
+			if err := a.db.DB.Table("instructors").Where("id = ?", article.InstructorID).First(&instructor).Error; err != nil {
 				return nil, errors.Wrap(err, "error loading instructor")
 			}
 			article.Instructor = instructor
 		}
 
 		// Admin のロード
-		if article.AdminId != 0 {
+		if article.AdminID != 0 {
 			admin := domain.Admin{}
-			if err := a.db.DB.Table("admins").Where("id = ?", article.AdminId).First(&admin).Error; err != nil {
+			if err := a.db.DB.Table("admins").Where("id = ?", article.AdminID).First(&admin).Error; err != nil {
 				return nil, errors.Wrap(err, "error loading admin")
 			}
 			article.Admin = admin
@@ -45,12 +45,12 @@ func (a ArticleSQL) FindAll(ctx context.Context) ([]domain.Article, error) {
 			json.ID,
 			json.Title,
 			json.SubTitle,
-			json.InstructorId,
-			json.AdminId,
+			json.InstructorID,
+			json.AdminID,
 			json.Description,
 			json.IsDisplay,
 			json.PublishedDatetime,
-			json.ArticleCategoryId,
+			json.ArticleCategoryID,
 			json.ViewCount,
 			json.ArticleCategory,
 			json.ArticleImages,
@@ -75,18 +75,18 @@ func (a ArticleSQL) FindAllByArticleCategoryId(ctx context.Context, category_id 
 		article := &json[i]
 
 		// Instructor のロード
-		if article.InstructorId != 0 {
+		if article.InstructorID != 0 {
 			instructor := domain.Instructor{}
-			if err := a.db.DB.Table("instructors").Where("id = ?", article.InstructorId).First(&instructor).Error; err != nil {
+			if err := a.db.DB.Table("instructors").Where("id = ?", article.InstructorID).First(&instructor).Error; err != nil {
 				return nil, errors.Wrap(err, "error loading instructor")
 			}
 			article.Instructor = instructor
 		}
 
 		// Admin のロード
-		if article.AdminId != 0 {
+		if article.AdminID != 0 {
 			admin := domain.Admin{}
-			if err := a.db.DB.Table("admins").Where("id = ?", article.AdminId).First(&admin).Error; err != nil {
+			if err := a.db.DB.Table("admins").Where("id = ?", article.AdminID).First(&admin).Error; err != nil {
 				return nil, errors.Wrap(err, "error loading admin")
 			}
 			article.Admin = admin
@@ -100,12 +100,12 @@ func (a ArticleSQL) FindAllByArticleCategoryId(ctx context.Context, category_id 
 			json.ID,
 			json.Title,
 			json.SubTitle,
-			json.InstructorId,
-			json.AdminId,
+			json.InstructorID,
+			json.AdminID,
 			json.Description,
 			json.IsDisplay,
 			json.PublishedDatetime,
-			json.ArticleCategoryId,
+			json.ArticleCategoryID,
 			json.ViewCount,
 			convertArticle(json.ArticleCategory),
 			json.ArticleImages,
