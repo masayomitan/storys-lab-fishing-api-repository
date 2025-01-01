@@ -7,13 +7,13 @@ import (
 	"storys-lab-fishing-api/app/usecase/fish"
 )
 
-type findOneFishPresenter struct{}
+type findFishPresenter struct{}
 
-func NewFindOneFishPresenter() usecase.FindOneFishPresenter {
-	return findOneFishPresenter{}
+func NewFishPresenter() usecase.FishPresenter {
+	return findFishPresenter{}
 }
 
-func (a findOneFishPresenter) Output(fish domain.Fish) domain.Fish {
+func (a findFishPresenter) PresentOne(fish domain.Fish) domain.Fish {
 	return domain.Fish{
 		ID:             		fish.ID,
 		Name:           		fish.Name,
@@ -32,4 +32,20 @@ func (a findOneFishPresenter) Output(fish domain.Fish) domain.Fish {
 		Dishes: 				fish.Dishes,
 		FishImages: 			fish.FishImages,
 	}
+}
+
+func (a findFishPresenter) PresentAll(fishes []domain.Fish) []domain.Fish {
+	var output = make([]domain.Fish, 0)
+	for _, fish := range fishes {
+		output = append(output, domain.Fish{
+			ID:				fish.ID,
+			Name: 			fish.Name,
+			FamilyName: 	fish.FamilyName,
+			ScientificName: fish.ScientificName,
+			FishCategoryId: fish.FishCategoryId,
+			Description: 	fish.Description,
+			FishImages: 	fish.FishImages,
+		})
+	}
+	return output
 }

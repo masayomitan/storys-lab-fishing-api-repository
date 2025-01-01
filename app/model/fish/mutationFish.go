@@ -7,7 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, error) {
+func (a FishSQL) CreateByAdmin(ctx context.Context, fish domain.Fish) (domain.Fish, error) {
 	var fishJSON = domain.Fish{
 		ID:   fish.ID,
 		Name: fish.Name,
@@ -16,6 +16,7 @@ func (a FishSQL) Create(ctx context.Context, fish domain.Fish) (domain.Fish, err
 		FishCategoryId: fish.FishCategoryId,
 		Description: fish.Description,
 	}
+	
 
 	if err := a.db.Store(ctx, a.tableName, fishJSON); err != nil {
 		return domain.Fish{}, errors.Wrap(err, "error creating account")

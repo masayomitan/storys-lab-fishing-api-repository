@@ -66,16 +66,16 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	api.GET("/migration", g.migration())
 
 	//////// 管理側
-	mc := api.Group("/admin")
+	admin := api.Group("/admin")
 
-	// /mc/fishes サブグループ
-	// fishes := mc.Group("/fishes")
-	// fishes.GET("/", g.buildFindAllFishesAdminRoute())
-	// fishes.GET("/create", g.buildCreateFishRoute())
+	// /admin/fishes サブグループ
+	fishes := admin.Group("/fishes")
+	fishes.GET("/", g.buildFindAllFishesAdminRoute())
+	fishes.GET("/create", g.buildCreateFishAdminRoute())
 	// fishes.GET("/update/:id", g.buildUpdateFishRoute())
 
-	// /mc/fish-categories サブグループ
-	fishCategories := mc.Group("/fish-categories")
+	// /admin/fish-categories サブグループ
+	fishCategories := admin.Group("/fish-categories")
 	fishCategories.GET("/", g.buildFindAllFishCategoriesAdminRoute())
 	fishCategories.POST("/create", g.buildCreateFishCategoryAdminRoute())
 	// fishCategories.GET("/update/:id", g.buildUpdateFishCategoryRoute())

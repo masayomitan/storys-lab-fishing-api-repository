@@ -7,9 +7,16 @@ import (
 
 type (
 	FishRepository interface {
-		Create(context.Context, domain.Fish) (domain.Fish, error)
+		// Create(context.Context, domain.Fish) (domain.Fish, error)
+		FindOne(context.Context, int) (domain.Fish, error)
 		FindAll(context.Context) ([]domain.Fish, error)
-		FindOne(context.Context, string) (domain.Fish, error)
+		// WithTransaction(context.Context, func(context.Context) error) error
+	}
+
+	FishAdminRepository interface {
+		CreateByAdmin(context.Context, domain.Fish) (domain.Fish, error)
+		FindOneByAdmin(context.Context, int) (domain.Fish, error)
+		FindAllByAdmin(context.Context) ([]domain.Fish, error)
 		// WithTransaction(context.Context, func(context.Context) error) error
 	}
 )

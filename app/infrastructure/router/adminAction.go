@@ -5,28 +5,42 @@ import (
 	// "gorm.io/gorm"
 	"storys-lab-fishing-api/app/adapter/api/action"
 
-	// fishAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/fish"
-	// fishAdminRepository "storys-lab-fishing-api/app/model/fish"
-	// fishAdminUsecase "storys-lab-fishing-api/app/usecase/fish"
+	fishAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/fish"
+	fishAdminRepository "storys-lab-fishing-api/app/model/fish"
+	fishAdminUsecase "storys-lab-fishing-api/app/usecase/fish"
 
 	fishCategoriesAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/fishCategory"
 	fishCategoriesAdminRepository "storys-lab-fishing-api/app/model/fishCategory"
 	fishCategoriesAdminUsecase "storys-lab-fishing-api/app/usecase/fishCategory"
 )
 
-// func (g ginEngine) buildFindAllFishesAdminRoute() gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		var (
-// 			uc = fishAdminUsecase.NewFishAdminInteractor(
-// 				fishAdminRepository.NewFishSQL(g.db),
-// 				fishAdminPresenter.NewFishPresenter(),
-// 				g.ctxTimeout,
-// 			)
-// 			act = action.NewFindFishCategoryAdminAction(uc, g.log)
-// 		)
-// 		act.FindAllByAdmin(c)
-// 	}
-// }
+func (g ginEngine) buildFindAllFishesAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishAdminUsecase.NewFishAdminInteractor(
+				fishAdminRepository.NewFishSQL(g.db),
+				fishAdminPresenter.NewFishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFishAdminAction(uc, g.log)
+		)
+		act.FindAllByAdmin(c)
+	}
+}
+
+func (g ginEngine) buildCreateFishAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishAdminUsecase.NewFishAdminInteractor(
+				fishAdminRepository.NewFishSQL(g.db),
+				fishAdminPresenter.NewFishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFishCreateAdminAction(uc, g.log, &g.validator)
+		)
+		act.CreateByAdmin(c)
+	}
+}
 
 func (g ginEngine) buildFindAllFishCategoriesAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {

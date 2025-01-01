@@ -64,10 +64,10 @@ func (interactor createFishInteractor) Execute(ctx context.Context, input domain
 		
 	)
 
-	fish, err := interactor.repo.Create(ctx, fish)
-	if err != nil {
-		return interactor.presenter.Output(domain.Fish{}), err
-	}
+	// fish, err := interactor.repo.Create(ctx, fish)
+	// if err != nil {
+	// 	return interactor.presenter.Output(domain.Fish{}), err
+	// }
 
 	return interactor.presenter.Output(fish), nil
 }

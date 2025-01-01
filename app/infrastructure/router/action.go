@@ -42,12 +42,12 @@ import (
 func (g ginEngine) buildFindOneFishRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = fishUsecase.NewFindOneFishInteractor(
+			uc = fishUsecase.NewFishInteractor(
 				fishRepository.NewFishOneSQL(g.db),
-				fishPresenter.NewFindOneFishPresenter(),
+				fishPresenter.NewFishPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindOneFishAction(uc, g.log)
+			act = action.NewFishAction(uc, g.log)
 		)
 		act.FindOne(c)
 	}
@@ -56,12 +56,12 @@ func (g ginEngine) buildFindOneFishRoute() gin.HandlerFunc {
 func (g ginEngine) buildFindAllFishRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = fishUsecase.NewFindAllFishInteractor(
+			uc = fishUsecase.NewFishInteractor(
 				fishRepository.NewFishSQL(g.db),
-				fishPresenter.NewFindAllFishPresenter(),
+				fishPresenter.NewFishPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindAllFishAction(uc, g.log)
+			act = action.NewFishAction(uc, g.log)
 		)
 		act.FindAll(c)
 	}
