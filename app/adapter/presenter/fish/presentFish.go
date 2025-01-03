@@ -19,7 +19,7 @@ func (a findFishPresenter) PresentOne(fish domain.Fish) domain.Fish {
 		Name:           		fish.Name,
 		FamilyName:     		fish.FamilyName,
 		ScientificName: 		fish.ScientificName,
-		FishCategoryId: 		fish.FishCategoryId,
+		FishCategoryID: 		fish.FishCategoryID,
 		Description:    		fish.Description,
 		Length:    				fish.Length,
 		Weight:    				fish.Weight,
@@ -42,7 +42,7 @@ func (a findFishPresenter) PresentAll(fishes []domain.Fish) []domain.Fish {
 			Name: 			fish.Name,
 			FamilyName: 	fish.FamilyName,
 			ScientificName: fish.ScientificName,
-			FishCategoryId: fish.FishCategoryId,
+			FishCategoryID: fish.FishCategoryID,
 			Description: 	fish.Description,
 			FishImages: 	fish.FishImages,
 		})

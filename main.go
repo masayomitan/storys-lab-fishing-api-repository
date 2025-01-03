@@ -17,7 +17,7 @@ func main() {
 		fmt.Println("envファイルの読み込みに失敗しました")
 	}
 
-	var app = router.NewConfig().
+	var app = router.NewAppConfig().
 		Name(os.Getenv("APP_NAME")).
 		ContextTimeout(10 * time.Second).
 		Logger(log.InstanceLogrusLogger).

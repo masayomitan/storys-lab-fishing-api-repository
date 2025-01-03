@@ -31,7 +31,7 @@ func NewFishCategoryAdminAction(uc usecase.FishCategoryAdminUseCase, log logger.
 	}
 }
 
-func NewFishCategoryCreateAdminAction(uc usecase.FishCategoryAdminUseCase, log logger.Logger, val *validator.Validator) FishCategoryCreateAdminAction {
+func NewCreateFishCategoryAdminAction(uc usecase.FishCategoryAdminUseCase, log logger.Logger, val *validator.Validator) FishCategoryCreateAdminAction {
 	return FishCategoryCreateAdminAction{
 		uc:  uc,
 		log: log,

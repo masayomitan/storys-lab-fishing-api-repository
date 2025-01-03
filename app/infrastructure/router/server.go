@@ -18,7 +18,7 @@ import (
 	"storys-lab-fishing-api/app/infrastructure/log"
 )
 
-type config struct {
+type appConfig struct {
 	appName 		string
 	logger  		logger.Logger
 	validator     	*validator.Validator
@@ -28,8 +28,8 @@ type config struct {
 	webServer     	Server
 }
 
-func NewConfig() *config {
-	return &config{}
+func NewAppConfig() *appConfig {
+	return &appConfig{}
 }
 
 func newGinServer(
@@ -98,29 +98,29 @@ func (g ginEngine) Listen() {
 	g.log.Infof("Service down")
 }
 
-func (c *config) ContextTimeout(t time.Duration) *config {
+func (c *appConfig) ContextTimeout(t time.Duration) *appConfig {
 	c.ctxTimeout = t
 	return c
 }
 
-func (c *config) Name(name string) *config {
+func (c *appConfig) Name(name string) *appConfig {
 	c.appName = name
 	return c
 }
 
-func (c *config) Logger(instance int) *config {
+func (c *appConfig) Logger(instance int) *appConfig {
 	log, err := log.NewLoggerFactory(instance)
 	if err != nil {
 		log.Fatalln(err)
 	}
 
 	c.logger = log
-	c.logger.Infof("Successfully configured log")
+	c.logger.Infof("Successfully appConfigured log")
 	return c
 }
 
 // DB接続
-func (c *config) DbSQL() *config {
+func (c *appConfig) DbSQL() *appConfig {
 	db, err := database.DBConnect()
 	if err != nil {
 		c.logger.Fatalln(err)
@@ -132,16 +132,16 @@ func (c *config) DbSQL() *config {
 	return c
 }
 
-func (c *config) Validator() *config {
+func (c *appConfig) Validator() *appConfig {
 	v := validator.NewValidator()
 
-	c.logger.Infof("Successfully configured validator")
+	c.logger.Infof("Successfully appConfigured validator")
 
 	c.validator = v
 	return c
 }
 
-func (c *config) WebServer(instance int) *config {
+func (c *appConfig) WebServer(instance int) *appConfig {
 	s, err := NewWebServerFactory(
 		instance,
 		c.logger,
@@ -155,13 +155,13 @@ func (c *config) WebServer(instance int) *config {
 		c.logger.Fatalln(err)
 	}
 
-	c.logger.Infof("Successfully configured router server")
+	c.logger.Infof("Successfully appConfigured router server")
 
 	c.webServer = s
 	return c
 }
 
-func (c *config) WebServerPort(port string) *config {
+func (c *appConfig) WebServerPort(port string) *appConfig {
 	p, err := strconv.ParseInt(port, 10, 64)
 	if err != nil {
 		c.logger.Fatalln(err)
@@ -170,7 +170,7 @@ func (c *config) WebServerPort(port string) *config {
 	return c
 }
 
-func (c *config) Start() {
+func (c *appConfig) Start() {
 	fmt.Println("start listen...")
 	c.webServer.Listen()
 }

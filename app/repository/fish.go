@@ -14,9 +14,9 @@ type (
 	}
 
 	FishAdminRepository interface {
-		CreateByAdmin(context.Context, domain.Fish) (domain.Fish, error)
 		FindOneByAdmin(context.Context, int) (domain.Fish, error)
 		FindAllByAdmin(context.Context) ([]domain.Fish, error)
+		CreateByAdmin(context.Context, domain.Fish) (domain.Fish, error)
 		// WithTransaction(context.Context, func(context.Context) error) error
 	}
 )
