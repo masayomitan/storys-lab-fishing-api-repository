@@ -1,6 +1,7 @@
 CREATE TABLE tides (
     id INT AUTO_INCREMENT PRIMARY KEY ,
     prefecture_id INT NOT NULL COMMENT '都道府県のID',
+    area_id INT NOT NULL COMMENT 'エリアのID',
     date DATE NOT NULL COMMENT '日付',
     sunrise_time TIME COMMENT '日の出時刻',
     sunset_time TIME COMMENT '日の入り時刻',
@@ -27,6 +28,8 @@ CREATE TABLE tides (
     updated_at DATETIME NOT NULL COMMENT '更新日時',
     deleted_at DATETIME DEFAULT NULL COMMENT '削除日時',
     FOREIGN KEY (prefecture_id) REFERENCES prefectures(id),
+    FOREIGN KEY (area_id) REFERENCES areas(id),
     INDEX idx_date (date),
+    INDEX idx_area (area_id),
     INDEX idx_weather (weather)
 ) COMMENT='潮汐に関連する情報を保持するテーブル';

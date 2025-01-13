@@ -1,4 +1,4 @@
-CREATE TABLE fishes_dishes (
+CREATE TABLE fishes_to_dishes (
     id INT AUTO_INCREMENT PRIMARY KEY,
     fish_id INT NOT NULL,
     dish_id INT NOT NULL,

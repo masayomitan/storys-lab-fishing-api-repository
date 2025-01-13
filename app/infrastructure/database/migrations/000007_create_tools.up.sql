@@ -1,0 +1,22 @@
+CREATE TABLE tools (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    tool_category_id INT NOT NULL COMMENT '釣り道具カテゴリのID',
+    material_id INT NOT NULL COMMENT '材料のID',
+    company_id INT NULL COMMENT '会社のID',
+    name VARCHAR(255) COMMENT '釣り道具の名前',
+    description TEXT COMMENT '説明',
+    size VARCHAR(255) COMMENT 'サイズ',
+    weight FLOAT COMMENT '重量',
+    durability INT COMMENT '耐久性',
+    tool_usage TEXT COMMENT '使用用途',
+    price INT COMMENT '価格',
+    maker VARCHAR(255) COMMENT 'メーカー名',
+    recommend TINYINT UNSIGNED COMMENT 'おすすめ度 (5段階)',
+    easy_fishing TINYINT UNSIGNED COMMENT '使いやすさ (5段階)',
+    created_at DATETIME NOT NULL COMMENT '作成日時',
+    updated_at DATETIME NOT NULL COMMENT '更新日時',
+    deleted_at DATETIME DEFAULT NULL COMMENT '削除日時',
+    CONSTRAINT fk_tool_category FOREIGN KEY (tool_category_id) REFERENCES tool_categories(id),
+    CONSTRAINT fk_material FOREIGN KEY (material_id) REFERENCES materials(id),
+    CONSTRAINT fk_company FOREIGN KEY (company_id) REFERENCES companies(id)
+) COMMENT='釣り道具情報を保存するテーブル';
