@@ -88,30 +88,30 @@ func DBConnect() (*gorm.DB, error) {
 	cfg := NewConfigDB()
 	var connect string
 	fmt.Println(os.Getenv("ENV"))
-	// connect = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-	// 	secretData.Username,
-	// 	secretData.Password,
-	// 	secretData.Host,
-	// 	secretData.Port,
-	// 	cfg.database,
-	// )
-	if (os.Getenv("ENV") == "local") {
-		connect = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-			cfg.user,
-			cfg.pass,
-			cfg.host,
-			cfg.port,
-			cfg.database,
-		)
-	} else {
-		connect = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-			secretData.Username,
-			secretData.Password,
-			secretData.Host,
-			secretData.Port,
-			cfg.database,
-		)
-	}
+	connect = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+		secretData.Username,
+		secretData.Password,
+		secretData.Host,
+		secretData.Port,
+		cfg.database,
+	)
+	// if (os.Getenv("ENV") == "local") {
+	// 	connect = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+	// 		cfg.user,
+	// 		cfg.pass,
+	// 		cfg.host,
+	// 		cfg.port,
+	// 		cfg.database,
+	// 	)
+	// } else {
+	// 	connect = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+	// 		secretData.Username,
+	// 		secretData.Password,
+	// 		secretData.Host,
+	// 		secretData.Port,
+	// 		cfg.database,
+	// 	)
+	// }
 
 	fmt.Println("データベースの接続情報:", connect)
 
