@@ -10,19 +10,19 @@ type GormAdapter struct {
 
 type FishSQL struct {
 	db             *GormAdapter
-	tableName string
+	tableName 		string
 }
 
 func NewFishSQL(db *gorm.DB) FishSQL {
 	return FishSQL{
 		db:             &GormAdapter{DB: db},
-		tableName: "fishes",
+		tableName: 		"fishes",
 	}
 }
 
 func NewFishOneSQL(db *gorm.DB) FishSQL {
 	return FishSQL{
 		db:             &GormAdapter{DB: db},
-		tableName: "fishes",
+		tableName: 		"fishes",
 	}
 }

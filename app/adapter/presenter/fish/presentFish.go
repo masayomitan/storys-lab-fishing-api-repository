@@ -15,22 +15,23 @@ func NewFishPresenter() usecase.FishPresenter {
 
 func (a findFishPresenter) PresentOne(fish domain.Fish) domain.Fish {
 	return domain.Fish{
-		ID:             		fish.ID,
-		Name:           		fish.Name,
-		FamilyName:     		fish.FamilyName,
-		ScientificName: 		fish.ScientificName,
-		FishCategoryID: 		fish.FishCategoryID,
-		Description:    		fish.Description,
-		Length:    				fish.Length,
-		Weight:    				fish.Weight,
-		Habitat:    			fish.Habitat,
-		DepthRange:    			fish.DepthRange,
-		WaterTemperatureRange: 	fish.WaterTemperatureRange,
-		ConservationStatus: 	fish.ConservationStatus,
-		FishCategory: 			fish.FishCategory,
-		FishingMethods: 		fish.FishingMethods,
-		Dishes: 				fish.Dishes,
-		FishImages: 			fish.FishImages,
+		ID:             			fish.ID,
+		Name:           			fish.Name,
+		ScientificName: 			fish.ScientificName,
+		FishCategoryID: 			fish.FishCategoryID,
+		Description:    			fish.Description,
+		Length:    					fish.Length,
+		Weight:    					fish.Weight,
+		Habitat:    				fish.Habitat,
+		DepthRangeMax:    			fish.DepthRangeMax,
+		DepthRangeMin:    			fish.DepthRangeMin,
+		WaterTemperatureRangeMax: 	fish.WaterTemperatureRangeMax,
+		WaterTemperatureRangeMin: 	fish.WaterTemperatureRangeMin,
+		ConservationStatus: 		fish.ConservationStatus,
+		FishCategory: 				fish.FishCategory,
+		FishingMethods: 			fish.FishingMethods,
+		Dishes: 					fish.Dishes,
+		Images: 					fish.Images,
 	}
 }
 
@@ -40,11 +41,10 @@ func (a findFishPresenter) PresentAll(fishes []domain.Fish) []domain.Fish {
 		output = append(output, domain.Fish{
 			ID:				fish.ID,
 			Name: 			fish.Name,
-			FamilyName: 	fish.FamilyName,
 			ScientificName: fish.ScientificName,
 			FishCategoryID: fish.FishCategoryID,
 			Description: 	fish.Description,
-			FishImages: 	fish.FishImages,
+			Images: 		fish.Images,
 		})
 	}
 	return output

@@ -17,6 +17,8 @@ func (a FishCategoryPresenter) PresentOne(FishCategory domain.FishCategory) doma
 	return domain.FishCategory{
 		ID:             FishCategory.ID,
 		Name:           FishCategory.Name,
+		EnglishName:	FishCategory.EnglishName,
+		FamilyName:		FishCategory.FamilyName,
 		Description:    FishCategory.Description,
 	}
 }
@@ -27,6 +29,8 @@ func (a FishCategoryPresenter) PresentAll(fishCategories []domain.FishCategory) 
 		output = append(output, domain.FishCategory{
 			ID:             fishCategory.ID,
 			Name:           fishCategory.Name,
+			EnglishName:	fishCategory.EnglishName,
+			FamilyName:		fishCategory.FamilyName,
 			Description:    fishCategory.Description,
 		})
 	}

@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/pkg/errors"
 	"storys-lab-fishing-api/app/domain"
-	"storys-lab-fishing-api/app/utils"
 )
 
 func (a FishCategorySQL) FindAllByAdmin(ctx context.Context) ([]domain.FishCategory, error) {
@@ -20,6 +19,8 @@ func (a FishCategorySQL) FindAllByAdmin(ctx context.Context) ([]domain.FishCateg
 		var fishCategory = domain.NewFishCategory(
 			json.ID,
 			json.Name,
+			json.FamilyName,
+			json.EnglishName,
 			json.Description,
 			json.CreatedAt,
 			json.UpdatedAt,
@@ -39,6 +40,8 @@ func (a FishCategorySQL) FindOneByAdmin(ctx context.Context, id int) (domain.Fis
 	var fishCategory = domain.NewFishCategory(
 		json.ID,
 		json.Name,
+		json.FamilyName,
+		json.EnglishName,
 		json.Description,
 		json.CreatedAt,
 		json.UpdatedAt,
@@ -48,29 +51,17 @@ func (a FishCategorySQL) FindOneByAdmin(ctx context.Context, id int) (domain.Fis
 	return fishCategory, nil
 }
 
-func (a FishCategorySQL) CreateByAdmin(ctx context.Context, requestParam domain.FishCategory) (domain.FishCategory, error) {
-	utils.SetTimestamps(&requestParam)
-
-	if err := a.db.Store(ctx, a.tableName, &requestParam); err != nil {
-		return domain.FishCategory{}, errors.Wrap(err, "error creating fish-category")
-	}
-
-	fmt.Println("")
-	return requestParam, nil
-}
-
 func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
-    return ga.DB.Table(table).Where(query).
+    return ga.DB.Table(table).
+		Where(query).
+		Where("deleted_at IS NULL").
 		Order("id asc").
 		Find(result).Error
 }
 
 func (ga *GormAdapter) FindOneTool(ctx context.Context, table string, tool_id int, result interface{}) error {
-	return ga.DB.Table(table).Where("id = ?", tool_id).
+	return ga.DB.Table(table).
+		Where("id = ?", tool_id).
+		Where("deleted_at IS NULL").
 		First(result).Error
-}
-
-
-func (ga *GormAdapter) Store(ctx context.Context, table string, entity interface{}) error {
-    return ga.DB.Table(table).Create(entity).Error
 }

@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	"fmt"
+	// "fmt"
 	"io"
 
 	"github.com/aws/aws-sdk-go-v2/service/s3"
@@ -11,7 +11,7 @@ import (
 )
 
 type S3Uploader interface {
-	UploadFile(ctx context.Context, file io.Reader, fileName string) (string, error)
+	UploadFile(ctx context.Context, file io.Reader, fileName string) (s3URL string, err error)
 }
 
 type DefaultS3Uploader struct {
@@ -39,5 +39,5 @@ func (u *DefaultS3Uploader) UploadFile(ctx context.Context, file io.Reader, file
 		return "", errors.Wrap(err, "failed to upload file to S3")
 	}
 
-	return fmt.Sprintf("https://%s.s3.amazonaws.com/%s", u.bucket, fileName), nil
+	return fileName, nil
 }

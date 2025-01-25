@@ -8,8 +8,8 @@ import (
 	"storys-lab-fishing-api/app/utils"
 )
 
-func (a ImageSQL) UpdateByAdmin(ctx context.Context, requestParam domain.Image) (domain.Image, error) {
-	utils.SetTimestamps(&requestParam)
+func (a ImageSQL) UploadByAdmin(ctx context.Context, requestParam domain.Image) (domain.Image, error) {
+	utils.SetCreateTimestamps(&requestParam)
 
 	if err := a.db.Store(ctx, a.tableName, &requestParam); err != nil {
 		return domain.Image{}, errors.Wrap(err, "error creating account")

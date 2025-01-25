@@ -129,7 +129,6 @@ func (t FishAdminAction) FindAllByAdmin(c *gin.Context) {
 		return
 	}
 	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish list")
-
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 
@@ -151,7 +150,6 @@ func (t MutationFishAdminAction) CreateByAdmin(c *gin.Context) {
 		response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
 		return
 	}
-	fmt.Println(requestParam)
 
 	if err := t.val.ValidateStruct(requestParam); err != nil {
 		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
@@ -170,6 +168,44 @@ func (t MutationFishAdminAction) CreateByAdmin(c *gin.Context) {
 		return
 	}
 	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish-category")
-
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}
+
+func (t FishAdminAction) DeleteByAdmin(c *gin.Context) {
+    const logKey = "delete_fish"
+	fmt.Println("deletteeee")
+	fmt.Println(c.Param("id"))
+    // パスパラメータからIDを取得
+    id := utils.StrToInt(c.Param("id"))
+
+    if id == 0 {
+        err := fmt.Errorf("id is required")
+        logging.NewError(
+            t.log,
+            err,
+            logKey,
+            http.StatusBadRequest,
+        ).Log("missing id in request")
+        response.NewError(err, http.StatusBadRequest).Send(c.Writer)
+        return
+    }
+
+    // UseCaseを呼び出して削除処理を実行
+    err := t.uc.DeleteExecuteByAdmin(c.Request.Context(), id)
+    if err != nil {
+        logging.NewError(
+            t.log,
+            err,
+            logKey,
+            http.StatusInternalServerError,
+        ).Log("error when deleting the fish")
+        response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
+        return
+    }
+
+    logging.NewInfo(t.log, logKey, http.StatusOK).Log("successfully deleted fish")
+    response.NewSuccess(map[string]interface{}{
+		"status":  http.StatusOK,
+		"message": "Fish deleted successfully",
+	}, http.StatusOK).Send(c.Writer)
 }

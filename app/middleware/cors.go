@@ -19,6 +19,8 @@ func SetupCORS() gin.HandlerFunc {
 			"POST",
 			"GET",
 			"PUT",
+			"PATCH",
+			"DELETE",
 			"OPTIONS",
 		},
 		AllowHeaders: []string{

@@ -10,7 +10,6 @@ func convertFishes(fishes []domain.Fish) []domain.Fish {
 		result = append(result, domain.Fish{
 			ID:        f.ID,
 			Name:      f.Name,
-			FamilyName: f.FamilyName,
 		})
 	}
 	return result
