@@ -12,8 +12,14 @@ func SetupCORS() gin.HandlerFunc {
 	return cors.New(cors.Config{
 		AllowOrigins: []string{
 			"http://localhost:3000",
+
+			// 一般公開側
 			"https://www.storys-lab-fishing.com",
 			"https://storys-lab-fishing.com",
+
+			// 管理側
+			"https://admin-fishing.storys-lab.com",
+			"https://www.admin-fishing.storys-lab.com",
 		},
 		AllowMethods: []string{
 			"POST",
