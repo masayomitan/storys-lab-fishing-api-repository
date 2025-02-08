@@ -19,8 +19,8 @@ type FishCategory struct {
 	EnglishName  	string      `json:"english_name" validate:"omitempty,max=255"`
 	FamilyName  	string      `json:"family_name" validate:"omitempty,max=255"`
 	Description 	string 		`json:"description" validate:"max=2000"`       
-	CreatedAt   	time.Time 	`gorm:"created_at"`
-	UpdatedAt 		time.Time 	`gorm:"updated_at"`
+	CreatedAt   	time.Time	`gorm:"created_at" json:"created_at"`
+    UpdatedAt		time.Time  	`gorm:"updated_at" json:"updated_at"`
 	DeletedAt		*time.Time  `gorm:"default:NULL"`
 }
 
@@ -39,13 +39,13 @@ type Fish struct {
 	WaterTemperatureRangeMax 	int             `json:"water_temperature_range_max"`
 	WaterTemperatureRangeMin 	int             `json:"water_temperature_range_min"`
 	ConservationStatus    		string          `json:"conservation_status" validate:"omitempty,max=100"`
-	CreatedAt             		time.Time       `gorm:"created_at"`
-	UpdatedAt             		time.Time       `gorm:"updated_at"`
+	CreatedAt 					time.Time  		`gorm:"created_at" json:"created_at"`
+    UpdatedAt 					time.Time  		`gorm:"updated_at" json:"updated_at"`
 	DeletedAt			  		*time.Time  	`gorm:"default:NULL"`
 
 	FishCategory          		FishCategory    `gorm:"foreignKey:FishCategoryID" validate:"-"`
-	FishingMethods        		[]FishingMethod `gorm:"many2many:fishing_methods_fishes;foreignKey:ID;joinForeignKey:FishId;References:ID;joinReferences:FishingMethodID" validate:"-"`
-	Dishes                		[]Dish          `gorm:"many2many:fishes_dishes;foreignKey:ID;joinForeignKey:FishId;References:ID;joinReferences:DishID" validate:"-"`
+	FishingMethods        		[]FishingMethod `gorm:"many2many:fishing_methods_to_fishes;foreignKey:ID;joinForeignKey:FishId;References:ID;joinReferences:FishingMethodID" validate:"-"`
+	Dishes                		[]Dish          `gorm:"many2many:fishes_to_dishes;foreignKey:ID;joinForeignKey:FishId;References:ID;joinReferences:DishID" validate:"-"`
 	Images 						[]Image 		`gorm:"many2many:fishes_to_images;joinForeignKey:FishID;JoinReferences:ImageID" validate:"-"`
 }
 
@@ -55,8 +55,8 @@ type FishImage struct {
 	S3Url 		string 	     	`json:"s3_url"`
 	Sort 		string 			`json:"sort"`
 	IsMain 		string 			`json:"is_main"`
-	CreatedAt	time.Time       `gorm:"created_at"`
-	UpdatedAt	time.Time       `gorm:"updated_at"`
+	CreatedAt   time.Time  		`gorm:"created_at" json:"created_at"`
+    UpdatedAt	time.Time  		`gorm:"updated_at" json:"updated_at"`
 	DeletedAt	time.Time 	  	`gorm:"deleted_at"`
 }
 
@@ -75,6 +75,8 @@ func NewFish(
 	waterTemperatureRangeMax 	int,
 	waterTemperatureRangeMin 	int,
 	conservationStatus 			string,
+	createdAt                   time.Time,
+	updatedAt                   time.Time,
 
 	fishCategory 				FishCategory,
 	fishingMethods 				[]FishingMethod,
@@ -96,6 +98,8 @@ func NewFish(
 		WaterTemperatureRangeMax: 	waterTemperatureRangeMax,
 		WaterTemperatureRangeMin: 	waterTemperatureRangeMin,
 		ConservationStatus: 		conservationStatus,
+		CreatedAt: 					createdAt,
+		UpdatedAt: 					updatedAt,
 
 		FishCategory: 				fishCategory,
 		FishingMethods: 			fishingMethods,

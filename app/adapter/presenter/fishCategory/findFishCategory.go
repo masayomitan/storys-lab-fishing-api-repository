@@ -13,13 +13,15 @@ func NewFishCategoryPresenter() usecase.FishCategoryPresenter {
 	return FishCategoryPresenter{}
 }
 
-func (a FishCategoryPresenter) PresentOne(FishCategory domain.FishCategory) domain.FishCategory {
+func (a FishCategoryPresenter) PresentOne(fishCategory domain.FishCategory) domain.FishCategory {
 	return domain.FishCategory{
-		ID:             FishCategory.ID,
-		Name:           FishCategory.Name,
-		EnglishName:	FishCategory.EnglishName,
-		FamilyName:		FishCategory.FamilyName,
-		Description:    FishCategory.Description,
+		ID:             fishCategory.ID,
+		Name:           fishCategory.Name,
+		EnglishName:	fishCategory.EnglishName,
+		FamilyName:		fishCategory.FamilyName,
+		Description:    fishCategory.Description,
+		CreatedAt:		fishCategory.CreatedAt,
+		UpdatedAt:		fishCategory.UpdatedAt,
 	}
 }
 
@@ -32,6 +34,8 @@ func (a FishCategoryPresenter) PresentAll(fishCategories []domain.FishCategory) 
 			EnglishName:	fishCategory.EnglishName,
 			FamilyName:		fishCategory.FamilyName,
 			Description:    fishCategory.Description,
+			CreatedAt:		fishCategory.CreatedAt,
+			UpdatedAt:		fishCategory.UpdatedAt,
 		})
 	}
 	return output

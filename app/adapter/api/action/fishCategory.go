@@ -68,11 +68,11 @@ func (t FishCategoryAdminAction) FindAllByAdmin(c *gin.Context) {
 			err,
 			logKey,
 			http.StatusInternalServerError,
-		).Log("error when returning the fish-category")
+		).Log("error when returning the fishCategory")
 
 		return
 	}
-	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish-category")
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fishCategory")
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 
@@ -106,11 +106,11 @@ func (t FishCategoryCreateAdminAction) CreateByAdmin(c *gin.Context) {
 			err,
 			logKey,
 			http.StatusInternalServerError,
-		).Log("error when returning the fish-category")
+		).Log("error when returning the fishCategory")
 		response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
 		return
 	}
-	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish-category")
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fishCategory")
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 
@@ -144,11 +144,11 @@ func (t FishCategoryCreateAdminAction) UpdateByAdmin(c *gin.Context, id int) {
 			err,
 			logKey,
 			http.StatusInternalServerError,
-		).Log("error when returning the fish-category")
+		).Log("error when returning the fishCategory")
 		response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
 		return
 	}
-	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish-category")
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fishCategory")
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 
@@ -178,11 +178,14 @@ func (t FishCategoryAdminAction) DeleteByAdmin(c *gin.Context) {
             err,
             logKey,
             http.StatusInternalServerError,
-        ).Log("error when deleting the fish-category")
+        ).Log("error when deleting the fishCategory")
         response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
         return
     }
 
-    logging.NewInfo(t.log, logKey, http.StatusOK).Log("successfully deleted fish-category")
-    response.NewSuccess(nil, http.StatusOK).Send(c.Writer)
+    logging.NewInfo(t.log, logKey, http.StatusOK).Log("successfully deleted fishCategory")
+    response.NewSuccess(map[string]interface{}{
+		"status":  http.StatusOK,
+		"message": "FishCategory deleted successfully",
+	}, http.StatusOK).Send(c.Writer)
 }

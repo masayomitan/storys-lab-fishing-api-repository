@@ -52,7 +52,6 @@ func (ga *GormAdapter) Update(ctx context.Context, table string, entity interfac
 }
 
 func (ga *GormAdapter) Delete(ctx context.Context, table string, id int) error {
-	// モデルを直接指定
 	return ga.DB.Table(table).
 		Where("id = ?", id).
 		Update("deleted_at", gorm.Expr("CURRENT_TIMESTAMP")).Error

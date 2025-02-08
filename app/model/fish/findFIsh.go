@@ -32,6 +32,8 @@ func (a FishSQL) FindOne(ctx context.Context, id int) (domain.Fish, error) {
 		json.WaterTemperatureRangeMax,
 		json.WaterTemperatureRangeMin,
 		json.ConservationStatus,
+		json.CreatedAt,
+		json.UpdatedAt,
 
 		convertFishCategory(json.FishCategory),
 		convertFishingMethods(json.FishingMethods),
@@ -56,8 +58,8 @@ func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 		var fish = domain.NewFish(
 			json.ID,
 			json.Name,
-			json.EnglishName,
 			json.ScientificName,
+			json.EnglishName,
 			json.FishCategoryID,
 			json.Description,
 			json.Length,
@@ -68,6 +70,9 @@ func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
 			json.WaterTemperatureRangeMax,
 			json.WaterTemperatureRangeMin,
 			json.ConservationStatus,
+			json.CreatedAt,
+			json.UpdatedAt,
+
 			convertFishCategory(json.FishCategory),
 			convertFishingMethods(json.FishingMethods),
 			convertDishes(json.Dishes),
@@ -89,8 +94,8 @@ func (a FishSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Fish, error
 	var fish = domain.NewFish(
 		json.ID,
 		json.Name,
-		json.EnglishName,
 		json.ScientificName,
+		json.EnglishName,
 		json.FishCategoryID,
 		json.Description,
 		json.Length,
@@ -101,6 +106,8 @@ func (a FishSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Fish, error
 		json.WaterTemperatureRangeMax,
 		json.WaterTemperatureRangeMin,
 		json.ConservationStatus,
+		json.CreatedAt,
+		json.UpdatedAt,
 
 		convertFishCategory(json.FishCategory),
 		convertFishingMethods(json.FishingMethods),
@@ -138,12 +145,16 @@ func (a FishSQL) FindAllByAdmin(ctx context.Context) ([]domain.Fish, error) {
 			json.WaterTemperatureRangeMax,
 			json.WaterTemperatureRangeMin,
 			json.ConservationStatus,
+			json.CreatedAt,
+			json.UpdatedAt,
+
 			convertFishCategory(json.FishCategory),
 			convertFishingMethods(json.FishingMethods),
 			convertDishes(json.Dishes),
 			convertImages(json.Images),
 		)
-
+		fmt.Println("FindAllByAdmin!!!")
+		fmt.Println(fishes)
 		fishes = append(fishes, fish)
 	}
 
@@ -154,20 +165,20 @@ func (ga *GormAdapter) FindOneORM(ctx context.Context, table string, id int, res
 	return ga.DB.Table(table).
 		Where("id = ?", id).
 		Where("deleted_at IS NULL").
-		Preload("FishImages").
+		Preload("Images").
 		Preload("FishCategory").
 		Preload("FishingMethods", func(*gorm.DB) *gorm.DB {
-			return ga.DB.Select("fishing_methods.*, fishing_methods_fishes.is_traditional").
-				Joins("inner join fishing_methods_fishes on fishing_methods_fishes.fishing_method_id = fishing_methods.id").
-				Where("fishing_methods_fishes.fish_id = ?", id)
+			return ga.DB.Select("fishing_methods.*, fishing_methods_to_fishes.is_traditional").
+				Joins("inner join fishing_methods_to_fishes on fishing_methods_to_fishes.fishing_method_id = fishing_methods.id").
+				Where("fishing_methods_to_fishes.fish_id = ?", id)
 		}).
-		Preload("Dishes.DishImages").
+		Preload("Dishes.Images").
 		First(result).Error
 }
 
 func (ga *GormAdapter) FindAllORM(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
-		// Preload("FishImages").
+		Preload("Images").
 		Where("deleted_at IS NULL").
 		Order("id asc").
 		Find(result).Error
