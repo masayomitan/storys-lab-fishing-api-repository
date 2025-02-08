@@ -20,6 +20,9 @@ func SetupCORS() gin.HandlerFunc {
 			// 管理側
 			"https://admin-fishing.storys-lab.com",
 			"https://www.admin-fishing.storys-lab.com",
+			// 暫定 SSL認証行けたら外す
+			"http://admin-fishing.storys-lab.com",
+			"http://www.admin-fishing.storys-lab.com",
 		},
 		AllowMethods: []string{
 			"POST",
