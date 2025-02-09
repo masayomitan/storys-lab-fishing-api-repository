@@ -4,7 +4,6 @@ import (
 	"net/http"
 	// "fmt"
 	"strconv"
-	"io"
 	"github.com/gin-gonic/gin"
 	"storys-lab-fishing-api/app/adapter/api/logging"
 	"storys-lab-fishing-api/app/adapter/api/response"
@@ -95,6 +94,8 @@ func (t MutationImageAdminAction) UploadByAdmin(c *gin.Context) {
 
 	// Retrieve files from the form
 	files := form.File["files"]
+	names := form.Value["names"]
+
 	if len(files) == 0 {
 		logging.NewError(
 			t.log,
@@ -108,32 +109,11 @@ func (t MutationImageAdminAction) UploadByAdmin(c *gin.Context) {
 
 	// Retrieve image_type from the form
 	imageTypeStr := form.Value["image_type"]
-	if len(imageTypeStr) == 0 {
-		logging.NewError(
-			t.log,
-			err,
-			logKey,
-			http.StatusBadRequest,
-		).Log("image_type not provided in the request")
-		response.NewError(err, http.StatusBadRequest).Send(c.Writer)
-		return
-	}
+	imageType, _ := strconv.Atoi(imageTypeStr[0])
 
-	imageType, err := strconv.Atoi(imageTypeStr[0])
-	if err != nil {
-		logging.NewError(
-			t.log,
-			err,
-			logKey,
-			http.StatusBadRequest,
-		).Log("invalid image_type value")
-		response.NewError(err, http.StatusBadRequest).Send(c.Writer)
-		return
-	}
+	var imagePayloads []usecase.ImageUploadPayload
 
-	// Convert files to io.Reader
-	fileReaders := make([]io.Reader, 0, len(files))
-	for _, fileHeader := range files {
+	for i, fileHeader := range files {
 		file, err := fileHeader.Open()
 		if err != nil {
 			logging.NewError(
@@ -146,15 +126,23 @@ func (t MutationImageAdminAction) UploadByAdmin(c *gin.Context) {
 			return
 		}
 		defer file.Close()
-		fileReaders = append(fileReaders, file)
+
+		name := ""
+		if i < len(names) {
+			name = names[i]
+		}
+
+		imagePayloads = append(imagePayloads, usecase.ImageUploadPayload{
+			File: file,
+			Name: name,
+		})
 	}
 
-	// Create the request payload
 	requestPayload := struct {
-		Images    []io.Reader
+		Images    []usecase.ImageUploadPayload
 		ImageType int
 	}{
-		Images:    fileReaders,
+		Images:    imagePayloads,
 		ImageType: imageType,
 	}
 

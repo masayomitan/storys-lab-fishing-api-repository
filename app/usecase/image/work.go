@@ -9,11 +9,16 @@ import (
 	"storys-lab-fishing-api/app/service"
 )
 
+type ImageUploadPayload struct {
+	File io.Reader
+	Name string
+}
+
 type ImageAdminUseCase interface {
 	// FindOneExecuteByAdmin(ctx context.Context, id int) (domain.Image, error)
 	FindAllExecuteByAdmin(ctx context.Context, typeID string) ([]domain.Image, error)
 	UploadExecuteByAdmin(ctx context.Context, requestPayload struct {
-		Images    []io.Reader
+		Images    []ImageUploadPayload
 		ImageType int
 	})  ([]domain.Image, error)
 }
