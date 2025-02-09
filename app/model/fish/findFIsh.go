@@ -133,8 +133,8 @@ func (a FishSQL) FindAllByAdmin(ctx context.Context) ([]domain.Fish, error) {
 		var fish = domain.NewFish(
 			json.ID,
 			json.Name,
-			json.EnglishName,
 			json.ScientificName,
+			json.EnglishName,
 			json.FishCategoryID,
 			json.Description,
 			json.Length,
@@ -153,8 +153,7 @@ func (a FishSQL) FindAllByAdmin(ctx context.Context) ([]domain.Fish, error) {
 			convertDishes(json.Dishes),
 			convertImages(json.Images),
 		)
-		fmt.Println("FindAllByAdmin!!!")
-		fmt.Println(fishes)
+
 		fishes = append(fishes, fish)
 	}
 

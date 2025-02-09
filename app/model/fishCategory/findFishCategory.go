@@ -19,8 +19,8 @@ func (a FishCategorySQL) FindAllByAdmin(ctx context.Context) ([]domain.FishCateg
 		var fishCategory = domain.NewFishCategory(
 			json.ID,
 			json.Name,
-			json.FamilyName,
 			json.EnglishName,
+			json.FamilyName,
 			json.Description,
 			json.CreatedAt,
 			json.UpdatedAt,
@@ -40,8 +40,8 @@ func (a FishCategorySQL) FindOneByAdmin(ctx context.Context, id int) (domain.Fis
 	var fishCategory = domain.NewFishCategory(
 		json.ID,
 		json.Name,
-		json.FamilyName,
 		json.EnglishName,
+		json.FamilyName,
 		json.Description,
 		json.CreatedAt,
 		json.UpdatedAt,

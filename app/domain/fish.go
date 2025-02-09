@@ -120,6 +120,7 @@ func NewFishCategory(
 	return FishCategory{
 		ID: 			ID,
 		Name: 			name,
+		EnglishName: 	englishName,
 		FamilyName: 	familyName,
 		Description: 	description,
 		CreatedAt: 		createdAt,
