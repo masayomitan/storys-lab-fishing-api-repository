@@ -86,34 +86,27 @@ func DBConnect() (*gorm.DB, error) {
 		return nil, fmt.Errorf("envファイルの読み込みに失敗しました: %w", err)
 	}
 
-	// cfg := NewConfigDB()
+	cfg := NewConfigDB()
 	var connect string
 	fmt.Println(os.Getenv("ENV"))
-	// prod
-	connect = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-		secretData.Username,
-		secretData.Password,
-		secretData.Host,
-		secretData.Port,
-		secretData.Database,
-	)
-	// if (os.Getenv("ENV") == "local") {
-	// 	connect = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-	// 		cfg.user,
-	// 		cfg.pass,
-	// 		cfg.host,
-	// 		cfg.port,
-	// 		cfg.database,
-	// 	)
-	// } else {
-	// 	connect = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
-	// 		secretData.Username,
-	// 		secretData.Password,
-	// 		secretData.Host,
-	// 		secretData.Port,
-	// 		secretData.Database,
-	// 	)
-	// }
+
+	if (os.Getenv("ENV") == "local") {
+		connect = fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			cfg.user,
+			cfg.pass,
+			cfg.host,
+			cfg.port,
+			cfg.database,
+		)
+	} else {
+		connect = fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?charset=utf8mb4&parseTime=True&loc=Local",
+			secretData.Username,
+			secretData.Password,
+			secretData.Host,
+			secretData.Port,
+			secretData.Database,
+		)
+	}
 
 	fmt.Println("データベースの接続情報:", connect)
 
