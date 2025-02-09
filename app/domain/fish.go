@@ -32,7 +32,7 @@ type Fish struct {
 	FishCategoryID        		int             `json:"fish_category_id" validate:"required"`
 	Description           		string          `json:"description" validate:"omitempty,max=2000"`
 	Length                		float64         `gorm:"type:decimal(10,3)" json:"length" validate:"gte=0,lte=1000"`
-	Weight                		float64         `gorm:"type:decimal(10,3)" json:"weight" validate:"gte=0,lte=100"`
+	Weight                		float64         `gorm:"type:decimal(10,3)" json:"weight" validate:"gte=0,lte=1000"`
 	Habitat               		string          `json:"habitat" validate:"omitempty,max=500"`
 	DepthRangeMin         		int             `json:"depth_range_max" validate:"gte=0,lte=1000"`
 	DepthRangeMax         		int             `json:"depth_range_min" validate:"gte=0,lte=1000"`
