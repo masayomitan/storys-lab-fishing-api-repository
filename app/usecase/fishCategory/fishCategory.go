@@ -45,7 +45,7 @@ func (t fishCategoryAdminInteractor) UpdateExecuteByAdmin(ctx context.Context, r
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
 	defer cancel()
 
-	fishCategory, err := t.repo.CreateByAdmin(ctx, requestParam)
+	fishCategory, err := t.repo.UpdateByAdmin(ctx, requestParam, id)
 	if err != nil {
 		return t.presenter.PresentOne(domain.FishCategory{}), err
 	}

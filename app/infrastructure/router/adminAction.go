@@ -74,6 +74,22 @@ func (g ginEngine) buildDeleteFishAdminRoute() gin.HandlerFunc {
 }
 
 // 管理者用の「すべての魚カテゴリを取得」ルート
+func (g ginEngine) buildFindOneFishCategoriesAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishCategoriesAdminUsecase.NewFishCategoryAdminInteractor(
+				fishCategoriesAdminRepository.NewFishCategorySQL(g.db),
+				fishCategoriesAdminPresenter.NewFishCategoryPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFishCategoryAdminAction(uc, g.log)
+		)
+		// 管理者向けにすべての魚カテゴリを取得するアクションを実行します。
+		act.FindOneByAdmin(c)
+	}
+}
+
+// 管理者用の「すべての魚カテゴリを取得」ルート
 func (g ginEngine) buildFindAllFishCategoriesAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -89,6 +105,8 @@ func (g ginEngine) buildFindAllFishCategoriesAdminRoute() gin.HandlerFunc {
 	}
 }
 
+
+
 // 管理者用の「魚カテゴリを作成」ルート
 func (g ginEngine) buildCreateFishCategoryAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -98,28 +116,28 @@ func (g ginEngine) buildCreateFishCategoryAdminRoute() gin.HandlerFunc {
 				fishCategoriesAdminPresenter.NewFishCategoryPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewCreateFishCategoryAdminAction(uc, g.log, &g.validator)
+			act = action.NewMutationFishCategoryAdminAction(uc, g.log, &g.validator)
 		)
 		// 管理者向けに魚カテゴリを作成するアクションを実行します。
 		act.CreateByAdmin(c)
 	}
 }
 
-//管理者用の「魚カテゴリを更新」ルート
-// func (g ginEngine) buildUpdateFishCategoryAdminRoute() gin.HandlerFunc {
-// 	return func(c *gin.Context) {
-// 		var (
-// 			uc = fishCategoriesAdminUsecase.NewFishCategoryAdminInteractor(
-// 				fishCategoriesAdminRepository.NewFishCategorySQL(g.db),
-// 				fishCategoriesAdminPresenter.NewFishCategoryPresenter(),
-// 				g.ctxTimeout,
-// 			)
-// 			act = action.NewUpdateFishCategoryAdminAction(uc, g.log, &g.validator)
-// 		)
-// 		// 管理者向けに魚カテゴリを更新するアクションを実行します。
-// 		act.UpdateByAdmin(c)
-// 	}
-// }
+// 管理者用の「魚カテゴリを更新」ルート
+func (g ginEngine) buildUpdateFishCategoryAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishCategoriesAdminUsecase.NewFishCategoryAdminInteractor(
+				fishCategoriesAdminRepository.NewFishCategorySQL(g.db),
+				fishCategoriesAdminPresenter.NewFishCategoryPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationFishCategoryAdminAction(uc, g.log, &g.validator)
+		)
+		// 管理者向けに魚カテゴリを更新するアクションを実行します。
+		act.UpdateByAdmin(c)
+	}
+}
 
 // 管理者用の「魚カテゴリを削除」ルート
 func (g ginEngine) buildDeleteFishCategoryAdminRoute() gin.HandlerFunc {

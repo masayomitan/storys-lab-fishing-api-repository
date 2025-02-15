@@ -31,7 +31,7 @@ func NewFishCategoryAdminAction(uc usecase.FishCategoryAdminUseCase, log logger.
 	}
 }
 
-func NewCreateFishCategoryAdminAction(uc usecase.FishCategoryAdminUseCase, log logger.Logger, val *validator.Validator) FishCategoryCreateAdminAction {
+func NewMutationFishCategoryAdminAction(uc usecase.FishCategoryAdminUseCase, log logger.Logger, val *validator.Validator) FishCategoryCreateAdminAction {
 	return FishCategoryCreateAdminAction{
 		uc:  uc,
 		log: log,
@@ -39,32 +39,13 @@ func NewCreateFishCategoryAdminAction(uc usecase.FishCategoryAdminUseCase, log l
 	}
 }
 
-// func (t FindOneToolAction) FindOneAdmin(c *gin.Context) {
-// 	const logKey = "find_one_Tool"
-// 	fmt.Println("")
-// 	output, err := t.uc.Execute(c.Request.Context(), utils.StrToInt(c.Param("id")))
-// 	if err != nil {
-// 		logging.NewError(
-// 			t.log,
-// 			err,
-// 			logKey,
-// 			http.StatusInternalServerError,
-// 		).Log("error when returning the Tool")
-
-// 		return
-// 	}
-// 	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning Tool")
-
-// 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
-// }
-
-func (t FishCategoryAdminAction) FindAllByAdmin(c *gin.Context) {
+func (f FishCategoryAdminAction) FindOneByAdmin(c *gin.Context) {
 	const logKey = "find_one_fish_category"
 	fmt.Println("")
-	output, err := t.uc.FindAllExecuteByAdmin(c.Request.Context())
+	output, err := f.uc.FindOneExecuteByAdmin(c.Request.Context(), utils.StrToInt(c.Param("id")))
 	if err != nil {
 		logging.NewError(
-			t.log,
+			f.log,
 			err,
 			logKey,
 			http.StatusInternalServerError,
@@ -72,7 +53,26 @@ func (t FishCategoryAdminAction) FindAllByAdmin(c *gin.Context) {
 
 		return
 	}
-	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fishCategory")
+	logging.NewInfo(f.log, logKey, http.StatusOK).Log("success when returning Tool")
+
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}
+
+func (f FishCategoryAdminAction) FindAllByAdmin(c *gin.Context) {
+	const logKey = "find_one_fish_category"
+	fmt.Println("")
+	output, err := f.uc.FindAllExecuteByAdmin(c.Request.Context())
+	if err != nil {
+		logging.NewError(
+			f.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the fishCategory")
+
+		return
+	}
+	logging.NewInfo(f.log, logKey, http.StatusOK).Log("success when returning fishCategory")
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 
@@ -115,10 +115,11 @@ func (t FishCategoryCreateAdminAction) CreateByAdmin(c *gin.Context) {
 }
 
 // 魚データ更新アクション
-func (t FishCategoryCreateAdminAction) UpdateByAdmin(c *gin.Context, id int) {
+func (t FishCategoryCreateAdminAction) UpdateByAdmin(c *gin.Context) {
 	const logKey = "create_fish_category"
 	fmt.Println("")
 
+    id := utils.StrToInt(c.Param("id"))
 	var requestParam domain.FishCategory
 	if err := c.ShouldBindJSON(&requestParam); err != nil {
 		logging.NewError(
