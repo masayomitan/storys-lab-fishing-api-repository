@@ -17,6 +17,7 @@ type FishAdminUseCase interface {
 	FindOneExecuteByAdmin(ctx context.Context, id int) (domain.Fish, error)
 	FindAllExecuteByAdmin(ctx context.Context) ([]domain.Fish, error)
 	CreateExecuteByAdmin(ctx context.Context, requestParam domain.Fish)  (domain.Fish, error)
+	UpdateExecuteByAdmin(ctx context.Context, requestParam domain.Fish, id int)  (domain.Fish, error)
 	DeleteExecuteByAdmin(ctx context.Context, id int) error
 }
 

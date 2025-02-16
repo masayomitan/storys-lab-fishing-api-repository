@@ -17,6 +17,7 @@ type (
 		FindOneByAdmin(context.Context, int) (domain.Fish, error)
 		FindAllByAdmin(context.Context) ([]domain.Fish, error)
 		CreateByAdmin(context.Context, domain.Fish) (domain.Fish, error)
+		UpdateByAdmin(context.Context, domain.Fish, int) (domain.Fish, error)
 		DeleteByAdmin(ctx context.Context, id int) error
 		// WithTransaction(context.Context, func(context.Context) error) error
 	}

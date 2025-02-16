@@ -25,6 +25,23 @@ import (
 )
 
 
+// 管理者用の「魚を取得」ルート
+func (g ginEngine) buildFindOneFishesAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishAdminUsecase.NewFishAdminInteractor(
+				fishAdminRepository.NewFishSQL(g.db),
+				fishAdminPresenter.NewFishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFishAdminAction(uc, g.log)
+		)
+		// 管理者向けにすべての魚を取得するアクションを実行します。
+		act.FindOneByAdmin(c)
+	}
+}
+
+
 // 管理者用の「すべての魚を取得」ルート
 func (g ginEngine) buildFindAllFishesAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
@@ -50,10 +67,26 @@ func (g ginEngine) buildCreateFishAdminRoute() gin.HandlerFunc {
 				fishAdminPresenter.NewFishPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFishCreateAdminAction(uc, g.log, &g.validator)
+			act = action.NewMutationFishAdminAction(uc, g.log, &g.validator)
 		)
 		// 管理者向けに魚を作成するアクションを実行します。
 		act.CreateByAdmin(c)
+	}
+}
+
+// 管理者用の「魚を更新」ルート
+func (g ginEngine) buildUpdateFishAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishAdminUsecase.NewFishAdminInteractor(
+				fishAdminRepository.NewFishSQL(g.db),
+				fishAdminPresenter.NewFishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationFishAdminAction(uc, g.log, &g.validator)
+		)
+		// 管理者向けに魚を作成するアクションを実行します。
+		act.UpdateByAdmin(c)
 	}
 }
 
@@ -73,7 +106,7 @@ func (g ginEngine) buildDeleteFishAdminRoute() gin.HandlerFunc {
 	}
 }
 
-// 管理者用の「すべての魚カテゴリを取得」ルート
+// 管理者用の「魚カテゴリを取得」ルート
 func (g ginEngine) buildFindOneFishCategoriesAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (

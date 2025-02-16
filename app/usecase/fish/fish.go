@@ -66,6 +66,17 @@ func (t fishAdminInteractor) CreateExecuteByAdmin(ctx context.Context, requestPa
 	return t.presenter.PresentOne(fish), nil
 }
 
+func (t fishAdminInteractor) UpdateExecuteByAdmin(ctx context.Context, requestParam domain.Fish, id int) (domain.Fish, error) {
+	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
+	defer cancel()
+
+	fish, err := t.repo.UpdateByAdmin(ctx, requestParam, id)
+	if err != nil {
+		return t.presenter.PresentOne(domain.Fish{}), err
+	}
+
+	return t.presenter.PresentOne(fish), nil
+}
 
 func (t fishAdminInteractor) DeleteExecuteByAdmin(ctx context.Context, id int) error {
 

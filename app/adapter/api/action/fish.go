@@ -63,7 +63,7 @@ func NewFishAdminAction(uc usecase.FishAdminUseCase, log logger.Logger) FishAdmi
 // - uc: Use case interface for fish admin actions.
 // - log: Logger for recording events.
 // - val: Validator for input validation.
-func NewFishCreateAdminAction(uc usecase.FishAdminUseCase, log logger.Logger, val *validator.Validator) MutationFishAdminAction {
+func NewMutationFishAdminAction(uc usecase.FishAdminUseCase, log logger.Logger, val *validator.Validator) MutationFishAdminAction {
 	return MutationFishAdminAction{
 		uc:  uc,
 		log: log,
@@ -113,6 +113,25 @@ func (t FishAction) FindAll(c *gin.Context) {
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 
+// FindOneByAdmin retrieves a list of all fishes for admin app.
+func (t FishAdminAction) FindOneByAdmin(c *gin.Context) {
+	const logKey = "find_all_fishes"
+
+	output, err := t.uc.FindOneExecuteByAdmin(c.Request.Context(), utils.StrToInt(c.Param("id")))
+	if err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the fish list")
+
+		return
+	}
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish list")
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}
+
 // FindAllByAdmin retrieves a list of all fishes for admin app.
 func (t FishAdminAction) FindAllByAdmin(c *gin.Context) {
 	const logKey = "find_all_fishes"
@@ -157,6 +176,46 @@ func (t MutationFishAdminAction) CreateByAdmin(c *gin.Context) {
 	}
 
 	output, err := t.uc.CreateExecuteByAdmin(c.Request.Context(), requestParam)
+	if err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the fish-category")
+		response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
+		return
+	}
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish-category")
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}
+
+// UpdateByAdmin creates a new fish entry for admin app.
+//
+// The request payload is validated before Updating the fish entry.
+func (t MutationFishAdminAction) UpdateByAdmin(c *gin.Context) {
+	const logKey = "create_fish"
+	fmt.Println("")
+
+	id := utils.StrToInt(c.Param("id"))
+	var requestParam domain.Fish
+	if err := c.ShouldBindJSON(&requestParam); err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusUnprocessableEntity,
+		).Log("invalid request payload")
+		response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
+		return
+	}
+
+	if err := t.val.ValidateStruct(requestParam); err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	output, err := t.uc.UpdateExecuteByAdmin(c.Request.Context(), requestParam, id)
 	if err != nil {
 		logging.NewError(
 			t.log,
