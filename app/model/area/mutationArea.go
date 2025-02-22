@@ -7,7 +7,7 @@ import (
 	"github.com/pkg/errors"
 )
 
-func (a AreaSQL) Create(ctx context.Context, area domain.Area) (domain.Area, error) {
+func (a AreaSQL) CreateByAdmin(ctx context.Context, area domain.Area) (domain.Area, error) {
 	var areaJSON = domain.Area{
 		ID:   area.ID,
 		Name: area.Name,

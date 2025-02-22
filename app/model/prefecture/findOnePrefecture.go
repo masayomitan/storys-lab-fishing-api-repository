@@ -45,7 +45,6 @@ func convertAreas(areas []domain.Area) []domain.Area {
 			Name: a.Name,
 			Description: a.Description,
 			PrefectureId: a.PrefectureId,
-			ImageUrl: a.ImageUrl,
 		})
 	}
 	return result

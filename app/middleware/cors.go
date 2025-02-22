@@ -26,8 +26,8 @@ func SetupCORS() gin.HandlerFunc {
 			"http://www.admin-fishing.storys-lab.com",
 		},
 		AllowMethods: []string{
-			"POST",
 			"GET",
+			"POST",
 			"PUT",
 			"PATCH",
 			"DELETE",

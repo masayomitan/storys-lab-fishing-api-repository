@@ -71,7 +71,7 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				// /admin/fishes サブグループ
 				fishes := admin.Group("/fishes")
 				fishes.GET("/", g.buildFindAllFishesAdminRoute())
-				fishes.GET("/:id", g.buildFindOneFishesAdminRoute())
+				fishes.GET("/:id", g.buildFindOneFishAdminRoute())
 				fishes.POST("/create", g.buildCreateFishAdminRoute())
 				fishes.PUT("/update/:id", g.buildUpdateFishAdminRoute())
 				fishes.DELETE("/delete/:id", g.buildDeleteFishAdminRoute())
@@ -83,6 +83,10 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				fishCategories.POST("/create", g.buildCreateFishCategoryAdminRoute())
 				fishCategories.PUT("/update/:id", g.buildUpdateFishCategoryAdminRoute())
 				fishCategories.DELETE("/delete/:id", g.buildDeleteFishCategoryAdminRoute())
+
+				areas := admin.Group("/areas")
+				areas.GET("/", g.buildFindAreasAdminRoute())
+				areas.GET("/:id", g.buildFindOneAreaAdminRoute())
 
 				// /admin/fish-categories サブグループ
 				images := admin.Group("/images")

@@ -9,10 +9,6 @@ func (Fish) TableName() string {
     return "fishes"
 }
 
-func (FishImage) TableName() string {
-    return "fish_images"
-}
-
 type FishCategory struct {
 	ID          	int    		`gorm:"primaryKey" json:"id"`
 	Name        	string 		`json:"name" validate:"required,min=1,max=255"`
@@ -47,17 +43,6 @@ type Fish struct {
 	FishingMethods        		[]FishingMethod `gorm:"many2many:fishing_methods_to_fishes;foreignKey:ID;joinForeignKey:FishId;References:ID;joinReferences:FishingMethodID" validate:"-"`
 	Dishes                		[]Dish          `gorm:"many2many:fishes_to_dishes;foreignKey:ID;joinForeignKey:FishId;References:ID;joinReferences:DishID" validate:"-"`
 	Images 						[]Image 		`gorm:"many2many:fishes_to_images;joinForeignKey:FishID;JoinReferences:ImageID" validate:"-"`
-}
-
-type FishImage struct {
-    ID 			int 			`gorm:"primaryKey" json:"id"`
-	ImageUrl 	string 			`json:"image_url"`
-	S3Url 		string 	     	`json:"s3_url"`
-	Sort 		string 			`json:"sort"`
-	IsMain 		string 			`json:"is_main"`
-	CreatedAt   time.Time  		`gorm:"created_at" json:"created_at"`
-    UpdatedAt	time.Time  		`gorm:"updated_at" json:"updated_at"`
-	DeletedAt	time.Time 	  	`gorm:"deleted_at"`
 }
 
 func NewFish(

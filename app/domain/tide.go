@@ -12,7 +12,7 @@ func (Tide) TableName() string {
 type Tide struct {
     ID int `gorm:"primaryKey" json:"id"`
 	PrefectureId int `json:"prefecture_id"`
-	AreaId int `json:"area_id"`
+	AreaID int `json:"area_id"`
 	Date             time.Time `json:"date"`
 	FormatDate       string    `json:"format_date"`
 	SunriseTime      sql.NullString `json:"sunrise_time"`

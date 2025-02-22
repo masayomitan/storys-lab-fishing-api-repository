@@ -17,6 +17,10 @@ import (
 	fishCategoriesAdminRepository "storys-lab-fishing-api/app/model/fishCategory"
 	fishCategoriesAdminUsecase "storys-lab-fishing-api/app/usecase/fishCategory"
 
+	areaAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/area"
+	areaAdminRepository "storys-lab-fishing-api/app/model/area"
+	areaAdminUsecase "storys-lab-fishing-api/app/usecase/area"
+
 	imageAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/image"
 	imageAdminRepository "storys-lab-fishing-api/app/model/image"
 	imageAdminUsecase "storys-lab-fishing-api/app/usecase/image"
@@ -24,9 +28,11 @@ import (
 	service "storys-lab-fishing-api/app/service"
 )
 
-
-// 管理者用の「魚を取得」ルート
-func (g ginEngine) buildFindOneFishesAdminRoute() gin.HandlerFunc {
+// ******************** 
+// 魚
+// ********************
+// 魚取得
+func (g ginEngine) buildFindOneFishAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			uc = fishAdminUsecase.NewFishAdminInteractor(
@@ -36,13 +42,12 @@ func (g ginEngine) buildFindOneFishesAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewFishAdminAction(uc, g.log)
 		)
-		// 管理者向けにすべての魚を取得するアクションを実行します。
 		act.FindOneByAdmin(c)
 	}
 }
 
 
-// 管理者用の「すべての魚を取得」ルート
+// 魚取得
 func (g ginEngine) buildFindAllFishesAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -53,12 +58,11 @@ func (g ginEngine) buildFindAllFishesAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewFishAdminAction(uc, g.log)
 		)
-		// 管理者向けにすべての魚を取得するアクションを実行します。
 		act.FindAllByAdmin(c)
 	}
 }
 
-// 管理者用の「魚を作成」ルート
+// 魚作成
 func (g ginEngine) buildCreateFishAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -74,7 +78,7 @@ func (g ginEngine) buildCreateFishAdminRoute() gin.HandlerFunc {
 	}
 }
 
-// 管理者用の「魚を更新」ルート
+// 魚更新
 func (g ginEngine) buildUpdateFishAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -85,12 +89,11 @@ func (g ginEngine) buildUpdateFishAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewMutationFishAdminAction(uc, g.log, &g.validator)
 		)
-		// 管理者向けに魚を作成するアクションを実行します。
 		act.UpdateByAdmin(c)
 	}
 }
 
-// 管理者用の「魚を削除」ルート
+// 魚削除
 func (g ginEngine) buildDeleteFishAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -101,12 +104,14 @@ func (g ginEngine) buildDeleteFishAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewFishAdminAction(uc, g.log)
 		)
-		// 管理者向けに魚を削除するアクションを実行します。
 		act.DeleteByAdmin(c)
 	}
 }
 
-// 管理者用の「魚カテゴリを取得」ルート
+// ******************** 
+// 魚カテゴリー
+// ********************
+// 魚カテゴリー取得
 func (g ginEngine) buildFindOneFishCategoriesAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -117,12 +122,11 @@ func (g ginEngine) buildFindOneFishCategoriesAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewFishCategoryAdminAction(uc, g.log)
 		)
-		// 管理者向けにすべての魚カテゴリを取得するアクションを実行します。
 		act.FindOneByAdmin(c)
 	}
 }
 
-// 管理者用の「すべての魚カテゴリを取得」ルート
+// すべての魚カテゴリー取得
 func (g ginEngine) buildFindAllFishCategoriesAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -133,14 +137,11 @@ func (g ginEngine) buildFindAllFishCategoriesAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewFishCategoryAdminAction(uc, g.log)
 		)
-		// 管理者向けにすべての魚カテゴリを取得するアクションを実行します。
 		act.FindAllByAdmin(c)
 	}
 }
 
-
-
-// 管理者用の「魚カテゴリを作成」ルート
+// 魚カテゴリー作成
 func (g ginEngine) buildCreateFishCategoryAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -151,12 +152,11 @@ func (g ginEngine) buildCreateFishCategoryAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewMutationFishCategoryAdminAction(uc, g.log, &g.validator)
 		)
-		// 管理者向けに魚カテゴリを作成するアクションを実行します。
 		act.CreateByAdmin(c)
 	}
 }
 
-// 管理者用の「魚カテゴリを更新」ルート
+// 魚カテゴリー更新
 func (g ginEngine) buildUpdateFishCategoryAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -167,12 +167,11 @@ func (g ginEngine) buildUpdateFishCategoryAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewMutationFishCategoryAdminAction(uc, g.log, &g.validator)
 		)
-		// 管理者向けに魚カテゴリを更新するアクションを実行します。
 		act.UpdateByAdmin(c)
 	}
 }
 
-// 管理者用の「魚カテゴリを削除」ルート
+// 魚カテゴリー削除
 func (g ginEngine) buildDeleteFishCategoryAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -183,12 +182,14 @@ func (g ginEngine) buildDeleteFishCategoryAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewFishCategoryAdminAction(uc, g.log)
 		)
-		// 管理者向けに魚カテゴリを削除するアクションを実行します。
 		act.DeleteByAdmin(c)
 	}
 }
 
-// 管理者用の「画像を更新」ルート
+// ******************** 
+// 画像
+// ********************
+// 画像更新
 func (g ginEngine) buildUpdateImageAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		// AWS Configをロード
@@ -213,13 +214,11 @@ func (g ginEngine) buildUpdateImageAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewUploadImageAdminAction(uc, g.log, &g.validator)
 		)
-
-		// 管理者向けに画像を更新するアクションを実行します。
 		act.UploadByAdmin(c)
 	}
 }
 
-// 管理者用の「すべての画像を取得」ルート
+// 画像取得
 func (g ginEngine) buildFindAllImagesAdminRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
@@ -230,7 +229,37 @@ func (g ginEngine) buildFindAllImagesAdminRoute() gin.HandlerFunc {
 			)
 			act = action.NewImageAdminAction(uc, g.log)
 		)
-		// 管理者向けにすべての画像を取得するアクションを実行します。
 		act.FindAllByAdmin(c)
+	}
+}
+
+// ******************** 
+// エリア
+// ********************
+func (g ginEngine) buildFindAreasAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = areaAdminUsecase.NewAreaAdminInteractor(
+				areaAdminRepository.NewAreaSQL(g.db),
+				areaAdminPresenter.NewAreaPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewAreaAdminAction(uc, g.log)
+		)
+		act.FindByAdmin(c)
+	}
+}
+
+func (g ginEngine) buildFindOneAreaAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = areaAdminUsecase.NewAreaAdminInteractor(
+				areaAdminRepository.NewAreaSQL(g.db),
+				areaAdminPresenter.NewAreaPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewAreaAdminAction(uc, g.log)
+		)
+		act.FindOneByAdmin(c)
 	}
 }

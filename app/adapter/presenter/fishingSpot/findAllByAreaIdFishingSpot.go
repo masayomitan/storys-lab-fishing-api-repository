@@ -20,7 +20,7 @@ func (a findAllFishingSpotPresenter) Output(fishingSpot []domain.FishingSpot) []
 			ID:             fishingSpot.ID,
 			Name:           fishingSpot.Name,
 			ImageUrl:       fishingSpot.ImageUrl,
-			AreaId: 		fishingSpot.AreaId,
+			AreaID: 		fishingSpot.AreaID,
 			Description:    fishingSpot.Description,
 		})
 	}

@@ -42,7 +42,7 @@ func convertTides(tides []domain.Tide) []domain.Tide {
 		formatDate := domain.FormatDate(t.Date)
 		result = append(result, domain.Tide{
 			ID:               t.ID,
-			AreaId:           t.AreaId,
+			AreaID:           t.AreaID,
 			PrefectureId:     t.PrefectureId,
 			Date:             t.Date,
 			FormatDate:       formatDate,

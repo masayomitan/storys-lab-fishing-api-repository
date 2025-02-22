@@ -14,7 +14,7 @@ func convertFishingSpots(fishingSpot []domain.FishingSpot) []domain.FishingSpot 
 			Name: 			f.Name,
 			ImageUrl:		f.ImageUrl,
 			Description: 	f.Description,
-			AreaId: 		f.AreaId,
+			AreaID: 		f.AreaID,
 			Tags: 			convertTags(f.Tags),
 		})
 	}
@@ -26,7 +26,7 @@ func convertTide(tide []domain.Tide) []domain.Tide {
 	for _, t := range tide {
 		result = append(result, domain.Tide{
 			ID: t.ID,
-			AreaId:			 t.AreaId,
+			AreaID:			 t.AreaID,
 			PrefectureId:    t.PrefectureId,
 		})
 	}
@@ -39,6 +39,19 @@ func convertTags(tags []domain.Tag) []domain.Tag {
 		result = append(result, domain.Tag{
 			ID:        t.ID,
 			Name:      t.Name,
+		})
+	}
+	return result
+}
+
+func convertImages(methods []domain.Image) []domain.Image {
+	var result []domain.Image
+	for _, i := range methods {
+		result = append(result, domain.Image{
+			ID: 		i.ID,
+			Name: 		i.Name,
+			ImageUrl: 	i.ImageUrl,
+			S3Url: 		i.S3Url,
 		})
 	}
 	return result

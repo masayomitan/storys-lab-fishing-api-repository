@@ -70,12 +70,12 @@ func (g ginEngine) buildFindAllFishRoute() gin.HandlerFunc {
 func (g ginEngine) buildFindOneAreaRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = areaUsecase.NewFindOneAreaInteractor(
+			uc = areaUsecase.NewAreaInteractor(
 				areaRepository.NewAreaSQL(g.db),
-				areaPresenter.NewFindOneAreaPresenter(),
+				areaPresenter.NewAreaPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindOneAreaAction(uc, g.log)
+			act = action.NewAreaAction(uc, g.log)
 		)
 		act.FindOne(c)
 	}

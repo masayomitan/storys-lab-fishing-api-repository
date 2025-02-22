@@ -1,8 +1,6 @@
 package presenter
 
 import (
-	// "time"
-
 	"storys-lab-fishing-api/app/domain"
 	"storys-lab-fishing-api/app/usecase/fish"
 )

@@ -9,36 +9,37 @@ import (
 	"storys-lab-fishing-api/app/adapter/api/response"
 	"storys-lab-fishing-api/app/adapter/logger"
 	"storys-lab-fishing-api/app/usecase/area"
+	"storys-lab-fishing-api/app/utils"
 )
 
-type FindOneAreaAction struct {
-	uc  usecase.FindOneAreaUseCase
+type AreaAction struct {
+	uc  usecase.AreaUseCase
 	log logger.Logger
 }
 
-type FindAllAreaAction struct {
-	uc  usecase.FindAllAreaUseCase
+type AreaAdminAction struct {
+	uc  usecase.AreaAdminUseCase
 	log logger.Logger
 }
 
-func NewFindOneAreaAction(uc usecase.FindOneAreaUseCase, log logger.Logger) FindOneAreaAction {
-	return FindOneAreaAction{
+func NewAreaAction(uc usecase.AreaUseCase, log logger.Logger) AreaAction {
+	return AreaAction{
 		uc:  uc,
 		log: log,
 	}
 }
 
-func NewFindAllAreaAction(uc usecase.FindAllAreaUseCase, log logger.Logger) FindAllAreaAction {
-	return FindAllAreaAction{
+func NewAreaAdminAction(uc usecase.AreaAdminUseCase, log logger.Logger) AreaAdminAction {
+	return AreaAdminAction{
 		uc:  uc,
 		log: log,
 	}
 }
 
-func (t FindOneAreaAction) FindOne(c *gin.Context) {
+func (t AreaAction) FindOne(c *gin.Context) {
 	const logKey = "find_one_area"
 	fmt.Println("")
-	output, err := t.uc.Execute(c.Request.Context(), c.Param("id"))
+	output, err := t.uc.FindOneExecute(c.Request.Context(), utils.StrToInt(c.Param("id")))
 	if err != nil {
 		logging.NewError(
 			t.log,
@@ -55,10 +56,10 @@ func (t FindOneAreaAction) FindOne(c *gin.Context) {
 }
 
 
-func (t FindAllAreaAction) FindAll(c *gin.Context) {
+func (t AreaAction) FindAll(c *gin.Context) {
 	const logKey = "find_all_area"
 
-	output, err := t.uc.Execute(c.Request.Context())
+	output, err := t.uc.FindAllExecute(c.Request.Context())
 	if err != nil {
 		logging.NewError(
 			t.log,
@@ -71,5 +72,41 @@ func (t FindAllAreaAction) FindAll(c *gin.Context) {
 	}
 	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning area list")
 
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}
+
+func (t AreaAdminAction) FindByAdmin(c *gin.Context) {
+	const logKey = "find_all_areas"
+
+	output, err := t.uc.FindExecuteByAdmin(c.Request.Context())
+	if err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the fish list")
+
+		return
+	}
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish list")
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}
+
+func (t AreaAdminAction) FindOneByAdmin(c *gin.Context) {
+	const logKey = "find_all_areas"
+
+	output, err := t.uc.FindOneExecuteByAdmin(c.Request.Context(), utils.StrToInt(c.Param("id")))
+	if err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the fish list")
+
+		return
+	}
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish list")
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
