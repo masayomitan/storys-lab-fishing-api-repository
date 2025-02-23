@@ -9,7 +9,7 @@ type Area struct {
 	ID           	int 			`gorm:"primaryKey" json:"id"`
 	Name         	string 			`json:"name"`
 	Description  	string 			`json:"description"`
-	PrefectureId 	string 			`json:"prefecture_id"`
+	PrefectureID 	int 			`json:"prefecture_id"`
 	CreatedAt 		time.Time  		`gorm:"created_at" json:"created_at"`
     UpdatedAt 		time.Time  		`gorm:"updated_at" json:"updated_at"`
 	DeletedAt  		*time.Time  	`gorm:"default:NULL"`
@@ -24,7 +24,7 @@ func NewArea(
 	ID 				int,
 	name			string,
 	description 	string,
-	prefectureId 	string,
+	prefectureID 	int,
 	createdAt       time.Time,
 	updatedAt       time.Time,
 
@@ -36,7 +36,7 @@ func NewArea(
 		ID: 			ID,
 		Name:			name,
 		Description: 	description,
-		PrefectureId: 	prefectureId,
+		PrefectureID: 	prefectureID,
 		CreatedAt:      createdAt,
 		UpdatedAt:      updatedAt,
 

@@ -11,7 +11,7 @@ func convertAreas(areas []domain.Area) []domain.Area {
 			ID:   a.ID,
 			Name: a.Name,
 			Description: a.Description,
-			PrefectureId: a.PrefectureId,
+			PrefectureID: a.PrefectureID,
 		})
 	}
 	return result

@@ -18,7 +18,7 @@ type FishCategoryAdminAction struct {
 	log logger.Logger
 }
 
-type FishCategoryCreateAdminAction struct {
+type MutationFishCategoryAdminAction struct {
 	uc  usecase.FishCategoryAdminUseCase
 	log logger.Logger
 	val *validator.Validator
@@ -31,8 +31,8 @@ func NewFishCategoryAdminAction(uc usecase.FishCategoryAdminUseCase, log logger.
 	}
 }
 
-func NewMutationFishCategoryAdminAction(uc usecase.FishCategoryAdminUseCase, log logger.Logger, val *validator.Validator) FishCategoryCreateAdminAction {
-	return FishCategoryCreateAdminAction{
+func NewMutationFishCategoryAdminAction(uc usecase.FishCategoryAdminUseCase, log logger.Logger, val *validator.Validator) MutationFishCategoryAdminAction {
+	return MutationFishCategoryAdminAction{
 		uc:  uc,
 		log: log,
 		val: val,
@@ -77,7 +77,7 @@ func (f FishCategoryAdminAction) FindAllByAdmin(c *gin.Context) {
 }
 
 // 魚カテゴリーデータ作成アクション
-func (t FishCategoryCreateAdminAction) CreateByAdmin(c *gin.Context) {
+func (t MutationFishCategoryAdminAction) CreateByAdmin(c *gin.Context) {
 	const logKey = "create_fish_category"
 	fmt.Println("")
 
@@ -115,7 +115,7 @@ func (t FishCategoryCreateAdminAction) CreateByAdmin(c *gin.Context) {
 }
 
 // 魚データ更新アクション
-func (t FishCategoryCreateAdminAction) UpdateByAdmin(c *gin.Context) {
+func (t MutationFishCategoryAdminAction) UpdateByAdmin(c *gin.Context) {
 	const logKey = "create_fish_category"
 	fmt.Println("")
 

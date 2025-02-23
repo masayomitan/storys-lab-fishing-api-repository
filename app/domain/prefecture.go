@@ -10,7 +10,7 @@ type Prefecture struct {
 	NameKana string `json:"name_kana"`
 	ImageUrl string `json:"image_url"`
 
-	Areas []Area `gorm:"foreignKey:PrefectureId"`
+	Areas []Area `gorm:"foreignKey:PrefectureID"`
 }
 
 func NewPrefecture(

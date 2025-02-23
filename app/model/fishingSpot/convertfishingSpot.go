@@ -20,7 +20,7 @@ func convertArea(a domain.Area) domain.Area {
 		ID:           a.ID,
 		Name:         a.Name,
 		Description:  a.Description,
-		PrefectureId: a.PrefectureId,
+		PrefectureID: a.PrefectureID,
 		Tides:        convertTides(a.Tides),
 	}
 }

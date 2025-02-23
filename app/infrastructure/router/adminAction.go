@@ -284,3 +284,17 @@ func (g ginEngine) buildFindOneAreaAdminRoute() gin.HandlerFunc {
 		act.FindOneByAdmin(c)
 	}
 }
+
+func (g ginEngine) buildCreateAreaAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = areaAdminUsecase.NewAreaAdminInteractor(
+				areaAdminRepository.NewAreaSQL(g.db),
+				areaAdminPresenter.NewAreaPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationAreaAdminAction(uc, g.log, &g.validator)
+		)
+		act.CreateByAdmin(c)
+	}
+}

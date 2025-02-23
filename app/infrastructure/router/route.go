@@ -92,6 +92,7 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				areas := admin.Group("/areas")
 				areas.GET("/", g.buildFindAreasAdminRoute())
 				areas.GET("/:id", g.buildFindOneAreaAdminRoute())
+				areas.POST("/create", g.buildCreateAreaAdminRoute())
 
 				// /admin/fish-categories サブグループ
 				images := admin.Group("/images")

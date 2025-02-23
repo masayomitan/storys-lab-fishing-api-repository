@@ -12,7 +12,7 @@ func (a PrefectureSQL) Find(ctx context.Context) ([]domain.Prefecture, error) {
 	var prefectures = make([]domain.Prefecture, 0)
 
 	if err := a.db.FindPrefectureORM(ctx, a.tableName, &json); err != nil {
-		return []domain.Prefecture{}, errors.Wrap(err, "error listing fishes")
+		return []domain.Prefecture{}, errors.Wrap(err, "error listing prefectures")
 	}
 
 	for _, json := range json {
@@ -36,7 +36,7 @@ func (a PrefectureSQL) FindOne(ctx context.Context, id int) (domain.Prefecture, 
 	fmt.Println(id)
 
 	if err := a.db.FindOnePrefectureORM(ctx, a.tableName, id, &prefJSON); err != nil {
-		return domain.Prefecture{}, errors.Wrap(err, "error listing fishes")
+		return domain.Prefecture{}, errors.Wrap(err, "error listing prefectures")
 	}
 
 	var pref = domain.NewPrefecture(
@@ -57,7 +57,7 @@ func (a PrefectureSQL) FindByAdmin(ctx context.Context) ([]domain.Prefecture, er
 	var prefectures = make([]domain.Prefecture, 0)
 
 	if err := a.db.FindPrefectureORM(ctx, a.tableName, &json); err != nil {
-		return []domain.Prefecture{}, errors.Wrap(err, "error listing fishes")
+		return []domain.Prefecture{}, errors.Wrap(err, "error listing prefectures")
 	}
 
 	for _, json := range json {
@@ -81,7 +81,7 @@ func (a PrefectureSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Prefe
 	fmt.Println(id)
 
 	if err := a.db.FindOnePrefectureORM(ctx, a.tableName, id, &prefJSON); err != nil {
-		return domain.Prefecture{}, errors.Wrap(err, "error listing fishes")
+		return domain.Prefecture{}, errors.Wrap(err, "error listing prefectures")
 	}
 
 	var pref = domain.NewPrefecture(
