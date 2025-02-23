@@ -84,6 +84,11 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				fishCategories.PUT("/update/:id", g.buildUpdateFishCategoryAdminRoute())
 				fishCategories.DELETE("/delete/:id", g.buildDeleteFishCategoryAdminRoute())
 
+				// 都道府県
+				prefectures := admin.Group("/prefectures")
+				prefectures.GET("/", g.buildFindPrefecturesAdminRoute())
+				// api.GET("/prefectures/:id", g.buildFindOnePrefRoute())
+
 				areas := admin.Group("/areas")
 				areas.GET("/", g.buildFindAreasAdminRoute())
 				areas.GET("/:id", g.buildFindOneAreaAdminRoute())

@@ -47,14 +47,14 @@ func (a FishSQL) FindOne(ctx context.Context, id int) (domain.Fish, error) {
 }
 
 func (a FishSQL) FindAll(ctx context.Context) ([]domain.Fish, error) {
-	var fishJSON = make([]domain.Fish, 0)
-
-	if err := a.db.FindAllORM(ctx, a.tableName, domain.Fish{}, &fishJSON); err != nil {
-		return []domain.Fish{}, errors.Wrap(err, "error listing fishes")
-	}
+	var json = make([]domain.Fish, 0)
 	var fishes = make([]domain.Fish, 0)
 
-	for _, json := range fishJSON {
+	if err := a.db.FindAllORM(ctx, a.tableName, domain.Fish{}, &json); err != nil {
+		return []domain.Fish{}, errors.Wrap(err, "error listing fishes")
+	}
+
+	for _, json := range json {
 		var fish = domain.NewFish(
 			json.ID,
 			json.Name,
@@ -121,15 +121,14 @@ func (a FishSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Fish, error
 }
 
 func (a FishSQL) FindAllByAdmin(ctx context.Context) ([]domain.Fish, error) {
-	var fishJSON = make([]domain.Fish, 0)
+	var json = make([]domain.Fish, 0)
+	var fishes = make([]domain.Fish, 0)
 
-	if err := a.db.FindAllORM(ctx, a.tableName, domain.Fish{}, &fishJSON); err != nil {
+	if err := a.db.FindAllORM(ctx, a.tableName, domain.Fish{}, &json); err != nil {
 		return []domain.Fish{}, errors.Wrap(err, "error listing fishes")
 	}
 
-	var fishes = make([]domain.Fish, 0)
-
-	for _, json := range fishJSON {
+	for _, json := range json {
 		var fish = domain.NewFish(
 			json.ID,
 			json.Name,

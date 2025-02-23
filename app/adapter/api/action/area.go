@@ -36,6 +36,25 @@ func NewAreaAdminAction(uc usecase.AreaAdminUseCase, log logger.Logger) AreaAdmi
 	}
 }
 
+func (t AreaAction) Find(c *gin.Context) {
+	const logKey = "find_all_area"
+
+	output, err := t.uc.FindAllExecute(c.Request.Context())
+	if err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the area list")
+
+		return
+	}
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning area list")
+
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}
+
 func (t AreaAction) FindOne(c *gin.Context) {
 	const logKey = "find_one_area"
 	fmt.Println("")
@@ -55,25 +74,6 @@ func (t AreaAction) FindOne(c *gin.Context) {
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 
-
-func (t AreaAction) FindAll(c *gin.Context) {
-	const logKey = "find_all_area"
-
-	output, err := t.uc.FindAllExecute(c.Request.Context())
-	if err != nil {
-		logging.NewError(
-			t.log,
-			err,
-			logKey,
-			http.StatusInternalServerError,
-		).Log("error when returning the area list")
-
-		return
-	}
-	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning area list")
-
-	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
-}
 
 func (t AreaAdminAction) FindByAdmin(c *gin.Context) {
 	const logKey = "find_all_areas"

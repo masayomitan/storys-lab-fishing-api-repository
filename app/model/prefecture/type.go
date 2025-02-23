@@ -8,20 +8,20 @@ type GormAdapter struct {
 	DB *gorm.DB
 }
 
-type PrefSQL struct {
+type PrefectureSQL struct {
 	db             *GormAdapter
 	tableName string
 }
 
-func NewPrefSQL(db *gorm.DB) PrefSQL {
-	return PrefSQL{
+func NewPrefectureSQL(db *gorm.DB) PrefectureSQL {
+	return PrefectureSQL{
 		db:             &GormAdapter{DB: db},
 		tableName: "prefectures",
 	}
 }
 
-func NewPrefOneSQL(db *gorm.DB) PrefSQL {
-	return PrefSQL{
+func NewPrefectureOneSQL(db *gorm.DB) PrefectureSQL {
+	return PrefectureSQL{
 		db:             &GormAdapter{DB: db},
 		tableName: "prefectures",
 	}

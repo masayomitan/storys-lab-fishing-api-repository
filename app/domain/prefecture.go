@@ -1,10 +1,10 @@
 package domain
 
-func (Pref) TableName() string {
+func (Prefecture) TableName() string {
     return "prefectures"
 }
 
-type Pref struct {
+type Prefecture struct {
 	ID string `gorm:"primaryKey" json:"id"`
 	Name string `json:"name"`
 	NameKana string `json:"name_kana"`
@@ -13,21 +13,15 @@ type Pref struct {
 	Areas []Area `gorm:"foreignKey:PrefectureId"`
 }
 
-type PrefID string
-
-func (f PrefID) String() string {
-	return string(f)
-}
-
-func NewPref(
+func NewPrefecture(
 	ID string,
 	name string,
 	nameKana string,
 	imageUrl string,
 
 	areas []Area,
-) Pref {
-	return Pref{
+) Prefecture {
+	return Prefecture{
 		ID: ID,
 		Name: name,
 		NameKana: nameKana,

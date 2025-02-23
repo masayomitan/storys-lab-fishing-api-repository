@@ -17,6 +17,10 @@ import (
 	fishCategoriesAdminRepository "storys-lab-fishing-api/app/model/fishCategory"
 	fishCategoriesAdminUsecase "storys-lab-fishing-api/app/usecase/fishCategory"
 
+	prefectureAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/prefecture"
+	prefectureAdminRepository "storys-lab-fishing-api/app/model/prefecture"
+	prefectureAdminUsecase "storys-lab-fishing-api/app/usecase/prefecture"
+
 	areaAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/area"
 	areaAdminRepository "storys-lab-fishing-api/app/model/area"
 	areaAdminUsecase "storys-lab-fishing-api/app/usecase/area"
@@ -230,6 +234,23 @@ func (g ginEngine) buildFindAllImagesAdminRoute() gin.HandlerFunc {
 			act = action.NewImageAdminAction(uc, g.log)
 		)
 		act.FindAllByAdmin(c)
+	}
+}
+
+// ******************** 
+// 都道府県
+// ********************
+func (g ginEngine) buildFindPrefecturesAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = prefectureAdminUsecase.NewPrefectureAdminInteractor(
+				prefectureAdminRepository.NewPrefectureSQL(g.db),
+				prefectureAdminPresenter.NewPrefecturePresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewPrefectureAdminAction(uc, g.log)
+		)
+		act.FindByAdmin(c)
 	}
 }
 

@@ -35,12 +35,10 @@ func (a AreaSQL) FindOne(ctx context.Context, id int) (domain.Area, error) {
 
 func (a AreaSQL) FindAll(ctx context.Context) ([]domain.Area, error) {
 	var json = make([]domain.Area, 0)
-
+	var areas = make([]domain.Area, 0)
 	if err := a.db.FindByPrefectureIdORM(ctx, a.tableName, domain.Area{}, &json); err != nil {
 		return []domain.Area{}, errors.Wrap(err, "error listing areas")
 	}
-
-	var areas = make([]domain.Area, 0)
 
 	for _, json := range json {
 		var area = domain.NewArea(
@@ -63,12 +61,11 @@ func (a AreaSQL) FindAll(ctx context.Context) ([]domain.Area, error) {
 
 func (a AreaSQL) FindByAdmin(ctx context.Context) ([]domain.Area, error) {
 	var json = make([]domain.Area, 0)
+	var areas = make([]domain.Area, 0)
 
 	if err := a.db.FindORM(ctx, a.tableName, &json); err != nil {
 		return []domain.Area{}, errors.Wrap(err, "error listing areas")
 	}
-
-	var areas = make([]domain.Area, 0)
 
 	for _, json := range json {
 		var area = domain.NewArea(

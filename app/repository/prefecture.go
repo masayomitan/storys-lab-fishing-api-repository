@@ -6,10 +6,13 @@ import (
 )
 
 type (
-	PrefRepository interface {
-		// Create(context.Context, domain.Fish) (domain.Fish, error)
-		// FindAll(context.Context) ([]domain.Fish, error)
-		FindOne(context.Context, string) (domain.Pref, error)
-		// WithTransaction(context.Context, func(context.Context) error) error
+	PrefectureRepository interface {
+		Find(context.Context) ([]domain.Prefecture, error)
+		FindOne(context.Context, int) (domain.Prefecture, error)
+	}
+
+	PrefectureAdminRepository interface {
+		FindByAdmin(context.Context) ([]domain.Prefecture, error)
+		FindOneByAdmin(context.Context, int) (domain.Prefecture, error)
 	}
 )

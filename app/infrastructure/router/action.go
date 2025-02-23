@@ -13,9 +13,9 @@ import (
 	areaRepository "storys-lab-fishing-api/app/model/area"
 	areaUsecase"storys-lab-fishing-api/app/usecase/area"
 
-	prefPresenter "storys-lab-fishing-api/app/adapter/presenter/prefecture"
-	prefRepository "storys-lab-fishing-api/app/model/prefecture"
-	prefUsecase"storys-lab-fishing-api/app/usecase/prefecture"
+	prefecturePresenter "storys-lab-fishing-api/app/adapter/presenter/prefecture"
+	prefectureRepository "storys-lab-fishing-api/app/model/prefecture"
+	prefectureUsecase"storys-lab-fishing-api/app/usecase/prefecture"
 
 	fishingSpotPresenter "storys-lab-fishing-api/app/adapter/presenter/fishingSpot"
 	fishingSpotRepository "storys-lab-fishing-api/app/model/fishingSpot"
@@ -84,12 +84,12 @@ func (g ginEngine) buildFindOneAreaRoute() gin.HandlerFunc {
 func (g ginEngine) buildFindOnePrefRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = prefUsecase.NewFindOnePrefInteractor(
-				prefRepository.NewPrefSQL(g.db),
-				prefPresenter.NewFindOnePrefPresenter(),
+			uc = prefectureUsecase.NewPrefectureInteractor(
+				prefectureRepository.NewPrefectureSQL(g.db),
+				prefecturePresenter.NewPrefecturePresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindOnePrefAction(uc, g.log)
+			act = action.NewPrefectureAction(uc, g.log)
 		)
 		act.FindOne(c)
 	}
