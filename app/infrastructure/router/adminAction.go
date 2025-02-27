@@ -298,3 +298,17 @@ func (g ginEngine) buildCreateAreaAdminRoute() gin.HandlerFunc {
 		act.CreateByAdmin(c)
 	}
 }
+
+func (g ginEngine) buildDeleteAreaAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = areaAdminUsecase.NewAreaAdminInteractor(
+				areaAdminRepository.NewAreaSQL(g.db),
+				areaAdminPresenter.NewAreaPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewAreaAdminAction(uc, g.log)
+		)
+		act.DeleteByAdmin(c)
+	}
+}

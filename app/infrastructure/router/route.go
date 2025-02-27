@@ -21,7 +21,8 @@ type ginEngine struct {
 
 func (g ginEngine) setAppHandlers(r *gin.Engine) {
 	// `/api` プレフィックスを追加
-	api := r.Group("/api") 
+	api := r.Group("/api")
+	// api := r.Group("/api/v1")  
 
 		// 静的ファイル
 		api.Static("/public", "./public")
@@ -68,7 +69,7 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 			// 管理側
 			admin := api.Group("/admin")
 			{
-				// /admin/fishes サブグループ
+				// 魚
 				fishes := admin.Group("/fishes")
 				fishes.GET("/", g.buildFindAllFishesAdminRoute())
 				fishes.GET("/:id", g.buildFindOneFishAdminRoute())
@@ -76,7 +77,7 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				fishes.PUT("/update/:id", g.buildUpdateFishAdminRoute())
 				fishes.DELETE("/delete/:id", g.buildDeleteFishAdminRoute())
 
-				// /admin/fish-categories サブグループ
+				// 魚カテゴリー
 				fishCategories := admin.Group("/fish-categories")
 				fishCategories.GET("/", g.buildFindAllFishCategoriesAdminRoute())
 				fishCategories.GET("/:id", g.buildFindOneFishCategoriesAdminRoute())
@@ -89,12 +90,14 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				prefectures.GET("/", g.buildFindPrefecturesAdminRoute())
 				// api.GET("/prefectures/:id", g.buildFindOnePrefRoute())
 
+				// エリア
 				areas := admin.Group("/areas")
 				areas.GET("/", g.buildFindAreasAdminRoute())
 				areas.GET("/:id", g.buildFindOneAreaAdminRoute())
 				areas.POST("/create", g.buildCreateAreaAdminRoute())
+				areas.DELETE("/delete/:id", g.buildDeleteAreaAdminRoute())
 
-				// /admin/fish-categories サブグループ
+				// 画像
 				images := admin.Group("/images")
 				images.GET("/", g.buildFindAllImagesAdminRoute())
 				images.POST("/upload", g.buildUpdateImageAdminRoute())

@@ -82,3 +82,9 @@ func (t areaAdminInteractor) CreateExecuteByAdmin(ctx context.Context, requestPa
 
 //     return t.repo.DeleteByAdmin(ctx, id)
 // }
+
+func (t areaAdminInteractor) DeleteExecuteByAdmin(ctx context.Context, id int) error {
+    // Repositoryを呼び出して削除処理を実行
+    return t.repo.DeleteByAdmin(ctx, id)
+}
+

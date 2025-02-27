@@ -52,7 +52,6 @@ func (a AreaSQL) FindAll(ctx context.Context) ([]domain.Area, error) {
 			convertTide(json.Tides),
 			convertImages(json.Images),
 		)
-
 		areas = append(areas, area)
 	}
 
@@ -79,7 +78,6 @@ func (a AreaSQL) FindByAdmin(ctx context.Context) ([]domain.Area, error) {
 			convertTide(json.Tides),
 			convertImages(json.Images),
 		)
-
 		areas = append(areas, area)
 	}
 
