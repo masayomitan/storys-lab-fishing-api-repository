@@ -11,7 +11,7 @@ func (a PrefectureSQL) Find(ctx context.Context) ([]domain.Prefecture, error) {
 	var json = make([]domain.Prefecture, 0)
 	var prefectures = make([]domain.Prefecture, 0)
 
-	if err := a.db.FindPrefectureORM(ctx, a.tableName, &json); err != nil {
+	if err := a.db.FindORM(ctx, a.tableName, &json); err != nil {
 		return []domain.Prefecture{}, errors.Wrap(err, "error listing prefectures")
 	}
 
@@ -35,7 +35,7 @@ func (a PrefectureSQL) FindOne(ctx context.Context, id int) (domain.Prefecture, 
 	var prefJSON = domain.Prefecture{}
 	fmt.Println(id)
 
-	if err := a.db.FindOnePrefectureORM(ctx, a.tableName, id, &prefJSON); err != nil {
+	if err := a.db.FindOneORM(ctx, a.tableName, id, &prefJSON); err != nil {
 		return domain.Prefecture{}, errors.Wrap(err, "error listing prefectures")
 	}
 
@@ -56,7 +56,7 @@ func (a PrefectureSQL) FindByAdmin(ctx context.Context) ([]domain.Prefecture, er
 	var json = make([]domain.Prefecture, 0)
 	var prefectures = make([]domain.Prefecture, 0)
 
-	if err := a.db.FindPrefectureORM(ctx, a.tableName, &json); err != nil {
+	if err := a.db.FindORM(ctx, a.tableName, &json); err != nil {
 		return []domain.Prefecture{}, errors.Wrap(err, "error listing prefectures")
 	}
 
@@ -80,7 +80,7 @@ func (a PrefectureSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Prefe
 	var prefJSON = domain.Prefecture{}
 	fmt.Println(id)
 
-	if err := a.db.FindOnePrefectureORM(ctx, a.tableName, id, &prefJSON); err != nil {
+	if err := a.db.FindOneORM(ctx, a.tableName, id, &prefJSON); err != nil {
 		return domain.Prefecture{}, errors.Wrap(err, "error listing prefectures")
 	}
 
@@ -97,22 +97,23 @@ func (a PrefectureSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Prefe
 	return pref, nil
 }
 
-func (ga *GormAdapter) FindPrefectureORM(ctx context.Context, table string, result interface{}) error {
+func (ga *GormAdapter) FindORM(ctx context.Context, table string, result interface{}) error {
 	return ga.DB.Table(table).
 		Where("deleted_at IS NULL").
 		Order("id asc").
 		Preload("Areas").
-		// Preload("Areas.Images").
+		Preload("Areas.Images").
 		Find(result).Error
 }
 
 
-func (ga *GormAdapter) FindOnePrefectureORM(ctx context.Context, table string, id int, result interface{}) error {
-	return ga.DB.Table(table).Where("id = ?", id).
+func (ga *GormAdapter) FindOneORM(ctx context.Context, table string, id int, result interface{}) error {
+	return ga.DB.Table(table).
+		Where("id = ?", id).
 		Where("deleted_at IS NULL").
 		Order("id asc").
 		Preload("Areas").
-		// Preload("Areas.Images").
+		Preload("Areas.Images").
 		First(result).Error
 }
 

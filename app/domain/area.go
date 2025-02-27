@@ -16,7 +16,7 @@ type Area struct {
 
 	FishingSpots 	[]FishingSpot 	`gorm:"foreignKey:AreaID"`
 	Tides 			[]Tide 			`gorm:"foreignKey:AreaID"`
-	Images 			[]Image 		`gorm:"many2many:areas_to_images;joinForeignKey:AreaID;JoinReferences:ImageID" validate:"-"`
+	Images 			[]Image 		`gorm:"many2many:areas_to_images;" validate:"-"`
 }
 
 
