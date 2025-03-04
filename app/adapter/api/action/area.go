@@ -163,3 +163,41 @@ func (t MutationAreaAdminAction) CreateByAdmin(c *gin.Context) {
 	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning area")
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
+
+
+func (t AreaAdminAction) DeleteByAdmin(c *gin.Context) {
+    const logKey = "delete_area"
+
+	fmt.Println(c.Param("id"))
+    id := utils.StrToInt(c.Param("id"))
+    if id == 0 {
+        err := fmt.Errorf("id is required")
+        logging.NewError(
+            t.log,
+            err,
+            logKey,
+            http.StatusBadRequest,
+        ).Log("missing id in request")
+        response.NewError(err, http.StatusBadRequest).Send(c.Writer)
+        return
+    }
+
+    // UseCaseを呼び出して削除処理を実行
+    err := t.uc.DeleteExecuteByAdmin(c.Request.Context(), id)
+    if err != nil {
+        logging.NewError(
+            t.log,
+            err,
+            logKey,
+            http.StatusInternalServerError,
+        ).Log("error when deleting the area")
+        response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
+        return
+    }
+
+    logging.NewInfo(t.log, logKey, http.StatusOK).Log("successfully deleted area")
+    response.NewSuccess(map[string]interface{}{
+		"status":  http.StatusOK,
+		"message": "Area deleted successfully",
+	}, http.StatusOK).Send(c.Writer)
+}

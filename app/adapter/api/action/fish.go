@@ -230,6 +230,7 @@ func (t MutationFishAdminAction) UpdateByAdmin(c *gin.Context) {
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 
+
 func (t FishAdminAction) DeleteByAdmin(c *gin.Context) {
     const logKey = "delete_fish"
 	fmt.Println("deletteeee")

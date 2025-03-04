@@ -126,7 +126,8 @@ func (ga *GormAdapter) FindByPrefectureIdORM(ctx context.Context, table string, 
 
 
 func (ga *GormAdapter) FindOneAreaORM(ctx context.Context, table string, id int, result interface{}) error {
-	return ga.DB.Table(table).Where("id = ?", id).
+	return ga.DB.Table(table).
+		Where("id = ?", id).
 		Preload("FishingSpots").
 		Preload("FishingSpots.Tags").
 		Preload("Images").
