@@ -164,6 +164,42 @@ func (t MutationAreaAdminAction) CreateByAdmin(c *gin.Context) {
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 
+func (t MutationAreaAdminAction) UpdateByAdmin(c *gin.Context) {
+	const logKey = "create_area"
+	fmt.Println("")
+
+	id := utils.StrToInt(c.Param("id"))
+	var requestParam domain.Area
+	if err := c.ShouldBindJSON(&requestParam); err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusUnprocessableEntity,
+		).Log("invalid request payload")
+		response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
+		return
+	}
+
+	if err := t.val.ValidateStruct(requestParam); err != nil {
+		c.JSON(http.StatusUnprocessableEntity, gin.H{"error": err.Error()})
+		return
+	}
+
+	output, err := t.uc.UpdateExecuteByAdmin(c.Request.Context(), requestParam, id)
+	if err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the fish-category")
+		response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
+		return
+	}
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish-category")
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}
 
 func (t AreaAdminAction) DeleteByAdmin(c *gin.Context) {
     const logKey = "delete_area"

@@ -95,6 +95,7 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				areas.GET("/", g.buildFindAreasAdminRoute())
 				areas.GET("/:id", g.buildFindOneAreaAdminRoute())
 				areas.POST("/create", g.buildCreateAreaAdminRoute())
+				areas.PUT("/update/:id", g.buildUpdateAreaAdminRoute())
 				areas.DELETE("/delete/:id", g.buildDeleteAreaAdminRoute())
 
 				// 画像

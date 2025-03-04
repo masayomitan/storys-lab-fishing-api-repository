@@ -5,7 +5,7 @@ func (Prefecture) TableName() string {
 }
 
 type Prefecture struct {
-	ID string `gorm:"primaryKey" json:"id"`
+	ID int `gorm:"primaryKey" json:"id"`
 	Name string `json:"name"`
 	NameKana string `json:"name_kana"`
 	ImageUrl string `json:"image_url"`
@@ -14,7 +14,7 @@ type Prefecture struct {
 }
 
 func NewPrefecture(
-	ID string,
+	ID int,
 	name string,
 	nameKana string,
 	imageUrl string,

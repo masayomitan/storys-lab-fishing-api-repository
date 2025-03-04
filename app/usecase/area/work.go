@@ -17,7 +17,7 @@ type AreaAdminUseCase interface {
 	FindExecuteByAdmin(ctx context.Context) ([]domain.Area, error)
 	FindOneExecuteByAdmin(ctx context.Context, id int) (domain.Area, error)
 	CreateExecuteByAdmin(ctx context.Context, requestParam domain.Area)  (domain.Area, error)
-	// UpdateExecuteByAdmin(ctx context.Context, requestParam domain.Area, id int)  (domain.Area, error)
+	UpdateExecuteByAdmin(ctx context.Context, requestParam domain.Area, id int)  (domain.Area, error)
 	DeleteExecuteByAdmin(ctx context.Context, id int) error
 }
 

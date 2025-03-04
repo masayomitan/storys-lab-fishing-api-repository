@@ -66,22 +66,17 @@ func (t areaAdminInteractor) CreateExecuteByAdmin(ctx context.Context, requestPa
 	return t.presenter.PresentOne(area), nil
 }
 
-// func (t areaAdminInteractor) UpdateExecuteByAdmin(ctx context.Context, requestParam domain.Area, id int) (domain.Area, error) {
-// 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
-// 	defer cancel()
+func (t areaAdminInteractor) UpdateExecuteByAdmin(ctx context.Context, requestParam domain.Area, id int) (domain.Area, error) {
+	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
+	defer cancel()
 
-// 	area, err := t.repo.UpdateByAdmin(ctx, requestParam, id)
-// 	if err != nil {
-// 		return t.presenter.PresentOne(domain.Area{}), err
-// 	}
+	area, err := t.repo.UpdateByAdmin(ctx, requestParam, id)
+	if err != nil {
+		return t.presenter.PresentOne(domain.Area{}), err
+	}
 
-// 	return t.presenter.PresentOne(area), nil
-// }
-
-// func (t areaAdminInteractor) DeleteExecuteByAdmin(ctx context.Context, id int) error {
-
-//     return t.repo.DeleteByAdmin(ctx, id)
-// }
+	return t.presenter.PresentOne(area), nil
+}
 
 func (t areaAdminInteractor) DeleteExecuteByAdmin(ctx context.Context, id int) error {
     // Repositoryを呼び出して削除処理を実行

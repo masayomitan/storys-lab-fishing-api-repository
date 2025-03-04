@@ -28,6 +28,26 @@ func (a AreaSQL) CreateByAdmin(ctx context.Context, requestParam domain.Area) (d
     return requestParam, nil
 }
 
+func (a AreaSQL) UpdateByAdmin(ctx context.Context, requestParam domain.Area, id int) (domain.Area, error) {
+    err := a.db.Transaction(ctx, func(*gorm.DB) error {
+        // Set timestamps for creation
+        utils.SetCreateTimestamps(&requestParam)
+        fmt.Println(requestParam)
+
+		if err := a.db.Update(a.tableName, &requestParam, id); err != nil {
+			return errors.Wrap(err, "error creating fish")
+		}
+
+        return nil
+    })
+
+    if err != nil {
+        return domain.Area{}, err
+    }
+
+    return requestParam, nil
+}
+
 func (a AreaSQL) DeleteByAdmin(ctx context.Context, id int) error {
 
 	if err := a.db.Delete(a.tableName, id); err != nil {

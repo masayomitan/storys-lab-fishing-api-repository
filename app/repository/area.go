@@ -17,7 +17,7 @@ type (
 		FindByAdmin(context.Context) ([]domain.Area, error)
 		FindOneByAdmin(context.Context, int) (domain.Area, error)
 		CreateByAdmin(context.Context, domain.Area) (domain.Area, error)
-		// UpdateByAdmin(context.Context, domain.Area, int) (domain.Area, error)
+		UpdateByAdmin(context.Context, domain.Area, int) (domain.Area, error)
 		DeleteByAdmin(context.Context, int) error
 		// WithTransaction(context.Context, func(context.Context) error) error
 	}
