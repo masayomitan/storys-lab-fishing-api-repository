@@ -10,7 +10,7 @@ type FishingSpot struct {
 	Name        					string 		`json:"name"`
 	Description 					string 		`json:"description"`
 	AreaID      					int 		`json:"area_id"`
-	RecommendedFishingMethods 		string 		`json:"recommended_fishing_methods"`
+	RecommendedFishingMethods 		int 		`json:"recommended_fishing_methods"`
 	CreatedAt   					time.Time	`gorm:"created_at" json:"created_at"`
     UpdatedAt 						time.Time 	`gorm:"updated_at" json:"updated_at"`
 	DeletedAt  						*time.Time 	`gorm:"default:NULL"`
