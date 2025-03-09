@@ -12,7 +12,6 @@ func convertFishingSpots(fishingSpot []domain.FishingSpot) []domain.FishingSpot 
 		result = append(result, domain.FishingSpot{
 			ID: 			f.ID,
 			Name: 			f.Name,
-			ImageUrl:		f.ImageUrl,
 			Description: 	f.Description,
 			AreaID: 		f.AreaID,
 			Tags: 			convertTags(f.Tags),

@@ -98,6 +98,14 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				areas.PUT("/update/:id", g.buildUpdateAreaAdminRoute())
 				areas.DELETE("/delete/:id", g.buildDeleteAreaAdminRoute())
 
+				// 釣り場
+				fishingSpot := admin.Group("/fishing-spots")
+				fishingSpot.GET("/", g.buildFindFishingSpotsAdminRoute())
+				fishingSpot.GET("/:id", g.buildFindOneFishingSpotAdminRoute())
+				fishingSpot.POST("/create", g.buildCreateFishingSpotAdminRoute())
+				fishingSpot.PUT("/update/:id", g.buildUpdateFishingSpotAdminRoute())
+				fishingSpot.DELETE("/delete/:id", g.buildDeleteFishingSpotAdminRoute())
+
 				// 画像
 				images := admin.Group("/images")
 				images.GET("/", g.buildFindAllImagesAdminRoute())

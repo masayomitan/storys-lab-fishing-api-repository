@@ -25,6 +25,10 @@ import (
 	areaAdminRepository "storys-lab-fishing-api/app/model/area"
 	areaAdminUsecase "storys-lab-fishing-api/app/usecase/area"
 
+	fishingSpotAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/fishingSpot"
+	fishingSpotAdminRepository "storys-lab-fishing-api/app/model/fishingSpot"
+	fishingSpotAdminUsecase "storys-lab-fishing-api/app/usecase/fishingSpot"
+
 	imageAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/image"
 	imageAdminRepository "storys-lab-fishing-api/app/model/image"
 	imageAdminUsecase "storys-lab-fishing-api/app/usecase/image"
@@ -322,6 +326,80 @@ func (g ginEngine) buildDeleteAreaAdminRoute() gin.HandlerFunc {
 				g.ctxTimeout,
 			)
 			act = action.NewAreaAdminAction(uc, g.log)
+		)
+		act.DeleteByAdmin(c)
+	}
+}
+
+
+// ******************** 
+// 釣り場
+// ********************
+func (g ginEngine) buildFindFishingSpotsAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishingSpotAdminUsecase.NewFishingSpotAdminInteractor(
+				fishingSpotAdminRepository.NewFishingSpotSQL(g.db),
+				fishingSpotAdminPresenter.NewFishingSpotPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFishingSpotAdminAction(uc, g.log)
+		)
+		act.FindByAdmin(c)
+	}
+}
+
+func (g ginEngine) buildFindOneFishingSpotAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishingSpotAdminUsecase.NewFishingSpotAdminInteractor(
+				fishingSpotAdminRepository.NewFishingSpotSQL(g.db),
+				fishingSpotAdminPresenter.NewFishingSpotPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFishingSpotAdminAction(uc, g.log)
+		)
+		act.FindOneByAdmin(c)
+	}
+}
+
+func (g ginEngine) buildCreateFishingSpotAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishingSpotAdminUsecase.NewFishingSpotAdminInteractor(
+				fishingSpotAdminRepository.NewFishingSpotSQL(g.db),
+				fishingSpotAdminPresenter.NewFishingSpotPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationFishingSpotAdminAction(uc, g.log, &g.validator)
+		)
+		act.CreateByAdmin(c)
+	}
+}
+
+func (g ginEngine) buildUpdateFishingSpotAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishingSpotAdminUsecase.NewFishingSpotAdminInteractor(
+				fishingSpotAdminRepository.NewFishingSpotSQL(g.db),
+				fishingSpotAdminPresenter.NewFishingSpotPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationFishingSpotAdminAction(uc, g.log, &g.validator)
+		)
+		act.UpdateByAdmin(c)
+	}
+}
+
+func (g ginEngine) buildDeleteFishingSpotAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishingSpotAdminUsecase.NewFishingSpotAdminInteractor(
+				fishingSpotAdminRepository.NewFishingSpotSQL(g.db),
+				fishingSpotAdminPresenter.NewFishingSpotPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFishingSpotAdminAction(uc, g.log)
 		)
 		act.DeleteByAdmin(c)
 	}

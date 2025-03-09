@@ -98,12 +98,12 @@ func (g ginEngine) buildFindOnePrefRoute() gin.HandlerFunc {
 func (g ginEngine) buildFindOneFishingSpotRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = fishingSpotUsecase.NewFindOneFishingSpotInteractor(
+			uc = fishingSpotUsecase.NewFishingSpotInteractor(
 				fishingSpotRepository.NewFishingSpotSQL(g.db),
-				fishingSpotPresenter.NewFindOneFishingSpotPresenter(),
+				fishingSpotPresenter.NewFishingSpotPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindOneFishingSpotAction(uc, g.log)
+			act = action.NewFishingSpotAction(uc, g.log)
 		)
 		act.FindOne(c)
 	}
@@ -112,12 +112,12 @@ func (g ginEngine) buildFindOneFishingSpotRoute() gin.HandlerFunc {
 func (g ginEngine) buildFindAllFishingSpotByAreaIdRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = fishingSpotUsecase.NewFindAllFishingSpotInteractor(
+			uc = fishingSpotUsecase.NewFishingSpotInteractor(
 				fishingSpotRepository.NewFishingSpotSQL(g.db),
-				fishingSpotPresenter.NewFindAllFishingSpotPresenter(),
+				fishingSpotPresenter.NewFishingSpotPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindAllFishingSpotAction(uc, g.log)
+			act = action.NewFishingSpotAction(uc, g.log)
 		)
 		act.FindAllByAreaId(c)
 	}
