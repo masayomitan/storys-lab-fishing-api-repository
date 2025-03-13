@@ -39,7 +39,7 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 
 		// 釣り場
 		api.GET("/fishing-spots/:id", g.buildFindOneFishingSpotRoute())
-		api.GET("/fishing-spots/area/:area_id", g.buildFindAllFishingSpotByAreaIdRoute())
+		api.GET("/fishing-spots/area/:area_id", g.buildFindFishingSpotsByAreaIdRoute())
 		// todo
 		// api.GET("/areas/:area_id/fishing-spots", g.buildFindAllFishingSpotByAreaIdRoute())
 

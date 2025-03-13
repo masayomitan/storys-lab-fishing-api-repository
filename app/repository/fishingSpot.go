@@ -9,7 +9,7 @@ type (
 
 	FishingSpotRepository interface {
 		Find(context.Context) ([]domain.FishingSpot, error)
-		FindAllByAreaId(context.Context, int) ([]domain.FishingSpot, error)
+		FindByAreaId(context.Context, int) ([]domain.FishingSpot, error)
 		FindOne(context.Context, int) (domain.FishingSpot, error)
 	}
 

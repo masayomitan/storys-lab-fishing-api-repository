@@ -163,7 +163,7 @@ func (ga *GormAdapter) FindOneORM(ctx context.Context, table string, id int, res
 	return ga.DB.Table(table).
 		Where("id = ?", id).
 		Where("deleted_at IS NULL").
-		Preload("Images").
+		Preload("Images", "deleted_at IS NULL").
 		Preload("FishCategory").
 		Preload("FishingMethods", func(*gorm.DB) *gorm.DB {
 			return ga.DB.Select("fishing_methods.*, fishing_methods_to_fishes.is_traditional").
@@ -176,7 +176,7 @@ func (ga *GormAdapter) FindOneORM(ctx context.Context, table string, id int, res
 
 func (ga *GormAdapter) FindAllORM(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
-		Preload("Images").
+		Preload("Images", "deleted_at IS NULL").
 		Where("deleted_at IS NULL").
 		Order("id asc").
 		Find(result).Error

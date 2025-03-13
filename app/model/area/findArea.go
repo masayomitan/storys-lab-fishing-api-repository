@@ -111,7 +111,7 @@ func (a AreaSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Area, error
 func (ga *GormAdapter) FindORM(ctx context.Context, table string, result interface{}) error {
     return ga.DB.Table(table).
 		Where("deleted_at IS NULL").
-		Preload("Images").
+		Preload("Images", "deleted_at IS NULL").
 		Order("id asc").
 		Find(result).Error
 }
@@ -119,7 +119,7 @@ func (ga *GormAdapter) FindORM(ctx context.Context, table string, result interfa
 func (ga *GormAdapter) FindByPrefectureIdORM(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
 		Where("deleted_at IS NULL").
-		Preload("Images").
+		Preload("Images", "deleted_at IS NULL").
 		Order("id asc").
 		Find(result).Error
 }
@@ -128,10 +128,11 @@ func (ga *GormAdapter) FindByPrefectureIdORM(ctx context.Context, table string, 
 func (ga *GormAdapter) FindOneAreaORM(ctx context.Context, table string, id int, result interface{}) error {
 	return ga.DB.Table(table).
 		Where("id = ?", id).
-		Preload("FishingSpots").
-		Preload("FishingSpots.Tags").
-		Preload("Images").
 		Where("deleted_at IS NULL").
+		Preload("Images", "deleted_at IS NULL").
+		Preload("FishingSpots", "deleted_at IS NULL").
+		Preload("FishingSpots.Tags", "deleted_at IS NULL").
+		Preload("FishingSpots.Images", "deleted_at IS NULL").
 		First(result).Error
 }
 

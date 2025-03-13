@@ -73,9 +73,9 @@ func (t FishingSpotAction) FindOne(c *gin.Context) {
 }
 
 
-func (t FishingSpotAction) FindAllByAreaId(c *gin.Context) {
+func (t FishingSpotAction) FindByAreaId(c *gin.Context) {
 	const logKey = "find_all_fishing_spot_by_area_id"
-	output, err := t.uc.FindOneExecute(c.Request.Context(), utils.StrToInt(c.Param("area_id")))
+	output, err := t.uc.FindByAreaIdExecute(c.Request.Context(), utils.StrToInt(c.Param("area_id")))
 	if err != nil {
 		logging.NewError(
 			t.log,

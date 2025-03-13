@@ -15,6 +15,7 @@ func convertFishingSpots(fishingSpot []domain.FishingSpot) []domain.FishingSpot 
 			Description: 	f.Description,
 			AreaID: 		f.AreaID,
 			Tags: 			convertTags(f.Tags),
+			Images: 		convertImages(f.Images),
 		})
 	}
 	return result

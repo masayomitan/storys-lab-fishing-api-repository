@@ -18,7 +18,6 @@ type FishingSpot struct {
 	Fishes 							[]Fish 		`gorm:"many2many:fish_fishing_spot_time_tags;foreignKey:ID;joinForeignKey:FishingSpotID;References:ID;joinReferences:FishID"`
 	Area   							Area 		`gorm:"foreignKey:AreaID;references:ID"`
 	Tags 							[]Tag 		`gorm:"many2many:fishing_spots_to_tags;joinForeignKey:FishingSpotID;joinReferences:TagID"`
-
 	Images 							[]Image 	`gorm:"many2many:fishing_spots_to_images;" validate:"-"`
 }
 

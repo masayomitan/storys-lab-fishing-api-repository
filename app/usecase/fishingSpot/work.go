@@ -10,6 +10,7 @@ import (
 
 type FishingSpotUseCase interface {
 	FindOneExecute(ctx context.Context, id int) (domain.FishingSpot, error)
+	FindByAreaIdExecute(ctx context.Context, area_id int) ([]domain.FishingSpot, error)
 	FindAllExecute(ctx context.Context) ([]domain.FishingSpot, error)
 	// Create(ctx context.Context, requestParam domain.Fish)  (domain.Fish, error)
 }

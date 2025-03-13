@@ -17,6 +17,18 @@ func (a FishingSpotInteractor) FindOneExecute(ctx context.Context, id int) (doma
 	return a.presenter.PresentOne(fishingSpot), nil
 }
 
+func (a FishingSpotInteractor) FindByAreaIdExecute(ctx context.Context, id int) ([]domain.FishingSpot, error) {
+	ctx, cancel := context.WithTimeout(ctx, a.ctxTimeout)
+	defer cancel()
+
+	fishingSpot, err := a.repo.FindByAreaId(ctx, id)
+	if err != nil {
+		return a.presenter.PresentAll([]domain.FishingSpot{}), err
+	}
+
+	return a.presenter.PresentAll(fishingSpot), nil
+}
+
 
 func (t FishingSpotInteractor) FindAllExecute(ctx context.Context) ([]domain.FishingSpot, error) {
 	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)

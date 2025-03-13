@@ -37,6 +37,7 @@ func (a ImageSQL) FindAllByAdmin(ctx context.Context, query map[string]interface
 
 func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
+		Where("deleted_at IS NULL").
 		Order("id asc").
 		Find(result).Error
 }

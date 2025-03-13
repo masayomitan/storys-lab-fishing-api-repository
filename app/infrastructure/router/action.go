@@ -109,7 +109,7 @@ func (g ginEngine) buildFindOneFishingSpotRoute() gin.HandlerFunc {
 	}
 }
 
-func (g ginEngine) buildFindAllFishingSpotByAreaIdRoute() gin.HandlerFunc {
+func (g ginEngine) buildFindFishingSpotsByAreaIdRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
 			uc = fishingSpotUsecase.NewFishingSpotInteractor(
@@ -119,7 +119,7 @@ func (g ginEngine) buildFindAllFishingSpotByAreaIdRoute() gin.HandlerFunc {
 			)
 			act = action.NewFishingSpotAction(uc, g.log)
 		)
-		act.FindAllByAreaId(c)
+		act.FindByAreaId(c)
 	}
 }
 
