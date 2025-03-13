@@ -15,9 +15,10 @@ type FishingSpot struct {
     UpdatedAt 						time.Time 	`gorm:"updated_at" json:"updated_at"`
 	DeletedAt  						*time.Time 	`gorm:"default:NULL"`
 
-	Fishes 							[]Fish 		`gorm:"many2many:fish_fishing_spot_time_tags;foreignKey:ID;joinForeignKey:FishingSpotId;References:ID;joinReferences:FishId"`
+	Fishes 							[]Fish 		`gorm:"many2many:fish_fishing_spot_time_tags;foreignKey:ID;joinForeignKey:FishingSpotID;References:ID;joinReferences:FishID"`
 	Area   							Area 		`gorm:"foreignKey:AreaID;references:ID"`
-	Tags 							[]Tag 		`gorm:"many2many:fishing_spots_to_tags;foreignKey:ID;joinForeignKey:FishingSpotId;References:ID;joinReferences:TagId"`
+	Tags 							[]Tag 		`gorm:"many2many:fishing_spots_to_tags;joinForeignKey:FishingSpotID;joinReferences:TagID"`
+
 	Images 							[]Image 	`gorm:"many2many:fishing_spots_to_images;" validate:"-"`
 }
 
@@ -27,7 +28,7 @@ func NewFishingSpot(
 	name 						string,
 	description 				string,
 	areaID 						int,
-	recommendedFishingMethods 	string,
+	recommendedFishingMethods 	int,
 	createdAt       			time.Time,
 	updatedAt       			time.Time,
 

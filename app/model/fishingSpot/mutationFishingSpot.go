@@ -2,7 +2,6 @@ package model
 
 import (
 	"context"
-	"fmt"
 	"gorm.io/gorm"
 	"github.com/pkg/errors"
 	"storys-lab-fishing-api/app/domain"
@@ -11,9 +10,7 @@ import (
 
 func (a FishingSpotSQL) CreateByAdmin(ctx context.Context, requestParam domain.FishingSpot) (domain.FishingSpot, error) {
 	err := a.db.Transaction(ctx, func(*gorm.DB) error {
-        // Set timestamps for creation
         utils.SetCreateTimestamps(&requestParam)
-        fmt.Println(requestParam)
 
         // Insert the area record and foreign table
 		if err := a.db.Store(a.tableName, &requestParam); err != nil {
@@ -30,9 +27,7 @@ func (a FishingSpotSQL) CreateByAdmin(ctx context.Context, requestParam domain.F
 
 func (a FishingSpotSQL) UpdateByAdmin(ctx context.Context, requestParam domain.FishingSpot, id int) (domain.FishingSpot, error) {
     err := a.db.Transaction(ctx, func(*gorm.DB) error {
-        // Set timestamps for creation
         utils.SetCreateTimestamps(&requestParam)
-        fmt.Println(requestParam)
 
 		if err := a.db.Update(a.tableName, &requestParam, id); err != nil {
 			return errors.Wrap(err, "error creating fish")

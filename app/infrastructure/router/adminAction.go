@@ -33,6 +33,10 @@ import (
 	imageAdminRepository "storys-lab-fishing-api/app/model/image"
 	imageAdminUsecase "storys-lab-fishing-api/app/usecase/image"
 
+	tagAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/tag"
+	tagAdminRepository "storys-lab-fishing-api/app/model/tag"
+	tagAdminUsecase "storys-lab-fishing-api/app/usecase/tag"
+
 	service "storys-lab-fishing-api/app/service"
 )
 
@@ -402,5 +406,22 @@ func (g ginEngine) buildDeleteFishingSpotAdminRoute() gin.HandlerFunc {
 			act = action.NewFishingSpotAdminAction(uc, g.log)
 		)
 		act.DeleteByAdmin(c)
+	}
+}
+
+// ******************** 
+// タグ
+// ********************
+func (g ginEngine) buildFindTagsAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = tagAdminUsecase.NewTagAdminInteractor(
+				tagAdminRepository.NewTagSQL(g.db),
+				tagAdminPresenter.NewTagPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewTagAdminAction(uc, g.log)
+		)
+		act.FindByAdmin(c)
 	}
 }

@@ -112,6 +112,9 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				images.POST("/upload", g.buildUpdateImageAdminRoute())
 				// images.PUT("/upload/:id", g.buildUpdateFishCategoryRoute())
 				// images.DELETE("/delete", g.buildDeleteImageAdminRoute())
+
+				tags := admin.Group("/tags")
+				tags.GET("/", g.buildFindTagsAdminRoute())
 			}
 	
 }

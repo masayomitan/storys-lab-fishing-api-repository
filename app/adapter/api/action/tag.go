@@ -1,0 +1,56 @@
+package action
+
+import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"storys-lab-fishing-api/app/adapter/api/logging"
+	"storys-lab-fishing-api/app/adapter/api/response"
+	"storys-lab-fishing-api/app/adapter/logger"
+	"storys-lab-fishing-api/app/usecase/tag"
+	// "storys-lab-fishing-api/app/domain"
+	// "storys-lab-fishing-api/app/adapter/validator"
+	// "storys-lab-fishing-api/app/utils"
+)
+
+type TagAction struct {
+	uc  usecase.TagUseCase
+	log logger.Logger
+}
+
+type TagAdminAction struct {
+	uc  usecase.TagAdminUseCase
+	log logger.Logger
+}
+
+// func NewTagAction(uc usecase.TagUseCase, log logger.Logger) TagAction {
+// 	return TagAction{
+// 		uc:  uc,
+// 		log: log,
+// 	}
+// }
+
+func NewTagAdminAction(uc usecase.TagAdminUseCase, log logger.Logger) TagAdminAction {
+	return TagAdminAction{
+		uc:  uc,
+		log: log,
+	}
+}
+
+func (t TagAdminAction) FindByAdmin(c *gin.Context) {
+	const logKey = "find_all_tags"
+
+	output, err := t.uc.FindExecuteByAdmin(c.Request.Context())
+	if err != nil {
+		logging.NewError(
+			t.log,
+			err,
+			logKey,
+			http.StatusInternalServerError,
+		).Log("error when returning the fish list")
+
+		return
+	}
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when returning fish list")
+	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
+}
