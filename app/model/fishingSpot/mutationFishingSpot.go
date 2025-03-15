@@ -26,21 +26,63 @@ func (a FishingSpotSQL) CreateByAdmin(ctx context.Context, requestParam domain.F
 }
 
 func (a FishingSpotSQL) UpdateByAdmin(ctx context.Context, requestParam domain.FishingSpot, id int) (domain.FishingSpot, error) {
-    err := a.db.Transaction(ctx, func(*gorm.DB) error {
-        utils.SetCreateTimestamps(&requestParam)
+	err := a.db.Transaction(ctx, func(tx *gorm.DB) error {
+		utils.SetCreateTimestamps(&requestParam)
 
-		if err := a.db.Update(a.tableName, &requestParam, id); err != nil {
-			return errors.Wrap(err, "error creating fish")
+		// fishing_spots テーブルの更新（Tags, Images フィールドは除外）
+		if err := tx.Table(a.tableName).
+			Where("id = ?", id).
+			Omit("Tags", "Images").
+			Updates(requestParam).Error; err != nil {
+			return errors.Wrap(err, "error updating fishing spot")
 		}
 
-        return nil
-    })
+		// fishing_spots_to_tags の古いレコードを削除
+		if err := tx.Table("fishing_spots_to_tags").
+			Where("fishing_spot_id = ?", id).
+			Delete(nil).Error; err != nil {
+			return errors.Wrap(err, "error deleting old tag associations")
+		}
 
-    if err != nil {
-        return domain.FishingSpot{}, err
-    }
+		// fishing_spots_to_images の古いレコードを削除
+		if err := tx.Table("fishing_spots_to_images").
+			Where("fishing_spot_id = ?", id).
+			Delete(nil).Error; err != nil {
+			return errors.Wrap(err, "error deleting old image associations")
+		}
 
-    return requestParam, nil
+		// requestParam.Tags に基づいて新しいレコードを登録
+		for _, tag := range requestParam.Tags {
+			joinRecord := map[string]interface{}{
+				"fishing_spot_id": id,
+				"tag_id":          tag.ID,
+			}
+			if err := tx.Table("fishing_spots_to_tags").
+				Create(joinRecord).Error; err != nil {
+				return errors.Wrap(err, "error inserting new tag association")
+			}
+		}
+
+		// requestParam.Images に基づいて新しいレコードを登録
+		for _, image := range requestParam.Images {
+			joinRecord := map[string]interface{}{
+				"fishing_spot_id": id,
+				"image_id":        image.ID,
+			}
+			if err := tx.Table("fishing_spots_to_images").
+				Create(joinRecord).Error; err != nil {
+				return errors.Wrap(err, "error inserting new image association")
+			}
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return domain.FishingSpot{}, err
+	}
+
+	return requestParam, nil
 }
 
 func (a FishingSpotSQL) DeleteByAdmin(ctx context.Context, id int) error {
@@ -51,15 +93,8 @@ func (a FishingSpotSQL) DeleteByAdmin(ctx context.Context, id int) error {
 	return nil
 }
 
-
 func (ga *GormAdapter) Store(table string, entity interface{}) error {
     return ga.DB.Table(table).Create(entity).Error
-}
-
-func (ga *GormAdapter) Update(table string, entity interface{}, id int) error {
-    return ga.DB.Table(table).
-		Where("id = ?", id).
-		Updates(entity).Error
 }
 
 func (ga *GormAdapter) Delete(table string, id int) error {

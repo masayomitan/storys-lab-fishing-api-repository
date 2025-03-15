@@ -24,8 +24,8 @@ type FishingSpotAdminUseCase interface {
 }
 
 type FishingSpotPresenter interface {
-	PresentOne(domain.FishingSpot) domain.FishingSpot
-	PresentAll([]domain.FishingSpot) []domain.FishingSpot
+	Present(domain.FishingSpot) domain.FishingSpot
+	Presents([]domain.FishingSpot) []domain.FishingSpot
 }
 
 type FishingSpotInteractor struct {

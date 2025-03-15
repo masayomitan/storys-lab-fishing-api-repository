@@ -11,7 +11,7 @@ func NewFishingSpotPresenter() usecase.FishingSpotPresenter {
 	return fishingSpotPresenter{}
 }
 
-func (a fishingSpotPresenter) PresentOne(fishingSpot domain.FishingSpot) domain.FishingSpot {
+func (a fishingSpotPresenter) Present(fishingSpot domain.FishingSpot) domain.FishingSpot {
 	return domain.FishingSpot{
 		ID:             			fishingSpot.ID,
 		Name:           			fishingSpot.Name,
@@ -27,7 +27,7 @@ func (a fishingSpotPresenter) PresentOne(fishingSpot domain.FishingSpot) domain.
 	}
 }
 
-func (a fishingSpotPresenter) PresentAll(fishingSpot []domain.FishingSpot) []domain.FishingSpot {
+func (a fishingSpotPresenter) Presents(fishingSpot []domain.FishingSpot) []domain.FishingSpot {
 	var output = make([]domain.FishingSpot, 0)
 	for _, fishingSpot := range fishingSpot {
 		output = append(output, domain.FishingSpot{
