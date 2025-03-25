@@ -11,7 +11,7 @@ func convertTools(tools []domain.Tool) []domain.Tool {
 			ID:        t.ID,
 			Name:      t.Name,
 			Description: t.Description,
-			ToolImages: t.ToolImages,
+			Images: t.Images,
 		})
 	}
 	return result

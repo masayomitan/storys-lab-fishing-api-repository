@@ -126,12 +126,12 @@ func (g ginEngine) buildFindFishingSpotsByAreaIdRoute() gin.HandlerFunc {
 func (g ginEngine) buildFindAllToolRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = toolUsecase.NewFindAllToolInteractor(
+			uc = toolUsecase.NewToolInteractor(
 				toolRepository.NewToolSQL(g.db),
-				toolPresenter.NewFindAllToolPresenter(),
+				toolPresenter.NewToolPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindAllToolAction(uc, g.log)
+			act = action.NewToolAction(uc, g.log)
 		)
 		act.FindAll(c)
 	}
@@ -140,12 +140,12 @@ func (g ginEngine) buildFindAllToolRoute() gin.HandlerFunc {
 func (g ginEngine) buildFindOneToolRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = toolUsecase.NewFindOneToolInteractor(
+			uc = toolUsecase.NewToolInteractor(
 				toolRepository.NewToolSQL(g.db),
-				toolPresenter.NewFindOneToolPresenter(),
+				toolPresenter.NewToolPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindOneToolAction(uc, g.log)
+			act = action.NewToolAction(uc, g.log)
 		)
 		act.FindOne(c)
 	}
@@ -154,14 +154,14 @@ func (g ginEngine) buildFindOneToolRoute() gin.HandlerFunc {
 func (g ginEngine) buildFindAllToolCategoryRoute() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var (
-			uc = toolCategoryUsecase.NewFindAllToolCategoryInteractor(
+			uc = toolCategoryUsecase.NewToolCategoryInteractor(
 				toolCategoryRepository.NewToolCategorySQL(g.db),
-				toolCategoryPresenter.NewFindAllToolCategoryPresenter(),
+				toolCategoryPresenter.NewToolCategoryPresenter(),
 				g.ctxTimeout,
 			)
-			act = action.NewFindAllToolCategoryAction(uc, g.log)
+			act = action.NewToolCategoryAction(uc, g.log)
 		)
-		act.FindAll(c)
+		act.Find(c)
 	}
 }
 

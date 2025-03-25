@@ -1,4 +1,5 @@
 package domain
+import "time"
 
 func (ToolCategory) TableName() string {
     return "tool_categories"
@@ -8,23 +9,22 @@ func (Tool) TableName() string {
     return "tools"
 }
 
-func (ToolImage) TableName() string {
-    return "tool_images"
-}
-
 type ToolCategory struct {
-    ID int `gorm:"primaryKey" json:"id"`
-    Name string  `json:"name"`
-	Description string `json:"description"`
-	Tools []Tool `gorm:"foreignKey:ToolCategoryId"`
+    ID              int         `gorm:"primaryKey" json:"id"`
+    Name            string      `json:"name"`
+	Description     string      `json:"description"`
+    CreatedAt   	time.Time	`gorm:"created_at" json:"created_at"`
+    UpdatedAt		time.Time  	`gorm:"updated_at" json:"updated_at"`
+	DeletedAt		*time.Time  `gorm:"default:NULL"`
 
+	Tools           []Tool      `gorm:"foreignKey:ToolCategoryId"`
 }
 
 type Tool struct {
     ID             int     `gorm:"primaryKey" json:"id"`
     Name           string  `json:"name"`
     Description    string  `json:"description"`
-    ToolCategoryId int     `json:"tool_category_id"`
+    ToolCategoryID int     `json:"tool_category_id"`
     MaterialID     int     `json:"material_id"`
     Size           string  `json:"size"`
     Weight         float64 `json:"weight"`
@@ -35,53 +35,45 @@ type Tool struct {
     Recommend      int     `json:"recommend"`
     EasyFishing    int     `json:"easy_fishing"`
 
-    ToolImages []ToolImage `gorm:"foreignKey:ToolId"`
-}
-
-type ToolImage struct {
-    ID string `gorm:"primaryKey" json:"id"`
-    ToolId string  `json:"tool_id"`
-	ImageUrl string `json:"image_url"`
-	Sort string `json:"sort"`
-	IsMain string `json:"is_main"`
+    Images         []Image `gorm:"many2many:tools_to_images;" validate:"-"`
 }
 
 func NewToolCategory(
-	ID int,
-	name string,
+	ID          int,
+	name        string,
 	description string,
-	tools []Tool,
+	tools       []Tool,
 
 ) ToolCategory {
 	return ToolCategory{
-		ID: ID,
-		Name: name,
-		Description: description,
-		Tools: tools,
+		ID:             ID,
+		Name:           name,
+		Description:    description,
+		Tools:          tools,
 	}
 }
 
 func NewTool(
-    ID int,
-    name string,
-    description string,
-    toolCategoryId int,
-    materialID int,
-    size string,
-    weight float64,
-    durability string,
-    toolUsage string,
-    price int,
-    maker string,
-    recommend int,
-    easyFishing int,
-    toolImages []ToolImage,
+    ID              int,
+    name            string,
+    description     string,
+    toolCategoryID  int,
+    materialID      int,
+    size            string,
+    weight          float64,
+    durability      string,
+    toolUsage       string,
+    price           int,
+    maker           string,
+    recommend       int,
+    easyFishing     int,
+    images          []Image,
 ) Tool {
     return Tool{
         ID:             ID,
         Name:           name,
         Description:    description,
-        ToolCategoryId: toolCategoryId,
+        ToolCategoryID: toolCategoryID,
         MaterialID:     materialID,
         Size:           size,
         Weight:         weight,
@@ -91,6 +83,6 @@ func NewTool(
         Maker:          maker,
         Recommend:      recommend,
         EasyFishing:    easyFishing,
-        ToolImages:      toolImages,
+        Images:         images,
     }
 }

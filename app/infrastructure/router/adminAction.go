@@ -37,6 +37,14 @@ import (
 	tagAdminRepository "storys-lab-fishing-api/app/model/tag"
 	tagAdminUsecase "storys-lab-fishing-api/app/usecase/tag"
 
+	toolAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/tool"
+	toolAdminRepository "storys-lab-fishing-api/app/model/tool"
+	toolAdminUsecase "storys-lab-fishing-api/app/usecase/tool"
+
+	toolCategoriesAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/toolCategory"
+	toolCategoriesAdminRepository "storys-lab-fishing-api/app/model/toolCategory"
+	toolCategoriesAdminUsecase "storys-lab-fishing-api/app/usecase/toolCategory"
+
 	service "storys-lab-fishing-api/app/service"
 )
 
@@ -404,6 +412,163 @@ func (g ginEngine) buildDeleteFishingSpotAdminRoute() gin.HandlerFunc {
 				g.ctxTimeout,
 			)
 			act = action.NewFishingSpotAdminAction(uc, g.log)
+		)
+		act.DeleteByAdmin(c)
+	}
+}
+
+// ******************** 
+// 道具
+// ********************
+func (g ginEngine) buildFindOneToolAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolAdminUsecase.NewToolAdminInteractor(
+				toolAdminRepository.NewToolSQL(g.db),
+				toolAdminPresenter.NewToolPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewToolAdminAction(uc, g.log)
+		)
+		act.FindOneByAdmin(c)
+	}
+}
+
+
+// 道具取得
+func (g ginEngine) buildFindToolsAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolAdminUsecase.NewToolAdminInteractor(
+				toolAdminRepository.NewToolSQL(g.db),
+				toolAdminPresenter.NewToolPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewToolAdminAction(uc, g.log)
+		)
+		act.FindByAdmin(c)
+	}
+}
+
+// 道具作成
+func (g ginEngine) buildCreateToolAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolAdminUsecase.NewToolAdminInteractor(
+				toolAdminRepository.NewToolSQL(g.db),
+				toolAdminPresenter.NewToolPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationToolAdminAction(uc, g.log, &g.validator)
+		)
+		// 管理者向けに道具を作成するアクションを実行します。
+		act.CreateByAdmin(c)
+	}
+}
+
+// 道具更新
+func (g ginEngine) buildUpdateToolAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolAdminUsecase.NewToolAdminInteractor(
+				toolAdminRepository.NewToolSQL(g.db),
+				toolAdminPresenter.NewToolPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationToolAdminAction(uc, g.log, &g.validator)
+		)
+		act.UpdateByAdmin(c)
+	}
+}
+
+// 道具削除
+func (g ginEngine) buildDeleteToolAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolAdminUsecase.NewToolAdminInteractor(
+				toolAdminRepository.NewToolSQL(g.db),
+				toolAdminPresenter.NewToolPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewToolAdminAction(uc, g.log)
+		)
+		act.DeleteByAdmin(c)
+	}
+}
+
+// ******************** 
+// 道具カテゴリー
+// ********************
+// 道具カテゴリー取得
+func (g ginEngine) buildFindOneToolCategoriesAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolCategoriesAdminUsecase.NewToolCategoryAdminInteractor(
+				toolCategoriesAdminRepository.NewToolCategorySQL(g.db),
+				toolCategoriesAdminPresenter.NewToolCategoryPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewToolCategoryAdminAction(uc, g.log)
+		)
+		act.FindOneByAdmin(c)
+	}
+}
+
+// すべての道具カテゴリー取得
+func (g ginEngine) buildFindToolCategoriesAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolCategoriesAdminUsecase.NewToolCategoryAdminInteractor(
+				toolCategoriesAdminRepository.NewToolCategorySQL(g.db),
+				toolCategoriesAdminPresenter.NewToolCategoryPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewToolCategoryAdminAction(uc, g.log)
+		)
+		act.FindAllByAdmin(c)
+	}
+}
+
+// 道具カテゴリー作成
+func (g ginEngine) buildCreateToolCategoryAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolCategoriesAdminUsecase.NewToolCategoryAdminInteractor(
+				toolCategoriesAdminRepository.NewToolCategorySQL(g.db),
+				toolCategoriesAdminPresenter.NewToolCategoryPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationToolCategoryAdminAction(uc, g.log, &g.validator)
+		)
+		act.CreateByAdmin(c)
+	}
+}
+
+// 道具カテゴリー更新
+func (g ginEngine) buildUpdateToolCategoryAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolCategoriesAdminUsecase.NewToolCategoryAdminInteractor(
+				toolCategoriesAdminRepository.NewToolCategorySQL(g.db),
+				toolCategoriesAdminPresenter.NewToolCategoryPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationToolCategoryAdminAction(uc, g.log, &g.validator)
+		)
+		act.UpdateByAdmin(c)
+	}
+}
+
+// 道具カテゴリー削除
+func (g ginEngine) buildDeleteToolCategoryAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = toolCategoriesAdminUsecase.NewToolCategoryAdminInteractor(
+				toolCategoriesAdminRepository.NewToolCategorySQL(g.db),
+				toolCategoriesAdminPresenter.NewToolCategoryPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewToolCategoryAdminAction(uc, g.log)
 		)
 		act.DeleteByAdmin(c)
 	}

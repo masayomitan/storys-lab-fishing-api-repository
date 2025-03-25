@@ -233,7 +233,6 @@ func (t MutationFishAdminAction) UpdateByAdmin(c *gin.Context) {
 
 func (t FishAdminAction) DeleteByAdmin(c *gin.Context) {
     const logKey = "delete_fish"
-	fmt.Println("deletteeee")
 	fmt.Println(c.Param("id"))
     // パスパラメータからIDを取得
     id := utils.StrToInt(c.Param("id"))

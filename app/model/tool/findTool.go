@@ -7,10 +7,10 @@ import (
 	"storys-lab-fishing-api/app/domain"
 )
 
-func (a ToolSQL) FindAll(ctx context.Context) ([]domain.Tool, error) {
+func (a ToolSQL) Find(ctx context.Context) ([]domain.Tool, error) {
 	var json = make([]domain.Tool, 0)
 
-	if err := a.db.FindAll(ctx, a.tableName, domain.Tool{}, &json); err != nil {
+	if err := a.db.FindORM(ctx, a.tableName, domain.Tool{}, &json); err != nil {
 		return []domain.Tool{}, errors.Wrap(err, "error listing tools")
 	}
 	var tools = make([]domain.Tool, 0)
@@ -20,7 +20,7 @@ func (a ToolSQL) FindAll(ctx context.Context) ([]domain.Tool, error) {
 			json.ID,
 			json.Name,
 			json.Description,
-			json.ToolCategoryId,
+			json.ToolCategoryID,
 			json.MaterialID,
 			json.Size,
 			json.Weight,
@@ -30,7 +30,7 @@ func (a ToolSQL) FindAll(ctx context.Context) ([]domain.Tool, error) {
 			json.Maker,
 			json.Recommend,
 			json.EasyFishing,
-			json.ToolImages,
+			json.Images,
 		)
 		tools = append(tools, tool)
 	}
@@ -40,7 +40,7 @@ func (a ToolSQL) FindAll(ctx context.Context) ([]domain.Tool, error) {
 func (a ToolSQL) FindOne(ctx context.Context, id int) (domain.Tool, error) {
 	var json = domain.Tool{}
 
-	if err := a.db.FindOneTool(ctx, a.tableName, id, &json); err != nil {
+	if err := a.db.FindOneORM(ctx, a.tableName, id, &json); err != nil {
 		return domain.Tool{}, errors.Wrap(err, "error listing tools")
 	}
 
@@ -48,7 +48,7 @@ func (a ToolSQL) FindOne(ctx context.Context, id int) (domain.Tool, error) {
 		json.ID,
 		json.Name,
 		json.Description,
-		json.ToolCategoryId,
+		json.ToolCategoryID,
 		json.MaterialID,
 		json.Size,
 		json.Weight,
@@ -58,22 +58,81 @@ func (a ToolSQL) FindOne(ctx context.Context, id int) (domain.Tool, error) {
 		json.Maker,
 		json.Recommend,
 		json.EasyFishing,
-		json.ToolImages,
+		json.Images,
 	)
 
 	fmt.Println("")
 	return tool, nil
 }
 
-func (ga *GormAdapter) FindAll(ctx context.Context, table string, query interface{}, result interface{}) error {
+func (a ToolSQL) FindByAdmin(ctx context.Context) ([]domain.Tool, error) {
+	var json = make([]domain.Tool, 0)
+
+	if err := a.db.FindORM(ctx, a.tableName, domain.Tool{}, &json); err != nil {
+		return []domain.Tool{}, errors.Wrap(err, "error listing tools")
+	}
+	var tools = make([]domain.Tool, 0)
+
+	for _, json := range json {
+		var tool = domain.NewTool(
+			json.ID,
+			json.Name,
+			json.Description,
+			json.ToolCategoryID,
+			json.MaterialID,
+			json.Size,
+			json.Weight,
+			json.Durability,
+			json.ToolUsage,
+			json.Price,
+			json.Maker,
+			json.Recommend,
+			json.EasyFishing,
+			json.Images,
+		)
+		tools = append(tools, tool)
+	}
+	return tools, nil
+}
+
+func (a ToolSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Tool, error) {
+	var json = domain.Tool{}
+
+	if err := a.db.FindOneORM(ctx, a.tableName, id, &json); err != nil {
+		return domain.Tool{}, errors.Wrap(err, "error listing tool_categories")
+	}
+
+	var tool = domain.NewTool(
+		json.ID,
+		json.Name,
+		json.Description,
+		json.ToolCategoryID,
+		json.MaterialID,
+		json.Size,
+		json.Weight,
+		json.Durability,
+		json.ToolUsage,
+		json.Price,
+		json.Maker,
+		json.Recommend,
+		json.EasyFishing,
+		json.Images,
+	)
+
+	fmt.Println("")
+	return tool, nil
+}
+
+func (ga *GormAdapter) FindORM(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
-		Preload("ToolImages").
+		Preload("Images").
 		Order("id asc").
 		Find(result).Error
 }
 
-func (ga *GormAdapter) FindOneTool(ctx context.Context, table string, tool_id int, result interface{}) error {
-	return ga.DB.Table(table).Where("id = ?", tool_id).
-		Preload("ToolImages").
+func (ga *GormAdapter) FindOneORM(ctx context.Context, table string, tool_id int, result interface{}) error {
+	return ga.DB.Table(table).
+		Where("id = ?", tool_id).
+		Preload("Images").
 		First(result).Error
 }
