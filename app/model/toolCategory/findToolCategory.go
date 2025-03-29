@@ -88,8 +88,10 @@ func (a ToolCategorySQL) FindOneByAdmin(ctx context.Context, id int) (domain.Too
 }
 
 func (ga *GormAdapter) FindORM(ctx context.Context, table string, query interface{}, result interface{}) error {
-    return ga.DB.Table(table).Where(query).
-		Preload("Tools").
+    return ga.DB.Table(table).
+		Where(query).
+		Where("deleted_at IS NULL").
+		Preload("Tools", "deleted_at IS NULL").
 		Preload("Tools.Images").
 		Find(result).Error
 }
@@ -97,7 +99,8 @@ func (ga *GormAdapter) FindORM(ctx context.Context, table string, query interfac
 func (ga *GormAdapter) FindOneORM(ctx context.Context, table string, tool_category_id int, result interface{}) error {
 	return ga.DB.Table(table).
 		Where("id = ?", tool_category_id).
-		Preload("Tools").
+		Where("deleted_at IS NULL").
+		Preload("Tools", "deleted_at IS NULL").
 		Preload("Tools.Images").
 		First(result).Error
 }

@@ -17,25 +17,28 @@ type ToolCategory struct {
     UpdatedAt		time.Time  	`gorm:"updated_at" json:"updated_at"`
 	DeletedAt		*time.Time  `gorm:"default:NULL"`
 
-	Tools           []Tool      `gorm:"foreignKey:ToolCategoryId"`
+	Tools           []Tool      `gorm:"foreignKey:ToolCategoryID"`
 }
 
 type Tool struct {
-    ID             int     `gorm:"primaryKey" json:"id"`
-    Name           string  `json:"name"`
-    Description    string  `json:"description"`
-    ToolCategoryID int     `json:"tool_category_id"`
-    MaterialID     int     `json:"material_id"`
-    Size           string  `json:"size"`
-    Weight         float64 `json:"weight"`
-    Durability     string  `json:"durability"`
-    ToolUsage      string  `json:"tool_usage"`
-    Price          int     `json:"price"`
-    Maker          string  `json:"maker"`
-    Recommend      int     `json:"recommend"`
-    EasyFishing    int     `json:"easy_fishing"`
+    ID             int          `gorm:"primaryKey" json:"id"`
+    Name           string       `json:"name"`
+    Description    string       `json:"description"`
+    ToolCategoryID int          `json:"tool_category_id"`
+    MaterialID     int          `json:"material_id"`
+    Size           string       `json:"size"`
+    Weight         float64      `json:"weight"`
+    Durability     string       `json:"durability"`
+    ToolUsage      string       `json:"tool_usage"`
+    Price          int          `json:"price"`
+    Maker          string       `json:"maker"`
+    Recommend      int          `json:"recommend"`
+    EasyFishing    int          `json:"easy_fishing"`
+    CreatedAt      time.Time	`gorm:"created_at" json:"created_at"`
+    UpdatedAt	   time.Time  	`gorm:"updated_at" json:"updated_at"`
+	DeletedAt	   *time.Time   `gorm:"default:NULL"`
 
-    Images         []Image `gorm:"many2many:tools_to_images;" validate:"-"`
+    Images         []Image      `gorm:"many2many:tools_to_images;" validate:"-"`
 }
 
 func NewToolCategory(

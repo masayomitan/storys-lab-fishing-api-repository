@@ -243,6 +243,6 @@ func (t ToolAdminAction) DeleteByAdmin(c *gin.Context) {
     logging.NewInfo(t.log, logKey, http.StatusOK).Log("successfully deleted")
     response.NewSuccess(map[string]interface{}{
 		"status":  http.StatusOK,
-		"message": "Fish deleted successfully",
+		"message": "Tool deleted successfully",
 	}, http.StatusOK).Send(c.Writer)
 }
