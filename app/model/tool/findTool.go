@@ -24,7 +24,6 @@ func (a ToolSQL) Find(ctx context.Context) ([]domain.Tool, error) {
 			json.MaterialID,
 			json.Size,
 			json.Weight,
-			json.Durability,
 			json.ToolUsage,
 			json.Price,
 			json.Maker,
@@ -52,7 +51,6 @@ func (a ToolSQL) FindOne(ctx context.Context, id int) (domain.Tool, error) {
 		json.MaterialID,
 		json.Size,
 		json.Weight,
-		json.Durability,
 		json.ToolUsage,
 		json.Price,
 		json.Maker,
@@ -82,7 +80,6 @@ func (a ToolSQL) FindByAdmin(ctx context.Context) ([]domain.Tool, error) {
 			json.MaterialID,
 			json.Size,
 			json.Weight,
-			json.Durability,
 			json.ToolUsage,
 			json.Price,
 			json.Maker,
@@ -110,7 +107,6 @@ func (a ToolSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Tool, error
 		json.MaterialID,
 		json.Size,
 		json.Weight,
-		json.Durability,
 		json.ToolUsage,
 		json.Price,
 		json.Maker,
@@ -125,6 +121,8 @@ func (a ToolSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Tool, error
 
 func (ga *GormAdapter) FindORM(ctx context.Context, table string, query interface{}, result interface{}) error {
     return ga.DB.Table(table).Where(query).
+		Where(query).
+		Where("deleted_at IS NULL").
 		Preload("Images").
 		Order("id asc").
 		Find(result).Error
@@ -132,6 +130,7 @@ func (ga *GormAdapter) FindORM(ctx context.Context, table string, query interfac
 
 func (ga *GormAdapter) FindOneORM(ctx context.Context, table string, tool_id int, result interface{}) error {
 	return ga.DB.Table(table).
+		Where("deleted_at IS NULL").
 		Where("id = ?", tool_id).
 		Preload("Images").
 		First(result).Error

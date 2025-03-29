@@ -26,9 +26,8 @@ type Tool struct {
     Description    string       `json:"description"`
     ToolCategoryID int          `json:"tool_category_id"`
     MaterialID     int          `json:"material_id"`
-    Size           string       `json:"size"`
+    Size           float64      `json:"size"`
     Weight         float64      `json:"weight"`
-    Durability     string       `json:"durability"`
     ToolUsage      string       `json:"tool_usage"`
     Price          int          `json:"price"`
     Maker          string       `json:"maker"`
@@ -62,9 +61,8 @@ func NewTool(
     description     string,
     toolCategoryID  int,
     materialID      int,
-    size            string,
+    size            float64,
     weight          float64,
-    durability      string,
     toolUsage       string,
     price           int,
     maker           string,
@@ -80,7 +78,6 @@ func NewTool(
         MaterialID:     materialID,
         Size:           size,
         Weight:         weight,
-        Durability:     durability,
         ToolUsage:      toolUsage,
         Price:          price,
         Maker:          maker,

@@ -109,10 +109,10 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				// 道具
 				tools := admin.Group("/tools")
 				tools.GET("/", g.buildFindToolsAdminRoute())
-				tools.GET("/:id", g.buildFindOneFishAdminRoute())
-				tools.POST("/create", g.buildCreateFishAdminRoute())
-				tools.PUT("/update/:id", g.buildUpdateFishAdminRoute())
-				tools.DELETE("/delete/:id", g.buildDeleteFishAdminRoute())
+				tools.GET("/:id", g.buildFindOneToolAdminRoute())
+				tools.POST("/create", g.buildCreateToolAdminRoute())
+				tools.PUT("/update/:id", g.buildUpdateToolAdminRoute())
+				tools.DELETE("/delete/:id", g.buildDeleteToolAdminRoute())
 
 				// 道具カテゴリー
 				toolCategories := admin.Group("/tool-categories")
