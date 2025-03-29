@@ -106,6 +106,22 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				fishingSpot.PUT("/update/:id", g.buildUpdateFishingSpotAdminRoute())
 				fishingSpot.DELETE("/delete/:id", g.buildDeleteFishingSpotAdminRoute())
 
+				// 道具
+				tools := admin.Group("/tools")
+				tools.GET("/", g.buildFindToolsAdminRoute())
+				tools.GET("/:id", g.buildFindOneFishAdminRoute())
+				tools.POST("/create", g.buildCreateFishAdminRoute())
+				tools.PUT("/update/:id", g.buildUpdateFishAdminRoute())
+				tools.DELETE("/delete/:id", g.buildDeleteFishAdminRoute())
+
+				// 道具カテゴリー
+				toolCategories := admin.Group("/tool-categories")
+				toolCategories.GET("/", g.buildFindToolCategoriesAdminRoute())
+				toolCategories.GET("/:id", g.buildFindOneToolCategoriesAdminRoute())
+				toolCategories.POST("/create", g.buildCreateToolCategoryAdminRoute())
+				toolCategories.PUT("/update/:id", g.buildUpdateToolCategoryAdminRoute())
+				toolCategories.DELETE("/delete/:id", g.buildDeleteToolCategoryAdminRoute())
+
 				// 画像
 				images := admin.Group("/images")
 				images.GET("/", g.buildFindAllImagesAdminRoute())
