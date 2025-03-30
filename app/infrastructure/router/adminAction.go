@@ -33,10 +33,6 @@ import (
 	imageAdminRepository "storys-lab-fishing-api/app/model/image"
 	imageAdminUsecase "storys-lab-fishing-api/app/usecase/image"
 
-	tagAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/tag"
-	tagAdminRepository "storys-lab-fishing-api/app/model/tag"
-	tagAdminUsecase "storys-lab-fishing-api/app/usecase/tag"
-
 	toolAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/tool"
 	toolAdminRepository "storys-lab-fishing-api/app/model/tool"
 	toolAdminUsecase "storys-lab-fishing-api/app/usecase/tool"
@@ -44,6 +40,14 @@ import (
 	toolCategoriesAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/toolCategory"
 	toolCategoriesAdminRepository "storys-lab-fishing-api/app/model/toolCategory"
 	toolCategoriesAdminUsecase "storys-lab-fishing-api/app/usecase/toolCategory"
+	
+	tagAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/tag"
+	tagAdminRepository "storys-lab-fishing-api/app/model/tag"
+	tagAdminUsecase "storys-lab-fishing-api/app/usecase/tag"
+
+	materialAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/material"
+	materialAdminRepository "storys-lab-fishing-api/app/model/material"
+	materialAdminUsecase "storys-lab-fishing-api/app/usecase/material"
 
 	service "storys-lab-fishing-api/app/service"
 )
@@ -586,6 +590,23 @@ func (g ginEngine) buildFindTagsAdminRoute() gin.HandlerFunc {
 				g.ctxTimeout,
 			)
 			act = action.NewTagAdminAction(uc, g.log)
+		)
+		act.FindByAdmin(c)
+	}
+}
+
+// ******************** 
+//  素材
+// ********************
+func (g ginEngine) buildFindMaterialsAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = materialAdminUsecase.NewMaterialAdminInteractor(
+				materialAdminRepository.NewMaterialSQL(g.db),
+				materialAdminPresenter.NewMaterialPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMaterialAdminAction(uc, g.log)
 		)
 		act.FindByAdmin(c)
 	}

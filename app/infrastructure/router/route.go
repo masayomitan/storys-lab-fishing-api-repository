@@ -129,8 +129,14 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				// images.PUT("/upload/:id", g.buildUpdateFishCategoryRoute())
 				// images.DELETE("/delete", g.buildDeleteImageAdminRoute())
 
+
+				// タグ
 				tags := admin.Group("/tags")
 				tags.GET("/", g.buildFindTagsAdminRoute())
+
+				// 
+				material := admin.Group("/materials")
+				material.GET("/", g.buildFindMaterialsAdminRoute())
 			}
 	
 }

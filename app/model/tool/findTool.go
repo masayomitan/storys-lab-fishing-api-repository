@@ -24,7 +24,6 @@ func (a ToolSQL) Find(ctx context.Context) ([]domain.Tool, error) {
 			json.MaterialID,
 			json.Size,
 			json.Weight,
-			json.ToolUsage,
 			json.Price,
 			json.Maker,
 			json.Recommend,
@@ -51,7 +50,6 @@ func (a ToolSQL) FindOne(ctx context.Context, id int) (domain.Tool, error) {
 		json.MaterialID,
 		json.Size,
 		json.Weight,
-		json.ToolUsage,
 		json.Price,
 		json.Maker,
 		json.Recommend,
@@ -80,7 +78,6 @@ func (a ToolSQL) FindByAdmin(ctx context.Context) ([]domain.Tool, error) {
 			json.MaterialID,
 			json.Size,
 			json.Weight,
-			json.ToolUsage,
 			json.Price,
 			json.Maker,
 			json.Recommend,
@@ -96,7 +93,7 @@ func (a ToolSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Tool, error
 	var json = domain.Tool{}
 
 	if err := a.db.FindOneORM(ctx, a.tableName, id, &json); err != nil {
-		return domain.Tool{}, errors.Wrap(err, "error listing tool_categories")
+		return domain.Tool{}, errors.Wrap(err, "error listing tools")
 	}
 
 	var tool = domain.NewTool(
@@ -107,7 +104,6 @@ func (a ToolSQL) FindOneByAdmin(ctx context.Context, id int) (domain.Tool, error
 		json.MaterialID,
 		json.Size,
 		json.Weight,
-		json.ToolUsage,
 		json.Price,
 		json.Maker,
 		json.Recommend,
