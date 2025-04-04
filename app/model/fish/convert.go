@@ -30,15 +30,6 @@ func convertFishingMethods(methods []domain.FishingMethod) []domain.FishingMetho
 func convertDishes(dishes []domain.Dish) []domain.Dish {
 	var result []domain.Dish
 	for _, d := range dishes {
-		var dishImages []domain.DishImage
-		for _, img := range d.DishImages {
-			dishImages = append(dishImages, domain.DishImage{
-				ID:     	img.ID,
-				DishId: 	img.DishId,
-				ImageUrl:   img.ImageUrl,
-			})
-		}
-
 		result = append(result, domain.Dish{
 			ID:          d.ID,
 			Name:        d.Name,
@@ -46,7 +37,7 @@ func convertDishes(dishes []domain.Dish) []domain.Dish {
 			Ingredients: d.Ingredients,
 			Kind:        d.Kind,
 			Level:       d.Level,
-			DishImages:  dishImages,
+			Images:      d.Images,
 		})
 	}
 	return result

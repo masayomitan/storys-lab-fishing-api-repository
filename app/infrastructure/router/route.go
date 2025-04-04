@@ -122,6 +122,14 @@ func (g ginEngine) setAppHandlers(r *gin.Engine) {
 				toolCategories.PUT("/update/:id", g.buildUpdateToolCategoryAdminRoute())
 				toolCategories.DELETE("/delete/:id", g.buildDeleteToolCategoryAdminRoute())
 
+				// 料理
+				dish := admin.Group("/dishes")
+				dish.GET("/", g.buildFindDishesAdminRoute())
+				dish.GET("/:id", g.buildFindOneDishAdminRoute())
+				dish.POST("/create", g.buildCreateDishAdminRoute())
+				dish.PUT("/update/:id", g.buildUpdateDishAdminRoute())
+				dish.DELETE("/delete/:id", g.buildDeleteDishAdminRoute())
+
 				// 画像
 				images := admin.Group("/images")
 				images.GET("/", g.buildFindAllImagesAdminRoute())

@@ -40,6 +40,10 @@ import (
 	toolCategoriesAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/toolCategory"
 	toolCategoriesAdminRepository "storys-lab-fishing-api/app/model/toolCategory"
 	toolCategoriesAdminUsecase "storys-lab-fishing-api/app/usecase/toolCategory"
+
+	dishAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/dish"
+	dishAdminRepository "storys-lab-fishing-api/app/model/dish"
+	dishAdminUsecase "storys-lab-fishing-api/app/usecase/dish"
 	
 	tagAdminPresenter "storys-lab-fishing-api/app/adapter/presenter/tag"
 	tagAdminRepository "storys-lab-fishing-api/app/model/tag"
@@ -573,6 +577,84 @@ func (g ginEngine) buildDeleteToolCategoryAdminRoute() gin.HandlerFunc {
 				g.ctxTimeout,
 			)
 			act = action.NewToolCategoryAdminAction(uc, g.log)
+		)
+		act.DeleteByAdmin(c)
+	}
+}
+
+// ******************** 
+// 料理
+// ********************
+// 料理取得
+func (g ginEngine) buildFindOneDishAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = dishAdminUsecase.NewDishAdminInteractor(
+				dishAdminRepository.NewDishSQL(g.db),
+				dishAdminPresenter.NewDishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewDishAdminAction(uc, g.log)
+		)
+		act.FindOneByAdmin(c)
+	}
+}
+
+// すべての料理取得
+func (g ginEngine) buildFindDishesAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = dishAdminUsecase.NewDishAdminInteractor(
+				dishAdminRepository.NewDishSQL(g.db),
+				dishAdminPresenter.NewDishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewDishAdminAction(uc, g.log)
+		)
+		act.FindByAdmin(c)
+	}
+}
+
+// 料理作成
+func (g ginEngine) buildCreateDishAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = dishAdminUsecase.NewDishAdminInteractor(
+				dishAdminRepository.NewDishSQL(g.db),
+				dishAdminPresenter.NewDishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationDishAdminAction(uc, g.log, &g.validator)
+		)
+		act.CreateByAdmin(c)
+	}
+}
+
+// 料理更新
+func (g ginEngine) buildUpdateDishAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = dishAdminUsecase.NewDishAdminInteractor(
+				dishAdminRepository.NewDishSQL(g.db),
+				dishAdminPresenter.NewDishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewMutationDishAdminAction(uc, g.log, &g.validator)
+		)
+		act.UpdateByAdmin(c)
+	}
+}
+
+// 料理削除
+func (g ginEngine) buildDeleteDishAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = dishAdminUsecase.NewDishAdminInteractor(
+				dishAdminRepository.NewDishSQL(g.db),
+				dishAdminPresenter.NewDishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewDishAdminAction(uc, g.log)
 		)
 		act.DeleteByAdmin(c)
 	}
