@@ -268,3 +268,34 @@ func (t FishAdminAction) DeleteByAdmin(c *gin.Context) {
 		"message": "Fish deleted successfully",
 	}, http.StatusOK).Send(c.Writer)
 }
+
+func (t FishAdminAction) UpdateFishDishes(c *gin.Context) {
+	const logKey = "update_fish_dishes"
+
+	id := utils.StrToInt(c.Param("id"))
+	if id == 0 {
+		err := fmt.Errorf("id is required")
+		logging.NewError(t.log, err, logKey, http.StatusBadRequest).Log("missing id in request")
+		response.NewError(err, http.StatusBadRequest).Send(c.Writer)
+		return
+	}
+
+	var req domain.UpdateFishDishesRequest
+	if err := c.ShouldBindJSON(&req); err != nil {
+		logging.NewError(t.log, err, logKey, http.StatusBadRequest).Log("invalid dish_ids format")
+		response.NewError(err, http.StatusBadRequest).Send(c.Writer)
+		return
+	}
+
+	result, err := t.uc.UpdateFishDishesExecute(c.Request.Context(), id, req.DishIDs)
+	if err != nil {
+		logging.NewError(t.log, err, logKey, http.StatusInternalServerError).Log("failed to update fish dishes relation")
+		response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
+		return
+	}
+
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("successfully updated fish dishes")
+	response.NewSuccess(result, http.StatusOK).Send(c.Writer)
+}
+
+

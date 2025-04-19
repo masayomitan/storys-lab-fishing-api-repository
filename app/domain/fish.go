@@ -45,6 +45,14 @@ type Fish struct {
 	Images 						[]Image 		`gorm:"many2many:fishes_to_images;joinForeignKey:FishID;JoinReferences:ImageID" validate:"-"`
 }
 
+type UpdateFishDishesRequest struct {
+	DishIDs []int `json:"dish_ids" binding:"required"`
+}
+type FishDishRelationResult struct {
+	FishID  int   `json:"fish_id"`
+	DishIDs []int `json:"dish_ids"`
+}
+
 func NewFish(
 	ID 							int,
 	name 						string,

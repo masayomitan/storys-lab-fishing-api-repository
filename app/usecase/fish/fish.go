@@ -82,3 +82,12 @@ func (t fishAdminInteractor) DeleteExecuteByAdmin(ctx context.Context, id int) e
 
     return t.repo.DeleteByAdmin(ctx, id)
 }
+
+func (t fishAdminInteractor) UpdateFishDishesExecute(ctx context.Context, fishID int, dishIDs []int) (domain.FishDishRelationResult, error) {
+	ctx, cancel := context.WithTimeout(ctx, t.ctxTimeout)
+	defer cancel()
+
+	fish, _ := t.repo.UpdateFishDishesByAdmin(ctx, fishID, dishIDs)
+	return fish, nil
+}
+

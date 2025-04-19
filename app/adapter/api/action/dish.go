@@ -164,7 +164,7 @@ func (t MutationDishAdminAction) CreateByAdmin(c *gin.Context) {
 		response.NewError(err, http.StatusInternalServerError).Send(c.Writer)
 		return
 	}
-	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when retur")
+	logging.NewInfo(t.log, logKey, http.StatusOK).Log("success when return")
 	response.NewSuccess(output, http.StatusOK).Send(c.Writer)
 }
 

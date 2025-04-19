@@ -60,6 +60,43 @@ func (a FishSQL) DeleteByAdmin(ctx context.Context, id int) error {
 	return nil
 }
 
+func (a FishSQL) UpdateFishDishesByAdmin(ctx context.Context, fishID int, dishIDs []int) (domain.FishDishRelationResult, error) {
+	var fish domain.Fish
+
+	err := a.db.Transaction(ctx, func(tx *gorm.DB) error {
+
+		if err := tx.First(&fish, fishID).Error; err != nil {
+			return errors.Wrap(err, "fish not found")
+		}
+
+		if err := tx.Model(&fish).Association("Dishes").Clear(); err != nil {
+			return errors.Wrap(err, "failed to clear existing dishes")
+		}
+
+		if len(dishIDs) > 0 {
+			var dishes []domain.Dish
+			if err := tx.Where("id IN ?", dishIDs).Find(&dishes).Error; err != nil {
+				return errors.Wrap(err, "failed to load new dishes")
+			}
+			if err := tx.Model(&fish).Association("Dishes").Append(dishes); err != nil {
+				return errors.Wrap(err, "failed to append new dishes")
+			}
+		}
+
+		return nil
+	})
+
+	if err != nil {
+		return domain.FishDishRelationResult{}, err
+	}
+
+	return domain.FishDishRelationResult{
+		FishID:  fishID,
+		DishIDs: dishIDs,
+	}, nil
+}
+
+
 func (ga *GormAdapter) Store(ctx context.Context, table string, entity interface{}) error {
     return ga.DB.Table(table).Create(entity).Error
 }

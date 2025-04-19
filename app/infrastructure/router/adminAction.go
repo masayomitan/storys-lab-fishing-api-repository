@@ -136,6 +136,21 @@ func (g ginEngine) buildDeleteFishAdminRoute() gin.HandlerFunc {
 	}
 }
 
+// 魚 料理 紐付け
+func (g ginEngine) buildUpdateFishDishesAdminRoute() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		var (
+			uc = fishAdminUsecase.NewFishAdminInteractor(
+				fishAdminRepository.NewFishSQL(g.db),
+				fishAdminPresenter.NewFishPresenter(),
+				g.ctxTimeout,
+			)
+			act = action.NewFishAdminAction(uc, g.log)
+		)
+		act.UpdateFishDishes(c)
+	}
+}
+
 // ******************** 
 // 魚カテゴリー
 // ********************

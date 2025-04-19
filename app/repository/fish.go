@@ -19,6 +19,8 @@ type (
 		CreateByAdmin(context.Context, domain.Fish) (domain.Fish, error)
 		UpdateByAdmin(context.Context, domain.Fish, int) (domain.Fish, error)
 		DeleteByAdmin(context.Context, int) error
+		UpdateFishDishesByAdmin(ctx context.Context, fishID int, dishIDs []int) (domain.FishDishRelationResult, error)
+
 		// WithTransaction(context.Context, func(context.Context) error) error
 	}
 )

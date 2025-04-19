@@ -19,6 +19,7 @@ type FishAdminUseCase interface {
 	CreateExecuteByAdmin(ctx context.Context, requestParam domain.Fish)  (domain.Fish, error)
 	UpdateExecuteByAdmin(ctx context.Context, requestParam domain.Fish, id int)  (domain.Fish, error)
 	DeleteExecuteByAdmin(ctx context.Context, id int) error
+	UpdateFishDishesExecute(ctx context.Context, fishID int, dishIDs []int) (domain.FishDishRelationResult, error)
 }
 
 type FishPresenter interface {
